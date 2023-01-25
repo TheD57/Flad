@@ -1,5 +1,6 @@
-import { View, Text, Image, Animated ,PanResponder, Dimensions } from 'react-native'
-import React, { useRef } from 'react'
+import { View, Text, Image, Animated ,PanResponder, Dimensions, StyleSheet } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { eventMethod } from '@ionic/core/dist/types/utils/overlays';
 
 
 const {width : wWidht} = Dimensions.get("window");
@@ -7,14 +8,21 @@ const width = wWidht *0.75;
 const height = wWidht * (465/264);
 const borderRadius = 24;
 
-
-
 interface CardProps {
     title: string;
     image: any;
     onSwipe: (direction: "left" | "right") => void;
   }
 
+//   const [loading, setLoading] = useState(true);
+//   const [cards, setCards] = useState(cardArray);
+
+// useEffect(()=>{
+//   setLoading(true);
+//   eventMethod().then(
+//     setLoading(false);
+//   )
+// })
   
   const Card: React.FC<CardProps> = ({ title, image, onSwipe }) => {
     const pan = useRef(new Animated.ValueXY()).current;
@@ -48,19 +56,25 @@ interface CardProps {
         },
       })
     ).current;
-  
+    
     return (
       <View>
         <Animated.View
-          style={{ transform: [{ translateX: pan.x }] }}
+          style={{ transform: [{ translateX: pan.x  }], backgroundColor : 'red'}}
           {...panResponder.panHandlers} 
         >
-          <Image source={image} style={{ width: 200, height: 200 }} />
+          <Image source={{uri : image}} style={{ width: 200, height: 200 }} />
         </Animated.View>
       </View>
     );
   };
   
+
+const nournous = StyleSheet.create({
+
+})
+
+
   export default Card;
 
 

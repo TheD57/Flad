@@ -69,16 +69,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-    card: {
-      borderRadius : 8,
-      shadowRadius : 20,
-      shadowColor : '#'
-    },
-    image: {
-        width: 320,
-        height: 440,
-        borderRadius: 18,
-        resizeMode : "cover",
-        placeholder: "assets/images/loadingPlaceholder.gif"
-      },
+  card: {
+    borderRadius : 8,
+    shadowRadius : 20,
+    shadowColor : '#'
+  },
+  image: {
+    width: 320,
+    height: 440,
+    borderRadius: 18,
+    resizeMode : "cover",
+    placeholder: "assets/images/loadingPlaceholder.gif"
+  },
 });

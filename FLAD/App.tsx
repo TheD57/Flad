@@ -1,43 +1,61 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useTransition } from 'react';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import Card from './components/Card';
+import Spot from './pages/spot';
 
-import { cards as cardArray } from './FakeData/data'
 
- 
+
 export default function App() {
-//  const [currentCard, setCurrentCard] = useState(cardArray);
-//  const aIndex = useTransition(currentCard)
-// ;
-const [cards, setCards] = useState(cardArray);
-const aIndex = useTransition();
-const onSwipe = (index: number, direction: 'left' | 'right') => {
-  if (direction === 'right') {
-    // Swiped right
-    console.log('Swiped right');
+  //  const [currentCard, setCurrentCard] = useState(cardArray);
+  //  const aIndex = useTransition(currentCard)
+  // ;
 
-  } else if (direction === 'left') {
-    console.log('Swiped left');
-  }
-  // update the state of the card or the app
-  setCards(cards.filter((_, i) => i !== index));
-};
+// const aIndex = useTransition();
+// const onSwipe = (index: number, direction: 'left' | 'right') => {
+//   if (direction === 'right') {
+//     // Swiped right
+//     console.log('Swiped right');
+
+//   } else if (direction === 'left') {
+//     console.log('Swiped left');
+//   }
+//   // update the state of the card or the app
+//   setCards(cards.filter((_, i) => i !== index));
+// };
 
 // const [currentCard, setCurrentCard] = useState(0);
+const {width : wWidht} = Dimensions.get("window");
 
   return (
 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',  position : 'absolute', backgroundColor : '' }}>
-      {cards.map((card, index) => (
-        <View key={card.name}>
-          <Card
-            title={card.name}
-            image={card.sourceUrl}
-            onSwipe={(direction) => onSwipe(index, direction)}
-          />
-        </View>
-      ))}
+    <View style={styles.container}>
+      
+      <LinearGradient colors={['rgba(2, 2, 2, 0.58) 0%','rgba(0, 0, 0, 0) 90.56%']}style={styles.gradient}>
+      <Text
+      style={{
+        fontStyle : 'normal',
+        left: wWidht/9 ,
+        top: 65,
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontWeight: "800",
+      }}>LOST FOREST</Text>
+      <Text
+      style={{
+        fontStyle : 'normal',
+        left: wWidht/9 ,
+        top: 65,
+        color: "#FFFFFF",
+        fontSize: 18,
+        fontWeight: "800",
+      }}>Laylow</Text>
+      </LinearGradient>
+      
+
+      <Spot>
+      </Spot>
     </View>
 
 
@@ -81,4 +99,11 @@ const styles = StyleSheet.create({
         resizeMode : "cover",
         placeholder: "assets/images/loadingPlaceholder.gif"
       },
+      gradient : {
+        position : "absolute",
+        top : 0,
+        left : 0,
+        right : 0,
+        height : 209,
+      }
 });

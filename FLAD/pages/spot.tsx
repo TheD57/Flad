@@ -1,73 +1,80 @@
-import { View, Text, Image, Animated ,PanResponder, Dimensions } from 'react-native'
-import React, { useRef, useState, useTransition } from 'react'
+import { View, Text, Image, Animated ,PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable } from 'react-native'
+import React, { useCallback, useRef, useState, useTransition } from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 
 import Card from '../components/Card';
 
 import { cards as cardArray } from '../FakeData/data'
 
-const {width : wWidht} = Dimensions.get("window");
-const width = wWidht *0.75;
-const height = wWidht * (465/264);
-const borderRadius = 24;
-
 interface SpotProps {
-    title: string;
-    image: any;
-    onSwipe: (direction: "left" | "right") => void;
-  }
-
+}
+const Spot: React.FC<SpotProps> = () => {
   
-    const Spot: React.FC<SpotProps> = ({ title, image, onSwipe }) => {
-    const [cards, setCards] = useState(cardArray);
-    const aIndex = useTransition();
-    const onSwipe = (index: number, direction: 'left' | 'right') => {
+  const [cards, setCards] = useState(cardArray);
+  const onSwipe = (index: number, direction: 'left' | 'right') => {
     if (direction === 'right') {
-        // Swiped right
-        console.log('Swiped right');
-
+      // Swiped right
+      console.log("===================")
     } else if (direction === 'left') {
-        console.log('Swiped left');
+      // Swiped left
     }
     // update the state of the card or the app
     setCards(cards.filter((_, i) => i !== index));
-    };
+  };
 
-// const [currentCard, setCurrentCard] = useState(0);
+  const hapti = (() => {
+  
+      // Haptics.NotificationFeedbackType.Success
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+        });
 
   return (
 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',  position : 'absolute', backgroundColor : '' }}>
+    <View style={styles.spot}>
+      
       {cards.map((card, index) => (
-        <View key={card.name}>
+
+        <View key={card.name} style = {{    position:'absolute'
+      }} >
+        <Pressable onLongPress={hapti}>
+
           <Card
             title={card.name}
             image={card.sourceUrl}
             onSwipe={(direction) => onSwipe(index, direction)}
           />
+        </Pressable>
+        <Button
+          title="Success"
+          onPress={
+            () =>
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              )
+          }
+        />
         </View>
       ))}
-    </View>
 
-
-
-    // <View style={styles.container}>
-    //   <Text>Open up App.tsx to start working on your app!</Text>
-    //   {/* <View>
-    //     <Animated.View>
-          
-    //     </Animated.View>
-    //     {cardArray.map( ({index}) => currentCard < index && step + step  && (
-    //       <Card card={card} ></Card>
-
-    //     )  )}
+    
+      {/* <LinearGradient
+        // Background Linear Gradient
+        colors={['rgba(0,0,0,0.8)', 'transparent']}
         
-    //   </View> */}
-    //   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    //   <Card title="Swipe me left or right" />
-    // </View>
-    //   <StatusBar style="auto" />
-    // </View>
+      /> */}
+      
+      </View>
+      
   );
   };
+
+  const styles = StyleSheet.create({
+    spot : {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }
+  })
   
   export default Spot;

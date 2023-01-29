@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import { Animated, StyleSheet, Text, View, FlatList , Image} from 'react-native';
 
-
 type CustomCardMusic = { //Props
-    image: string;
+    image: any;
     title: string;
     description: string;
 }
@@ -12,7 +11,7 @@ export default function CardMusic(CBP: CustomCardMusic) {
     return (
       <View style={styles.container}>
           <View style={styles.imageContainer}>
-              <Image source={{uri: CBP.image}} style={styles.image} borderRadius={50}/>
+              <Image source={require('../assets/jul.png')} style={styles.image}/>
           </View>
           <View style={styles.textContainer}>
               <Text style={styles.title}>{CBP.title}</Text>
@@ -39,7 +38,8 @@ export default function CardMusic(CBP: CustomCardMusic) {
     image: {
       width: '100%',
       height: '100%',
-      borderRadius: 50
+      borderRadius: 10
+
     },
     textContainer: {
       flex: 1,

@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useTransition } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-import Card from './components/Card';
-
+import FavoritePage from './pages/favoritePage';
 import { cards as cardArray } from './FakeData/data'
 
  
@@ -28,7 +27,7 @@ const onSwipe = (index: number, direction: 'left' | 'right') => {
 
   return (
 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',  position : 'absolute', backgroundColor : '' }}>
+    /*<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',  position : 'absolute', backgroundColor : '' }}>
       {cards.map((card, index) => (
         <View key={card.name}>
           <Card
@@ -38,6 +37,10 @@ const onSwipe = (index: number, direction: 'left' | 'right') => {
           />
         </View>
       ))}
+    </View>*/
+
+    <View style={{backgroundColor: '#141414'}}>
+      <FavoritePage/>
     </View>
 
 
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   card: {
     borderRadius : 8,

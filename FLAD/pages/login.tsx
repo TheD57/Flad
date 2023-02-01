@@ -27,7 +27,7 @@ interface Params {
     id: string;
   }
 //generate random string
-  const MY_SECURE_AUTH_STATE_KEY = 'MySecureAuthStateKey';
+  export const MY_SECURE_AUTH_STATE_KEY = 'MySecureAuthStateKey';
 
   WebBrowser.maybeCompleteAuthSession();
 
@@ -41,6 +41,7 @@ const discovery = {
 async function save(key : string, value : string) {
   await SecureStore.setItemAsync(key, value);
 }
+
 
 export default function Login() {  
     // const [advice, setAdvice] = useState("dd");
@@ -87,9 +88,9 @@ export default function Login() {
                 />
         </View>
       );
-    };
+};
     
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     centeredView: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -132,5 +133,5 @@ export default function Login() {
         justifyContent : 'center'
       }
    
-  })
+})
   

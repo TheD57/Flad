@@ -6,12 +6,14 @@ import * as Haptics from 'expo-haptics';
 import Card from '../components/Card';
 
 import { cards as cardArray } from '../FakeData/data'
+import FladButton from '../components/button/button';
 
 interface SpotProps {
+
 }
-const Spot: React.FC<SpotProps> = () => {
-  
+export default function Spot() {
   const [cards, setCards] = useState(cardArray);
+  const [currentCard, setcurrentCard] = useState(cards[cards.length - 1]);
   const onSwipe = (index: number, direction: 'left' | 'right') => {
     if (direction === 'right') {
       // Swiped right
@@ -19,8 +21,9 @@ const Spot: React.FC<SpotProps> = () => {
     } else if (direction === 'left') {
       // Swiped left
     }
-    // update the state of the card or the app
+    // update the state of the cards state when it remove thisy
     setCards(cards.filter((_, i) => i !== index));
+    setcurrentCard(cards[cards.length -1]);
   };
 
   const hapti = (() => {
@@ -31,12 +34,28 @@ const Spot: React.FC<SpotProps> = () => {
 
   return (
 
+
     <View style={styles.spot}>
+      <ImageBackground blurRadius={20}
+                             style={{
+                                 position: 'absolute',
+                                 width: "120%",
+                                 height: "120%",
+                                 justifyContent: "center",
+                                 alignItems: "center",
+                                 opacity: 0.28
+                             }}
+                             source={{
+                                 uri:currentCard.sourceUrl ,
+                             }}
+            ></ImageBackground>
       
       {cards.map((card, index) => (
+        
 
         <View key={card.name} style = {{    position:'absolute'
       }} >
+        
         <Pressable onLongPress={hapti}>
 
           <Card
@@ -45,7 +64,7 @@ const Spot: React.FC<SpotProps> = () => {
             onSwipe={(direction) => onSwipe(index, direction)}
           />
         </Pressable>
-        <Button
+        {/* <Button
           title="Success"
           onPress={
             () =>
@@ -53,7 +72,8 @@ const Spot: React.FC<SpotProps> = () => {
                 Haptics.NotificationFeedbackType.Success
               )
           }
-        />
+        ></Button> */}
+        <FladButton name="discovery"/>
         </View>
       ))}
 
@@ -68,7 +88,6 @@ const Spot: React.FC<SpotProps> = () => {
       
   );
   };
-
   const styles = StyleSheet.create({
     spot : {
       flex: 1,
@@ -77,4 +96,3 @@ const Spot: React.FC<SpotProps> = () => {
     }
   })
   
-  export default Spot;

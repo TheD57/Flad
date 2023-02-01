@@ -75,6 +75,8 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         ( translateX.value,
           [-SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 2],
           [1, 0, 0]);
+         
+
           return {
             opacity : opacityl,
           };
@@ -84,7 +86,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         const opacityl = interpolate
         ( translateX.value,
           [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 4],
-          [0.75, 1, 0.75]);
+          [0.85, 1, 1]);
 
           return {
             opacity : opacityl,
@@ -93,7 +95,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         const opacDStyle = useAnimatedStyle(() => {
           const opacityl = interpolate
           ( translateY.value,
-            [-SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 2],
+            [-SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 4],
             [0, 0, 1]);
             return {
               opacity : opacityl,
@@ -133,7 +135,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
          <PanGestureHandler onGestureEvent={onGestureEvent}>
         
         
-        <Animated.View style={[ rStyle, styles.card,opacCStyle ]}>
+        <Animated.View style={[ rStyle, styles.card,opacCStyle, ]} >
         <Animated.View
                   style={[{
                     // transform: [{ rotate: "30deg" }],
@@ -185,7 +187,8 @@ const styles = StyleSheet.create({
   card : {
     justifyContent : 'center',
     alignItems : 'center',
-    
+    borderColor : 'red',
+                    borderWidth : 3,
   },
   image : {
     borderRadius : 24,

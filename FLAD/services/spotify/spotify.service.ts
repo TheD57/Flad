@@ -1,30 +1,25 @@
-// import { ApiSpotifyIdentification } from "./ApiSpotifyIdentification";
-// import { SpotifyRequest } from "./spotifyRequestHandler/spotifyRequest";
+import axios from "axios";
 
 
-// export class SpotifyService {
+export default class SpotifyService {
+    private readonly API_URL = "http://localhost:8080/api/spotify/exchange";
 
-// private identification : ApiSpotifyIdentification;
-// public request : SpotifyRequest;
+    constructor() {
+        
+    }
+  	// get id(){
+	// 	return this.identification;
+	// }
 
-//   constructor() {
-// 	this.identification= new ApiSpotifyIdentification();
-// 	this.request = new SpotifyRequest();
-//   }
+	// async apiAuth(url : string) {
+	// 	await this.identification.setCode(url);
+    // 	// this.request = ApiSpotifyRequests(await this.identification.createToken());
+	// }   
+	async getSpotifyCredentials() {
+		const res = await axios.get(this.API_URL)
+        // then  verify error
+		const spotifyCredentials = res.data;
+		return spotifyCredentials
+	  }
 
-//   	get id(){
-// 		return this.identification;
-// 	}
-
-// 	async apiAuth(url : string) {
-// 		await this.identification.setCode(url);
-//     	this.request = ApiSpotifyRequests(await this.identification.createToken());
-// 	}
-
-// 	async getSpotifyCredentials() {
-// 		const res = await axios.get('/api/spotify-credentials')
-// 		const spotifyCredentials = res.data
-// 		return spotifyCredentials
-// 	  }
-
-// }
+}

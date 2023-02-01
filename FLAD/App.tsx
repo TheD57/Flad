@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useState, useTransition } from 'react';
 import { Animated, Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import Card from './components/Card';
+import Login from './pages/login';
 import Spot from './pages/spot';
 
 
@@ -29,9 +30,11 @@ export default function App() {
 const {width : wWidht} = Dimensions.get("window");
 
   return (
+    
 
     <View style={styles.container}>
-      
+
+
       <LinearGradient colors={['rgba(2, 2, 2, 0.58) 0%','rgba(0, 0, 0, 0) 90.56%']}style={styles.gradient}>
       <Text
       style={{
@@ -53,9 +56,9 @@ const {width : wWidht} = Dimensions.get("window");
       }}>Laylow</Text>
       </LinearGradient>
       
+      <Login></Login>
+      {/* <Spot/> */}
 
-      <Spot>
-      </Spot>
     </View>
 
 
@@ -83,9 +86,10 @@ const {width : wWidht} = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
     card: {
       borderRadius : 8,

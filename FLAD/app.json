@@ -11,6 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#1d2129"
     },
+    "scheme": "flad",
     "updates": {
       "fallbackToCacheTimeout": 0
     },

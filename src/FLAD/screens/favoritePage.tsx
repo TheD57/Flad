@@ -5,6 +5,11 @@ import CardMusic from '../components/CardMusic';
 
 
 export default function favoritePage() {
+    export const MUSIC_LIST : Music[] = [
+        new Music("La pharmacie", "Jul",require("../assets/Images/jul.png")),
+        new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
+        new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
+      ]
     return (
         <View>
             <View style={styles.titleContainer}>
@@ -12,12 +17,17 @@ export default function favoritePage() {
                 <Text style={styles.description}>Retrouvez ici vos musiques favorites</Text>
             </View>
             <ScrollView>
-                <CardMusic image="../assets/jul.png" title="La pharmacie" description="Jul"/>
-                <CardMusic image="../assets/pnl.png" title="deux frères" description="PNL"/> 
-                <CardMusic image="../assets/jul.png" title="La pharmacie" description="Jul"/>
-                <CardMusic image="../assets/pnl.png" title="deux frères" description="PNL"/> 
-                <CardMusic image="../assets/jul.png" title="La pharmacie" description="Jul"/>
-                <CardMusic image="../assets/pnl.png" title="deux frères" description="PNL"/> 
+                <View>
+                    <FlatList
+                        data={MUSIC_LIST}
+                        renderItem={({ item }) => (
+                            <TouchableHighlight onPress={() => navigation.navigate("")}>
+                                <CardMusic image="{item.image}" title="{item.title}" description="{item.bio}"/>
+                            </TouchableHighlight>
+                        )}
+                        keyExtractor={(item: Music) => item.title }
+                      />
+                </View>
             </ScrollView>
         </View>
     );

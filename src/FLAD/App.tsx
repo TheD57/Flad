@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useTransition } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-import FavoritePage from './pages/favoritePage';
+import FavoritePage from './screens/favoritePage';
 import { cards as cardArray } from './FakeData/data'
 
  
@@ -40,7 +40,10 @@ const onSwipe = (index: number, direction: 'left' | 'right') => {
     </View>*/
 
     <View style={{backgroundColor: '#141414'}}>
-      <FavoritePage/>
+      <SafeAreaProvider>
+        <Navigation>
+        </Navigation>
+      </SafeAreaProvider>
     </View>
 
 

@@ -1,23 +1,25 @@
+import axios from "axios";
 
-export class SpotifyService {
 
-private identification : ApiSpotifyIdentification;
-public request : SpotifyRequest;
+export default class SpotifyService {
+    private readonly API_URL = "http://localhost:8080/api/spotify/exchange";
 
-  constructor() {
+    constructor() {
+        
+    }
+  	// get id(){
+	// 	return this.identification;
+	// }
 
-  }
-
-  	get identification{
-		
-	}
-
-	async uploadName() {
-		
-	}
-	async apiAuth(url : string) {
-		await this.identification.setCode(url);
-    	this.request = ApiSpotifyRequests(await this.identification.createToken());
-	}
+	// async apiAuth(url : string) {
+	// 	await this.identification.setCode(url);
+    // 	// this.request = ApiSpotifyRequests(await this.identification.createToken());
+	// }   
+	async getSpotifyCredentials() {
+		const res = await axios.get(this.API_URL)
+        // then  verify error
+		const spotifyCredentials = res.data;
+		return spotifyCredentials
+	  }
 
 }

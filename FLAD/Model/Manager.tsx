@@ -14,7 +14,7 @@ class Manager{
 
     // spotify methods
       apiAuthorization(url : string) {
-        spotifyService.apiAuthorization(url);
+        this.spotifyService.apiAuthorization(url);
       }
     
       getCompleteMusic = async (id : string) :Promise<Music> =>{
@@ -34,6 +34,8 @@ class Manager{
       playTrack(id : string) {
         this.spotifyService.playTrack(id);
       }
+      
+      
       ////////////////////////////////////////////
 
     // private readonly getTaskById: RequestHandler = async (

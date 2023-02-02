@@ -8,8 +8,6 @@ import AES from 'crypto-js'
 import querystring from 'querystring';
 import qs from 'qs';
 
-import request from 'request';
-
 class SpotifyController implements Controller {
     public path = '/spotify';
     public router = Router();
@@ -83,43 +81,59 @@ class SpotifyController implements Controller {
         
     };
 
-    // private getRefreshToken = async (
-    //     req: Request,
-    //     res: Response,
-    //     next: NextFunction
-    // ): Promise<Response | void> => {
+    private getRefreshToken = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
     
-    //   console.log('UUse2');
+      console.log('UUse2');
 
-    //     try {
-    //         const params = req.body;
-    //         if (!params.refresh_token) {
-    //           return res.json({
-    //             "error": "Parameter missing"
-    //           });
-    //         }
+        try {
+            const params = req.query.refresh_token;
+            if (!req.query.refresh_token) {
+              return res.json({
+                "error": "Parameter refresh_token missing"
+              });
+            }          
+            var authOptions = {
+              method: 'POST',
+              url: 'https://accounts.spotify.com/api/token',
+              data: qs.stringify({
+                grant_type: 'refresh_token',
+                refresh_token: params
+              }),
+              headers: {
+                'Authorization': 'Basic ' + ( Buffer.from(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64')),
+                'Content-Type' : 'application/x-www-form-urlencoded'
+              },
+              json: true
+            };
           
-    //         this.spotifyRequest({
-    //             grant_type: "refresh_token",
-    //             refresh_token: this.decrypt(params.refresh_token)
-    //           })
-    //           .then(session => {
-    //             return res.send({
-    //                 "access_token": session.access_token,
-    //                 "expires_in": session.expires_in
-    //             });
-    //           })
-    //           .catch(response => {
-    //             return res.json(response);
-    //           });
-    //           console.log("errur");
-    //     } catch (error) {
-    //         next(new HttpException(400, 'Cannot create post'));
-    //         console.log("errur");
-
-    //     }  
+            // request.post(authOptions, function(error, response, body) {
+            //   if (!error && response.statusCode === 200) {
+            //     var access_token = body.access_token;
+            //     res.send({
+            //       'access_token': access_token
+            //     });
+            //   }
+            // });
+            axios(authOptions)
+            .then(session => {
+              if(session.status === 200){
         
+                res.send({
+                    "access_token": session.data.access_token,
+                    "expires_in": session.data.expires_in
+                });
+              }});
+              console.log("goood");
+                } catch (error) {
+          console.log("errur");
+            next(new HttpException(400, 'Cannot create post'));
+        }  
         
+      }    
     // };
 
     public getMusic(){
@@ -226,9 +240,11 @@ class SpotifyController implements Controller {
       var access_token = resp.data.access_token;
       console.log(access_token);
       // should redirect res.redirect('/')
-      res.redirect('http://localhost:8080/api/ping');
+      res.json("ok");
     }
     } catch (error) {
+      console.log('heuuuuuuuuuuuuuuuuuuuuubizzzaaarrreeee');
+      console.log(error);
       next(new HttpException(400, 'On peut pas te connecter mec'));
     }
     

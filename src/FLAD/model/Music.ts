@@ -1,10 +1,10 @@
-export class Music {
-  private _name: string;
+export default class Music {
+  private _title: string;
   private _bio: string;
   private _image: ImageSource;
 
-  constructor(title: string, bio: string, image: any) {
-    this._title = name;
+  constructor(title: string, bio: string, image: ImageSource) {
+    this._title = title;
     this._bio = bio;
     this._image = image;
   }
@@ -18,18 +18,18 @@ export class Music {
   }
 
   get bio(): string {
-    return this._latitude;
+    return this._bio;
   }
 
   set bio(value: string) {
-    this._latitude = value;
+    this._bio = value;
   }
 
-  get image(): any {
+  get image(): ImageSource {
     return this._image;
   }
 
-  set image(value: any) {
+  set image(value: ImageSource) {
     this._image = value;
   }
 }

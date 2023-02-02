@@ -2,16 +2,17 @@ import React, {Component} from 'react';
 import { Animated, StyleSheet, Text, View, FlatList , Image} from 'react-native';
 
 type CustomCardMusic = { //Props
-    image: any;
+    image: ImageSource;
     title: string;
     description: string;
 }
 
 export default function CardMusic(CBP: CustomCardMusic) {
+    const source = typeof CBP.image === 'string' ? { uri: CBP.image } : CBP.image;
     return (
       <View style={styles.container}>
           <View style={styles.imageContainer}>
-              <Image source={require('../assets/jul.png')} style={styles.image}/>
+              <Image source={source} style={styles.image}/>
           </View>
           <View style={styles.textContainer}>
               <Text style={styles.title}>{CBP.title}</Text>

@@ -1,29 +1,35 @@
 import React, {Component} from 'react';
-import { NavigationContainer } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Home from '../screens/spot';
+import FavoritePage from '../screens/favoritePage';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-export default function Navigation() {
-    const BottomTabNavigator = createBottomTabNavigator();
+export default function StackNavigation() {
+    const Stack = createBottomTabNavigator();
     return (
-        <NavigationContainer>
-            <BottomTabNavigator.Navigator initialRouteName="Favorite">
-                <BottomTabNavigator.Screen name="Home" component={Home}
-                                           options={{
-                                               title: 'Home',
-                                               tabBarIcon: ({color}) => <TabBarIcon name="hear" color={color}/>,
-                                           }}/>
-                <BottomTabNavigator.Screen name="Favoris" component={Favorite}
-                                           options={{
-                                               title: 'Favoris',
-                                               tabBarIcon: ({color}) => <TabBarIcon name="hear" color={color}/>,
-                                           }}/>
-            </BottomTabNavigator.Navigator>
-        </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home"
+        screenOptions={{
+          
+        }}>
+          <Stack.Screen 
+            name="Home" 
+            component={FavoritePage} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Favoris" 
+            component={FavoritePage} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Settings" 
+            component={FavoritePage} 
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     )
-}
+  }
 
-function TabBarIcon(props: {
-    name: React.ComponentProps<typeof FontAwesome>['name'];
-    color: string;
-}) {
-    return <FontAwesome size={30} {...props} />;
-}

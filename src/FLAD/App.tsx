@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useTransition } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-import FavoritePage from './pages/favoritePage';
-import { cards as cardArray } from './FakeData/data'
+import FavoritePage from './screens/favoritePage';
+import { cards as cardArray } from './data/data'
+import Navigation from './navigation/Navigation';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
- 
 export default function App() {
 //  const [currentCard, setCurrentCard] = useState(cardArray);
 //  const aIndex = useTransition(currentCard)
@@ -24,7 +26,7 @@ const onSwipe = (index: number, direction: 'left' | 'right') => {
 };
 
 // const [currentCard, setCurrentCard] = useState(0);
-
+const Stack = createBottomTabNavigator();
   return (
 
     /*<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',  position : 'absolute', backgroundColor : '' }}>
@@ -39,9 +41,7 @@ const onSwipe = (index: number, direction: 'left' | 'right') => {
       ))}
     </View>*/
 
-    <View style={{backgroundColor: '#141414'}}>
-      <FavoritePage/>
-    </View>
+    <Navigation/>
 
 
 
@@ -65,23 +65,4 @@ const onSwipe = (index: number, direction: 'left' | 'right') => {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  card: {
-    borderRadius : 8,
-    shadowRadius : 20,
-    shadowColor : '#'
-  },
-  image: {
-    width: 320,
-    height: 440,
-    borderRadius: 18,
-    resizeMode : "cover",
-    placeholder: "assets/images/loadingPlaceholder.gif"
-  },
-});
+

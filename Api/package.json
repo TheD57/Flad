@@ -29,6 +29,7 @@
     "mongodb": "^5.0.0",
     "mongoose": "^6.9.0",
     "morgan": "^1.10.0",
+    "request": "^2.88.2",
     "swagger-ui-express": "^4.6.0",
     "winston": "^3.8.2"
   }

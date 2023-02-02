@@ -6,6 +6,9 @@ import axios from 'axios';
 import CryptString from './crypt';
 import AES from 'crypto-js'
 import querystring from 'querystring';
+import qs from 'qs';
+
+import request from 'request';
 
 class SpotifyController implements Controller {
     public path = '/spotify';
@@ -197,26 +200,61 @@ class SpotifyController implements Controller {
     //       next(new HttpException(400, 'Cannot create spot'));
     //   }  
       
-    var code = req.query.code || null;
+    var code  = req.query.code;
     var state = req.query.state || null;
     // var storedState = req.cookies ? req.cookies[stateKey] : null;
     var authOptions = {
+      method: 'POST',
       url: 'https://accounts.spotify.com/api/token',
-      form: {
+      data: qs.stringify({
         code: code,
         redirect_uri: this.CALLBACK_URL,
         grant_type: 'authorization_code'
-      },
+      }),
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64'))
+        'Authorization': 'Basic ' + ( Buffer.from(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64')),
+        'Content-Type' : 'application/x-www-form-urlencoded'
       },
       json: true
     };
+    try {
+      console.log('presssquuueee');
+    var resp = await axios(authOptions);
+    if (resp.status === 200) {
+      console.log(resp);
+      console.log('oon esttt laaa');
+      var access_token = resp.data.access_token;
+      console.log(access_token);
+      // should redirect res.redirect('/')
+      res.redirect('http://localhost:8080/api/ping');
+    }
+    } catch (error) {
+      next(new HttpException(400, 'On peut pas te connecter mec'));
+    }
+    
 
+    // axios({
+    //   method: 'post',
+    //   url: 'https://accounts.spotify.com/api/token',
+    //   data: {
+    //     firstName: 'Fred',
+    //     lastName: 'Flintstone'
+    //   },
+    //   headers: {
+    //     'Authorization': 'Basic ' + ( Buffer.from(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64')),
+    //     'Content-Type' : 'application/x-www-form-urlencoded'
+    //   },
+    // });
+    // request.post(authOptions, function(error, response, body) {
+    //   if (!error && response.statusCode === 200) {
+    //     var access_token = body.access_token;
+    //     console.log(access_token);
+    //     res.redirect(200, '/')
+    //   }
+    //   console.log(error);
+    // });
 
   };
-
-
 
 
     private encrypt(text :any){

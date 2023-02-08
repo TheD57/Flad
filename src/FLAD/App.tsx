@@ -8,9 +8,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Animated, Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import Card from './components/Card';
-import Login from './pages/login';
-import Spot from './pages/spot';
-
 
 
 export default function App() {

@@ -11,8 +11,6 @@ steps:
 # build CONTAINER for app-build on flutter IMAGE
   - name: app-build
     image: node:17.9.0
-    environment:
-      - NODE_ENV=production
     commands:
       - cd ./src/FLAD/ 
       - npm run build

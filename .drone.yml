@@ -13,10 +13,9 @@ steps:
     commands:
       - cd ./src/FLAD/
       - npm install expo-cli	
-      - apk add --no-cache python make g++
       - npm install
-      - npx expo build:android --type apk --no-publish
-      - npx expo build:ios --type archive --no-publish
+      - npx expo build:android 
+      - npx expo build:ios
       
   - name: code-analysis
     image: node:latest

@@ -15,7 +15,8 @@ steps:
       - cd ./src/FLAD/ 
       - npm install expo-cli
       - npm install
-      - npx react-native run-ios
+      - npx expo start
+      - w
 # build CONTAINER for sonar on flutter IMAGE
   - name: code-analysis
     image: node:latest

@@ -8,16 +8,17 @@ trigger:
     - push
 
 steps:
-# build CONTAINER for app-build on flutter IMAGE
   - name: app-build
     image: node:latest
     commands:
-      - cd ./src/FLAD/ 
-      - npm install expo-cli
+      - cd ./src/
+      - npm install -g react-native-cli
       - npm install
-      - npx expo start
-      - w
-# build CONTAINER for sonar on flutter IMAGE
+      - npx react-native init FLAD --template typescript
+      - cd FLAD/ 
+      - npm install
+      - npx react-native run-ios
+      
   - name: code-analysis
     image: node:latest
     environment:

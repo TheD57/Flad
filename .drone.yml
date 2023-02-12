@@ -14,8 +14,7 @@ steps:
       - cd ./src/FLAD/
       - npm install expo-cli	
       - npm install
-      - npx expo build:android 
-      - npx expo build:ios
+      - npx expo build
       
   - name: code-analysis
     image: node:latest

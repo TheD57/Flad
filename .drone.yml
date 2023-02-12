@@ -11,13 +11,12 @@ steps:
   - name: app-build
     image: node:latest
     commands:
-      - cd ./src/
-      - npm install -g react-native-cli
+      - cd ./src/FLAD/
+      - npm install expo-cli	
+      - apk add --no-cache python make g++
       - npm install
-      - npx react-native init FLAD --template typescript
-      - cd FLAD/ 
-      - npm install
-      - npx react-native run-ios
+      - npx expo build:android --type apk --no-publish
+      - npx expo build:ios --type archive --no-publish
       
   - name: code-analysis
     image: node:latest

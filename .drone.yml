@@ -13,7 +13,8 @@ steps:
     image: node:17.9.0
     commands:
       - cd ./src/FLAD/ 
-      - npm run build
+      - npm install expo-cli
+      - npx expo start
 # build CONTAINER for sonar on flutter IMAGE
   - name: code-analysis
     image: node:17.9.0

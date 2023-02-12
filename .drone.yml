@@ -14,7 +14,7 @@ steps:
       - cd ./src/FLAD/
       - npm install expo-cli	
       - npm install
-      - npm start
+      - npm run test
       
   - name: code-analysis
     image: node:latest

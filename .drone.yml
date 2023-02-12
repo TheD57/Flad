@@ -10,14 +10,15 @@ trigger:
 steps:
 # build CONTAINER for app-build on flutter IMAGE
   - name: app-build
-    image: node:17.9.0
+    image: node:latest
     commands:
       - cd ./src/FLAD/ 
       - npm install expo-cli
-      - npx expo start
+      - npm install
+      - npx react-native run-ios
 # build CONTAINER for sonar on flutter IMAGE
   - name: code-analysis
-    image: node:17.9.0
+    image: node:latest
     environment:
       SONAR_TOKEN:
         from_secret: SONAR_TOKEN

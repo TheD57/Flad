@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import { Animated, StyleSheet, Text, View, FlatList, ScrollView, TouchableHighlight } from 'react-native';
-import Card from '../components/Card';
+import { Animated, StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
 import CardMusic from '../components/CardMusic';
-import Music from '../model/Music'
+import Music from '../Model/Music'
 
 export default function favoritePage() {
     const MUSIC_LIST : Music[] = [
@@ -11,7 +10,7 @@ export default function favoritePage() {
         new Music("Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png"),
         new Music("Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg"),
         new Music("Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png"),
-        new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
+        new Music("Blanka", "PNL", require("../assets/images/pnl.png"))
       ]
     return (
         <View style={styles.body}>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         marginLeft: 20,
-        marginVertical: 50,
+        marginVertical: 60,
     },
     title: {
         fontSize: 24,
@@ -56,5 +55,6 @@ const styles = StyleSheet.create({
     },
     scroll: {
         marginBottom: 120,
+        marginTop: -30
     }
 });

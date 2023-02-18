@@ -1,7 +1,6 @@
 import React, {Component, useState } from 'react';
 import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-//import {useNavigation} from "@react-navigation/native";
 
 const DismissKeyboard = ({ children }) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -15,14 +14,13 @@ export default function loginPage() {
     const toggleRememberMe = () => {
         setRememberMe(!rememberMe);
     }
-    //const navigation = useNavigation();
 
     return (
         <DismissKeyboard>
         <View style={styles.container}>
             <ImageBackground source={require("../assets/images/Background.png")} resizeMode="cover" style={styles.image}>
                 <Text style={styles.versionText}>
-                    v1.0
+                    v2.0
                 </Text>
                 <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
                 <Text style={styles.text}>SE CONNECTER</Text>

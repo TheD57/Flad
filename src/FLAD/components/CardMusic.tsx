@@ -27,14 +27,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: 20
+    marginBottom: 15
   },
   imageContainer: {
     width: 80,
     height: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 20
+    marginRight: 20,
+    marginLeft: 20
   },
   image: {
     width: '100%',

@@ -7,7 +7,7 @@ export default function App() {
   return (
     
     <SafeAreaProvider>
-    {/* <Navigation/> */}
+      {/* <Navigation/> */}
       <StartNavigation/>
     </SafeAreaProvider>
 

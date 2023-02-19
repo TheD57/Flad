@@ -10,10 +10,9 @@ export default function Onboarding({ item }) {
         <View style={[styles.container, { width }]}>
             <Image source={item.image} style={[styles.image, { width, resizeMode: 'contain'}]} />
 
-            <View style={{ flex: 0.7 }}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.description}>{item.description}</Text>
-            </View>
+
 
         </View>
     );

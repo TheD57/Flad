@@ -8,7 +8,7 @@ const DismissKeyboard = ({ children }) => (
     </TouchableWithoutFeedback>
 )
 
-export default function loginPage() {
+export default function InscriptionPage() {
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
 
@@ -24,7 +24,7 @@ export default function loginPage() {
                         v2.0
                     </Text>
                     <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
-                    <Text style={styles.text}>SE CONNECTER</Text>
+                    <Text style={styles.text}>S'INSCRIRE</Text>
                     <View style={styles.containerInput}>
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
@@ -33,17 +33,21 @@ export default function loginPage() {
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
-                    <View style={styles.rememberMeContainer}>
-                        <TouchableOpacity style={[styles.checkbox, rememberMe ? styles.checkboxChecked : null]} onPress={toggleRememberMe}></TouchableOpacity>
-                        <Text style={styles.rememberMeText}>SE SOUVENIR DE MOI</Text>
+                    <View style={styles.containerInput}>
+                        <TextInput style={[styles.input, styles.shadow]}/>
+                        <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
+                    <TouchableOpacity style={[styles.buttonSpotify, styles.shadow]}>
+                        <Text style={styles.textIntoButton}>Lier compte</Text>
+                        <Image source={require("../assets/icons/icons/Spotify.png")} style={{width: 30, height: 30}}/>
+                    </TouchableOpacity>
                     <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => console.log("Oui")}>
-                        <Image source={require("../assets/icons/Check.png")} style={styles.buttonImage}/>
+                        <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
                     </TouchableOpacity>
                     <View style={styles.inscriptionText}>
-                        <Text style={{fontSize: 16, color: 'white'}}>Tu n'as pas de compte? </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('Inscription')}>
-                            <Text style={{fontSize: 16, color: '#406DE1', textDecorationLine: 'underline'}}>S'inscrire</Text>
+                        <Text style={{fontSize: 16, color: 'white'}}>Tu as déjà un compte? </Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                            <Text style={{fontSize: 16, color: '#406DE1', textDecorationLine: 'underline'}}>Se connecter</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
@@ -52,15 +56,12 @@ export default function loginPage() {
     )
 }
 
-
-
 const styles = StyleSheet.create ({
     container: {
-        flex: 1,    
+        flex: 1   
     },
     containerInput: {
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        justifyContent: 'center'
     },
     image: {
         flex: 1,
@@ -70,7 +71,8 @@ const styles = StyleSheet.create ({
         width: 280,
         height: 140,
         alignSelf: 'center',
-        marginBottom: 100
+        marginBottom: 50,
+        marginTop: -20
     },
     button: {
         marginTop: 40,
@@ -87,6 +89,48 @@ const styles = StyleSheet.create ({
         width: 40,
         height: 40
     },
+    versionText: {
+        position: 'absolute',
+        top: 40,
+        right: 20,
+        color: 'gray',
+        fontWeight: 'bold',
+        fontSize: 15
+    },
+    text: {
+        fontWeight: 'bold',
+        fontSize: 25,
+        alignSelf: 'center',
+        color: 'white',
+        marginBottom: 15
+    },
+    textIntoButton: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: 'white',
+        marginRight: 10
+    },
+    shadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 2,
+          height: 3,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 3.84,
+    },
+    input: {
+        width: 300,
+        height: 42,
+        borderRadius: 30,
+        color: 'black',
+        backgroundColor: 'white',
+        fontSize: 15,
+        alignSelf: 'center',
+        marginBottom: 20,
+        paddingLeft: 50,
+        paddingRight: 20 
+    },
     iconUser : {
         position: 'absolute',
         width: 20,
@@ -101,68 +145,19 @@ const styles = StyleSheet.create ({
         left: '17%',
         bottom: '50%'
     },
-    input: {
-        width: 300,
-        height: 42,
-        borderRadius: 30,
-        color: 'black',
-        backgroundColor: 'white',
-        fontSize: 15,
-        alignSelf: 'center',
-        marginBottom: 20,
-        paddingLeft: 50,
-        paddingRight: 20 
-    },
-    text: {
-        fontWeight: 'bold',
-        fontSize: 25,
-        alignSelf: 'center',
-        color: 'white',
-        marginBottom: 15
-    },
-    shadow: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 2,
-          height: 3,
-        },
-        shadowOpacity: 0.50,
-        shadowRadius: 3.84,
-    },
-    versionText: {
-        position: 'absolute',
-        top: 40,
-        right: 20,
-        color: 'gray',
-        fontWeight: 'bold',
-        fontSize: 15
-    },
-    rememberMeContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'center',
-        marginBottom: 20,
-        marginTop: 10
-    },
-    checkbox: {
-        width: 20,
-        height: 20,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: 'gray',
-        marginRight: 10
-    },
-    rememberMeText: {
-        fontWeight: 'bold',
-        fontSize: 17,
-        color: 'white'
-    },
-    checkboxChecked: {
-        backgroundColor: 'white'
-    },
     inscriptionText: {
         flexDirection: 'row', 
         alignSelf: 'center', 
         bottom: -80
+    },
+    buttonSpotify: {
+        width: 300,
+        height: 42,
+        backgroundColor: '#24CF5F',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 30,
+        flexDirection: 'row'
     }
 })

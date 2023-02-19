@@ -34,7 +34,7 @@ export default function Onboarding() {
 
     return (
         <View style={styles.container}>
-            <View style={{ flex: 3 }}>
+            <View style={styles.balise}>
                 <FlatList 
                     data={slides} 
                     renderItem={({item}) => <OnboardingItem item={item} />} 
@@ -50,33 +50,33 @@ export default function Onboarding() {
                     onViewableItemsChanged={viewableItemsChanged}  
                     viewabilityConfig={viewConfig}
                     ref={slidesRef}
-                />      
-            </View>
-            <View style={styles.balise}>
+                />   
                 <Paginator data={slides} scrollX={scrollX}/>
                 <NextButton scrollTo={scrollTo} percentage={(currentIndex + 1) * (100 / slides.length)} />    
             </View>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalContent}>
                     <ImageBackground source={require("../assets/images/Background_Start_Page.png")} style={styles.backgroundImage}>
-                        <Text style={styles.versionText}>
-                            v2.0
-                        </Text>
-                        <TouchableOpacity onPress={handleModal}>
-                            <View style={styles.closeButtonCircle}>
-                                <Image source={require("../assets/icons/icons/croix.png")} style={styles.imageButton}/>
-                            </View>
-                        </TouchableOpacity>
-                        <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
-                        <TouchableOpacity style={styles.buttonConnection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
-                            <Text style={styles.text}>CONTINUER AVEC SPOTIFY</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonInscription}>
-                            <Text style={styles.text}>S’INSCRIRE MAINTENANT</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button2Connection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
-                            <Text style={styles.text}>SE CONNECTER</Text>
-                        </TouchableOpacity>
+                        <View style={styles.modalView}>
+                            <Text style={styles.versionText}>
+                                v2.0
+                            </Text>
+                            <TouchableOpacity onPress={handleModal} style={styles.closeButtonCircle}>
+                                <View>
+                                    <Image source={require("../assets/icons/icons/croix.png")} style={styles.imageButton}/>
+                                </View>
+                            </TouchableOpacity>
+                            <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
+                            <TouchableOpacity style={styles.buttonConnection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
+                                <Text style={styles.text}>CONTINUER AVEC SPOTIFY</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonInscription} onPress={() => {handleModal(); navigation.navigate('Inscription');}}>
+                                <Text style={styles.text}>S’INSCRIRE MAINTENANT</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button2Connection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
+                                <Text style={styles.text}>SE CONNECTER</Text>
+                            </TouchableOpacity>
+                        </View>
                     </ImageBackground>
                 </View>
             </Modal>
@@ -94,15 +94,13 @@ const styles = StyleSheet.create({
     imageLogo: {
         width: 280,
         height: 140,
-        position: 'absolute',
-        top: 150,
-        right: 60
+        marginBottom: 100
     },
     balise: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: -130
+        marginBottom: 50
     },
     closeButtonCircle: {
         backgroundColor: 'gray',
@@ -122,6 +120,11 @@ const styles = StyleSheet.create({
         left: '-5%',
         right: '-5%',
         height: '100%',
+    },
+    modalView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     backgroundImage: {
         flex: 1,
@@ -143,28 +146,24 @@ const styles = StyleSheet.create({
     buttonConnection: {
         width: 262,
         height: 57,
-        position: 'absolute',
-        top: 350,
-        right: 70,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#24CF5F',
         borderRadius: 11,
         borderColor: '#68F097',
-        borderWidth: 1
+        borderWidth: 1,
+        marginBottom: 12
     },
     buttonInscription: {
         width: 262,
         height: 57,
-        position: 'absolute',
-        top: 420,
-        right: 70,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#951DDE',
         borderRadius: 11,
         borderColor: '#C656ED',
-        borderWidth: 1
+        borderWidth: 1,
+        marginBottom: 220
     },
     text: {
         fontWeight: 'bold',

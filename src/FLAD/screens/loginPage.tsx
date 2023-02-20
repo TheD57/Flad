@@ -1,7 +1,9 @@
 import React, {Component, useState } from 'react';
 import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
+import normalize from '../components/Normalize';
 
+// @ts-ignore
 const DismissKeyboard = ({ children }) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         {children}
@@ -25,11 +27,11 @@ export default function loginPage() {
                     </Text>
                     <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
                     <Text style={styles.text}>SE CONNECTER</Text>
-                    <View style={styles.containerInput}>
+                    <View>
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
                     </View>
-                    <View style={styles.containerInput}>
+                    <View>
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
@@ -41,9 +43,12 @@ export default function loginPage() {
                         <Image source={require("../assets/icons/Check.png")} style={styles.buttonImage}/>
                     </TouchableOpacity>
                     <View style={styles.inscriptionText}>
-                        <Text style={{fontSize: 16, color: 'white'}}>Tu n'as pas de compte? </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('Inscription')}>
-                            <Text style={{fontSize: 16, color: '#406DE1', textDecorationLine: 'underline'}}>S'inscrire</Text>
+                        <Text style={{fontSize: normalize(18), color: 'white'}}>Tu n'as pas de compte? </Text>
+                        <TouchableOpacity 
+                            // @ts-ignore
+                            onPress={() => navigation.navigate('Inscription')}
+                        >
+                            <Text style={{fontSize: normalize(18), color: '#406DE1', textDecorationLine: 'underline'}}>S'inscrire</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
@@ -58,56 +63,51 @@ const styles = StyleSheet.create ({
     container: {
         flex: 1,    
     },
-    containerInput: {
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
     image: {
         flex: 1,
         justifyContent: 'center',
     },
     imageLogo: {
-        width: 280,
-        height: 140,
+        width: normalize(324),
+        height: normalize(162),
         alignSelf: 'center',
-        marginBottom: 100
+        marginBottom: '25%'
     },
     button: {
-        marginTop: 40,
+        marginTop: '10%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
         backgroundColor: 'white',
-        width: 86,
-        height: 86,
+        width: normalize(100),
+        height: normalize(100),
         borderRadius: 21
     },
     buttonImage: {
-        width: 40,
-        height: 40
+        width: normalize(46),
+        height: normalize(46),
     },
     iconUser : {
         position: 'absolute',
         width: 20,
         height: 20,
-        left: '17%',
+        left: normalize(80),
         bottom: '50%'
     },
     iconLock : {
         position: 'absolute',
         width: 20,
         height: 20,
-        left: '17%',
+        left: normalize(80),
         bottom: '50%'
     },
     input: {
-        width: 300,
-        height: 42,
+        width: normalize(350),
+        height: normalize(50),
         borderRadius: 30,
         color: 'black',
         backgroundColor: 'white',
-        fontSize: 15,
         alignSelf: 'center',
         marginBottom: 20,
         paddingLeft: 50,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create ({
     },
     text: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: normalize(29),
         alignSelf: 'center',
         color: 'white',
         marginBottom: 15
@@ -135,14 +135,14 @@ const styles = StyleSheet.create ({
         right: 20,
         color: 'gray',
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: normalize(17)
     },
     rememberMeContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
-        marginBottom: 20,
-        marginTop: 10
+        marginBottom: '5%',
+        marginTop: normalize(10)
     },
     checkbox: {
         width: 20,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create ({
     },
     rememberMeText: {
         fontWeight: 'bold',
-        fontSize: 17,
+        fontSize: normalize(19),
         color: 'white'
     },
     checkboxChecked: {
@@ -163,6 +163,6 @@ const styles = StyleSheet.create ({
     inscriptionText: {
         flexDirection: 'row', 
         alignSelf: 'center', 
-        bottom: -80
+        bottom: '-20%'
     }
 })

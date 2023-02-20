@@ -34,6 +34,8 @@
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.9",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
     "rive-react-native": "^3.0.41"
   },
   "devDependencies": {

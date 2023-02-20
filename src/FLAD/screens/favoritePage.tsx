@@ -20,9 +20,9 @@ export default function favoritePage() {
                 <Text style={styles.title}>Favoris</Text>
                 <Text style={styles.description}>Retrouvez ici vos musiques favorites</Text>
             </View>
-            <ScrollView style={styles.scroll}>
+            <ScrollView>
                 <View>
-                    <FlatList
+                    <FlatList style={{marginBottom: 80}}
                         data={MUSIC_LIST}
                         renderItem={({ item }) => (
                             //<TouchableHighlight onPress={() => navigation.navigate("")}>
@@ -40,11 +40,12 @@ export default function favoritePage() {
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: "#141414"
+        justifyContent: 'center',
+        backgroundColor: "#141414",
     },
     titleContainer: {
+        marginTop: 20,
         marginLeft: 20,
-        marginVertical: 60,
     },
     title: {
         fontSize: 24,
@@ -55,8 +56,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 18,
         color: '#787878',
-    },
-    scroll: {
-        marginTop: -30
+        marginBottom: 20
     }
 });

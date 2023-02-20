@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, FlatList, Animated, TouchableOpacity, ImageBack
 import Modal from "react-native-modal";
 import {useNavigation} from "@react-navigation/native";
 
+import normalize from '../components/Normalize';
 import OnboardingItem from './OnboardingItem';
 import Paginator from './Paginator';
 import NextButton from './NextButton';
@@ -17,7 +18,7 @@ export default function Onboarding() {
     const [isModalVisible, setIsModalVisible] = React.useState(false);
 
     const handleModal = () => setIsModalVisible(() => !isModalVisible);
-
+    // @ts-ignore
     const viewableItemsChanged = useRef(({ viewableItems }) => {
         setCurrentIndex(viewableItems[0].index);
     }).current;
@@ -26,6 +27,7 @@ export default function Onboarding() {
 
     const scrollTo = () => {
         if(currentIndex < slides.length - 1) {
+            // @ts-ignore
             slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
         } else {
             setIsModalVisible(() => !isModalVisible);
@@ -33,6 +35,7 @@ export default function Onboarding() {
     };
 
     return (
+        // @ts-ignore
         <View style={styles.container}>
             <View style={styles.balise}>
                 <FlatList 
@@ -67,12 +70,18 @@ export default function Onboarding() {
                                 </View>
                             </TouchableOpacity>
                             <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
-                            <TouchableOpacity style={styles.buttonConnection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
+                            <TouchableOpacity 
+                                style={styles.buttonConnection} 
+                                onPress={() => {handleModal(); 
+                                // @ts-ignore
+                                navigation.navigate('Login');         
+                            }}>
                                 <Text style={styles.text}>CONTINUER AVEC SPOTIFY</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.buttonInscription} onPress={() => {handleModal(); navigation.navigate('Inscription');}}>
                                 <Text style={styles.text}>S’INSCRIRE MAINTENANT</Text>
                             </TouchableOpacity>
+                            
                             <TouchableOpacity style={styles.button2Connection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
                                 <Text style={styles.text}>SE CONNECTER</Text>
                             </TouchableOpacity>
@@ -92,9 +101,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#141414'
     },
     imageLogo: {
-        width: 280,
-        height: 140,
-        marginBottom: 100
+        width: normalize(324),
+        height: normalize(162),
+        marginBottom: '25%'
     },
     balise: {
         flex: 1,
@@ -141,7 +150,7 @@ const styles = StyleSheet.create({
         right: 10,
         color: 'gray',
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: normalize(17)
     },
     buttonConnection: {
         width: 262,
@@ -168,7 +177,7 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: 'bold',
         color: 'white',
-        fontSize: 16
+        fontSize: normalize(18)
     },
     button2Connection: {
         width: '100%',

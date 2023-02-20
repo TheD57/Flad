@@ -1,7 +1,9 @@
 import React, {Component, useState } from 'react';
 import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
+import normalize from '../components/Normalize';
 
+// @ts-ignore
 const DismissKeyboard = ({ children }) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         {children}
@@ -25,15 +27,15 @@ export default function InscriptionPage() {
                     </Text>
                     <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
                     <Text style={styles.text}>S'INSCRIRE</Text>
-                    <View style={styles.containerInput}>
+                    <View>
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
                     </View>
-                    <View style={styles.containerInput}>
+                    <View>
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
-                    <View style={styles.containerInput}>
+                    <View>
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
@@ -44,10 +46,13 @@ export default function InscriptionPage() {
                     <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => console.log("Oui")}>
                         <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
                     </TouchableOpacity>
-                    <View style={styles.inscriptionText}>
-                        <Text style={{fontSize: 16, color: 'white'}}>Tu as déjà un compte? </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                            <Text style={{fontSize: 16, color: '#406DE1', textDecorationLine: 'underline'}}>Se connecter</Text>
+                    <View style={styles.connectionText}>
+                        <Text style={{fontSize: normalize(18), color: 'white'}}>Tu as déjà un compte? </Text>
+                        <TouchableOpacity 
+                            // @ts-ignore
+                            onPress={() => navigation.navigate('Login')}
+                        >
+                            <Text style={{fontSize: normalize(18), color: '#406DE1', textDecorationLine: 'underline'}}>Se connecter</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
@@ -60,34 +65,31 @@ const styles = StyleSheet.create ({
     container: {
         flex: 1   
     },
-    containerInput: {
-        justifyContent: 'center'
-    },
     image: {
         flex: 1,
         justifyContent: 'center',
     },
     imageLogo: {
-        width: 280,
-        height: 140,
+        width: normalize(324),
+        height: normalize(162),
         alignSelf: 'center',
         marginBottom: 50,
         marginTop: -20
     },
     button: {
-        marginTop: 40,
+        marginTop: '10%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
         backgroundColor: 'white',
-        width: 86,
-        height: 86,
+        width: normalize(100),
+        height: normalize(100),
         borderRadius: 21
     },
     buttonImage: {
-        width: 40,
-        height: 40
+        width: normalize(46),
+        height: normalize(46),
     },
     versionText: {
         position: 'absolute',
@@ -95,11 +97,11 @@ const styles = StyleSheet.create ({
         right: 20,
         color: 'gray',
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: normalize(17)
     },
     text: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: normalize(29),
         alignSelf: 'center',
         color: 'white',
         marginBottom: 15
@@ -120,12 +122,11 @@ const styles = StyleSheet.create ({
         shadowRadius: 3.84,
     },
     input: {
-        width: 300,
-        height: 42,
+        width: normalize(350),
+        height: normalize(50),
         borderRadius: 30,
         color: 'black',
         backgroundColor: 'white',
-        fontSize: 15,
         alignSelf: 'center',
         marginBottom: 20,
         paddingLeft: 50,
@@ -135,24 +136,24 @@ const styles = StyleSheet.create ({
         position: 'absolute',
         width: 20,
         height: 20,
-        left: '17%',
+        left: normalize(80),
         bottom: '50%'
     },
     iconLock : {
         position: 'absolute',
         width: 20,
         height: 20,
-        left: '17%',
+        left: normalize(80),
         bottom: '50%'
     },
-    inscriptionText: {
+    connectionText: {
         flexDirection: 'row', 
         alignSelf: 'center', 
-        bottom: -80
+        bottom: '-20%'
     },
     buttonSpotify: {
-        width: 300,
-        height: 42,
+        width: normalize(350),
+        height: normalize(50),
         backgroundColor: '#24CF5F',
         justifyContent: 'center',
         alignItems: 'center',

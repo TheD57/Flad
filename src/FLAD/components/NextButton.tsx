@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity , Animated } from 'react-native';
 import Svg, { G, Circle } from 'react-native-svg';
 import { AntDesign } from '@expo/vector-icons';
 
+// @ts-ignore
 export default function NextButton({ percentage, scrollTo }) {
     const size = 128;
     const strokeWidth = 2;
@@ -12,7 +13,7 @@ export default function NextButton({ percentage, scrollTo }) {
 
     const progressAnimation = useRef(new Animated.Value(0)).current;
     const progressRef = useRef(null);
-
+    // @ts-ignore
     const animation = (toValue) => {
         return Animated.timing(progressAnimation, {
             toValue,
@@ -31,12 +32,14 @@ export default function NextButton({ percentage, scrollTo }) {
                 const strokeDashoffset = circumFerence - (circumFerence * value.value) / 100;
 
                 if (progressRef?.current) {
+                    // @ts-ignore
                     progressRef.current.setNativeProps({
                         strokeDashoffset,
                     });
                 }
 
             }, 
+            // @ts-ignore
             [percentage]
 
         );
@@ -54,7 +57,7 @@ export default function NextButton({ percentage, scrollTo }) {
                     <Circle stroke="#E6E7E8" fill="#141414" cx={center} cy={center} r={radius} strokeWidth={strokeWidth}/>
                     <Circle
                         ref={progressRef}
-                        stroke="#3F2F78"
+                        stroke="#b50909"
                         fill="#141414"
                         cx={center}
                         cy={center}
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     },
     button: {
         position: 'absolute',
-        backgroundColor: '#3F2F78',
+        backgroundColor: '#b50909',
         borderRadius: 100,
         padding: 20
     }

@@ -1,19 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, useWindowDimensions } from 'react-native';
+import normalize from '../components/Normalize';
 
 import slides from '../data/slides';
 
+// @ts-ignore
 export default function Onboarding({ item }) {
     const { width } = useWindowDimensions();
 
     return (
         <View style={[styles.container, { width }]}>
             <Image source={item.image} style={[styles.image, { width, resizeMode: 'contain'}]} />
-
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
-
-
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.description}>{item.description}</Text>
         </View>
     );
 }
@@ -21,7 +20,6 @@ export default function Onboarding({ item }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
         marginTop: -60
     },
     image: {
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: '800',
-        fontSize: 28,
+        fontSize: normalize(32),
         marginBottom: 10,
         color: 'white',
         textAlign: 'left',
@@ -40,6 +38,7 @@ const styles = StyleSheet.create({
     description: {
         fontWeight: '300',
         color: 'white',
+        fontSize: normalize(16),
         textAlign: 'left',
         paddingRight: 30,
         paddingLeft: 20

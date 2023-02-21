@@ -4,7 +4,7 @@ import Animated,{ Extrapolate, interpolate, useAnimatedGestureHandler, useAnimat
 
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
-import Icons from '../../assets/icons/icon';
+import Icons from '../../assets/icons/icons/icon';
 import Rive, { Fit, RiveRef } from 'rive-react-native';
 
 const {width : wWidht} = Dimensions.get("window");

@@ -1,45 +1,48 @@
 // import db from '../database';
 import { Place, PlacePosition, Position, UserLocation } from '../model/locationModel';
 import axios from 'axios';
+import LocationSchema from "../database/schema/LocationSchema";
 
 class LocationService {
-    private API_KEY : string = "AIzaSyBFCEAtmhZ8jvw84UTQvX3Aqpr66GVqB_A";
-    public async getNearUser(uuid : string, latitude : number, longitude : number)
+    private locationCollection = LocationSchema;
+    // private API_KEY : string = "AIzaSyBFCEAtmhZ8jvw84UTQvX3Aqpr66GVqB_A";
+    public async getNearUser(idFlad : string, latitude : number, longitude : number)
     {
-        const UserCollectionref = db.collection('UserPosition');
-        db.collection('UserPosition').doc(uuid).set({uuid : uuid, latitude : latitude, longitude : longitude});
-        // const newPosition = {
-        //     name: 'Los Angeles',
-        //     state: 'CA',
-        //     country: 'USA'
-        //   };     
-        const snapshot = await UserCollectionref.where("uuid", "!=", uuid).get();
-        if (snapshot.empty) {
-          console.log('No matching documents.');
-          return;
-        }  
+        await this.locationCollection.findOneAndUpdate(
+            { idFlad },
+            { idFlad, latitude, longitude },
+            { upsert: true }
+        );
+
+        const snapshot = await this.locationCollection.find({ idFlad: { $ne: idFlad } });
+        if (snapshot.length === 0) {
+        console.log('No matching documents.');
+        return;
+        }
 
         let dbUsersList:UserLocation[] = [];
         snapshot.forEach(doc => {
-            dbUsersList.push(new UserLocation(doc.data().uuid,doc.data().latitude,doc.data().longitude));
-          console.log(doc.id, '=>', doc.data());
+            dbUsersList.push(new UserLocation(doc.idFlad,doc.latitude,doc.longitude));
+          console.log(doc.idFlad, '=>', doc);
         });
-            
-            let listUser: string[] = [];                                                             //Set the listUser to an empty list
+            // missing the curent music
+            let listUser: string[] = [];                                                             
             dbUsersList.forEach(user => {
                 console.log(user);
-                const dist = this.distanceBetween(latitude , longitude , user.latitude, user.longitude);      //With the function meters, determinate the distance between the current user and the user who is in the actual row
+                const dist = this.distanceBetween(latitude , longitude , user.latitude, user.longitude);    
                 console.log(user.uuid,dist);
-                if (dist <= 5) {                                                     //If the user in the actual row is less than 100 meters away of the current user
+                if (dist <= 100) {                                                  
     
-                    listUser.push(user.uuid);             //Add the username and the ID of the song that user who is in the actual row is listening
+                    listUser.push(user.uuid);             
     
                 }
-            });                                      
+            }); 
+            
+            
     
                 
-            return listUser;                                                           //Return an array
-            // $listUser[] = ['user' => $userID, 'music' => $idMusic];             //Add the username and the ID of the song that user who is in the actual row is listening
+            return listUser;                                                          
+            // $listUser[] = {userID,idMusic};             
        
     }
 

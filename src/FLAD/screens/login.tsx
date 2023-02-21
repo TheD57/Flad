@@ -6,7 +6,7 @@ import * as AuthSession from 'expo-auth-session';
 
 import Card from '../components/Card';
 import axios from 'axios';
-import { cards as cardArray } from '../FakeData/data'
+import { cards as cardArray } from '../data/data'
 import FladButton from '../components/button/button';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';

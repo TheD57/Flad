@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Animated, StyleSheet, Text, View, FlatList, ScrollView, TouchableHighlight } from 'react-native';
 import Card from '../components/Card';
 import CardMusic from '../components/CardMusic';
-import Music from '../model/Music'
+import Music from '../Model/Music'
 
 export default function favoritePage() {
     const MUSIC_LIST : Music[] = [

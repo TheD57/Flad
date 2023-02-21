@@ -1,4 +1,4 @@
-class Music {
+export default class Music {
     private id : string; 
     private name : string;
     private artist : string;
@@ -10,4 +10,5 @@ class Music {
         this.artist = artist;
         this.linkCover = linkCover;
     }
+   
 }

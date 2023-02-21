@@ -23,6 +23,8 @@ class SpotifyController implements Controller {
         this.router.get(`${this.path}/callback`,this.getAccessToken);
         // this.router.post(`${this.path}/refresh`,this.getRefreshToken);
         this.router.get(`${this.path}/play/:musicId`, this.getMusic);
+        this.router.get(`${this.path}/spot`, this.getSpot);
+        
     }
 
       // need to put in ENvironement file
@@ -134,85 +136,49 @@ class SpotifyController implements Controller {
         }  
         
       }    
-    // };
-
+    
     public getMusic(){
 
       return null;
     }
 
-    // private spotifyRequest = (params : AuthReqBody) => {
-    //     return new Promise<any>(() => {
-    //       console.log("============ on est laaaa sa mer");
-    //       var code = req.query.code || null;
-    //       var state = req.query.state || null;
+    public getSpot = async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+  ): Promise<Response | void> => {
+    const spots = [
+      {
+        name: "blue",
+        sourceUrl: "https://cdns-images.dzcdn.net/images/artist/399e7e760d8fedf3cc2891e9c0c41658/200x200-000000-80-0-0.jpg",
+        index: 3
+      },
+      {
+        name: "strange history",
+        sourceUrl: "https://images.genius.com/339dfe2a7c0adf9a5d08febf29a845f4.1000x1000x1.jpg",
+        index: 7
+      },
+      {
+        name: "oboy album",
+        sourceUrl: "https://i.pinimg.com/originals/ad/cc/d5/adccd58a0d0ff516a6114703cd05810e.jpg",
+        index: 1
+      }
+    ];
+    try {
+      res.send(spots);
+    
+    } catch (error) {
+      console.log('heuuuuuuuuuuuuuuuuuuuuubizzzaaarrreeee');
+      console.log(error);
+      next(new HttpException(400, 'On peut pas avoir darray mec'));
+    }    }
 
-    //         axios.post(this.API_URL, {
-    //           form: params,
-    //           headers: {
-    //             "Authorization": "Basic " + new Buffer(this.CLIENT_ID + ":" + this.CLIENT_SECRET).toString('base64')
-    //           },
-    //           json: true
-    //         });
-    //       }).then(resp => {
-    //         if (resp.statusCode != 200) {
-    //           return Promise.reject({
-    //             statusCode: resp.statusCode,
-    //             body: resp.body
-    //           });
-    //         }
-    //         return Promise.resolve(resp.body);
-    //       })
-    //       .catch(err => {
-    //         return Promise.reject({
-    //           statusCode: 500,
-    //           body: err.stringify({})
-    //         });
-    //       });
-    // };
 
     private getAccessToken = async (
       req: Request,
       res: Response,
       next: NextFunction
   ): Promise<Response | void> => {
-
-    // console.log("heheh");
-    //   try {
-    //     var code = req.query.code;
-    //     var state = req.query.state;
-    //     console.log("================================================================================================================================");
-    //     console.log(req);
-    //     console.log("================================================================================================================================");
-
-    //     if (state === null) {
-    //       next(new HttpException(400, 'Cannot create twerk'));
-    //     } else {
-    //      const resp : any = await axios.post('https://accounts.spotify.com/api/token',{
-    //         form: {
-    //           code: code,
-    //           redirect_uri: this.CALLBACK_URL,
-    //           // code_verifier : this.ENCRYPTION_SECRET.stringCrypt,
-    //           grant_type: 'authorization_code'
-    //         },
-    //         headers: {
-    //           'Authorization': 'Basic ' + (new Buffer(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64')),
-    //         },json: true}
-    //         );
-    //       if (resp.statusCode != 200) {
-    //         console.log(resp.statusCode, resp.body);    
-    //           }
-    //       else{
-    //         console.log("error");
-    //         console.log(resp.statusCode, resp.body);    
-    //       }
-            
-    //     }
-    //       // });
-    //   } catch (error) {
-    //     console.log(error);
-    //       next(new HttpException(400, 'Cannot create spot'));
-    //   }  
       
     var code  = req.query.code;
     var state = req.query.state || null;
@@ -249,39 +215,9 @@ class SpotifyController implements Controller {
     }
     
 
-    // axios({
-    //   method: 'post',
-    //   url: 'https://accounts.spotify.com/api/token',
-    //   data: {
-    //     firstName: 'Fred',
-    //     lastName: 'Flintstone'
-    //   },
-    //   headers: {
-    //     'Authorization': 'Basic ' + ( Buffer.from(this.CLIENT_ID + ':' + this.CLIENT_SECRET).toString('base64')),
-    //     'Content-Type' : 'application/x-www-form-urlencoded'
-    //   },
-    // });
-    // request.post(authOptions, function(error, response, body) {
-    //   if (!error && response.statusCode === 200) {
-    //     var access_token = body.access_token;
-    //     console.log(access_token);
-    //     res.redirect(200, '/')
-    //   }
-    //   console.log(error);
-    // });
 
   };
 
-
-    private encrypt(text :any){
-        return CryptoJS.AES.encrypt(text, this.ENCRYPTION_SECRET.stringCrypt).toString();
-    };
-
-    private decrypt(text: any) {
-        console.log("errer");
-        var bytes = CryptoJS.AES.decrypt(text, this.ENCRYPTION_SECRET.stringCrypt);
-        return bytes.toString(CryptoJS.enc.Utf8);
-    };
     
 }
 export default SpotifyController;

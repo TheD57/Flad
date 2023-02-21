@@ -6,6 +6,7 @@ import cors from 'cors';
 import Controller from './controller/Icontroller';
 // import ErrorMiddleware from './middleware/error.middleware';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
 // to secure
 // import helmet from 'helmet';
@@ -24,7 +25,7 @@ class App {
         this.port = port;
         this.dataBase = null;
         
-        // this.initialiseDatabase();
+        this.initialiseDatabase();
         this.initialiseMiddleware();
         this.initialiseControllers(controllers);
         
@@ -61,7 +62,14 @@ class App {
             console.log(`⚡️[server] : App listening on the port ${this.port}`);
         });
     }
-
+    
+    private initialiseDatabase(): void {
+        const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
+        const uri = "mongodb+srv://fladDevDb:ZslYlNRWIOUU7i6o@fladcluster.b29tytu.mongodb.net/?retryWrites=true&w=majority"
+        mongoose.connect(uri)
+        .then(() => console.log("Connect to MongoDB database successfully"))
+        .catch(err => console.log("Error connecting : "+ err ));
+    }
     
 }
 

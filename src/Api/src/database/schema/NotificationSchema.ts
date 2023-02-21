@@ -1,6 +1,8 @@
-const notificationSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+
+const notificationSchema = new Schema({
     type: {type: String, required: true},
     content: {type: String, required: true}
 });
 
-export default {Annonce: mongoose.model("nofitication", notificationSchema)}
+export default {Notification: model("nofitication", notificationSchema)}

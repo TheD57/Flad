@@ -14,23 +14,17 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 interface CardProps {
     title: string;
     image: any;
-    onSwipe: (direction: "left" | "right") => void;
   }
   type ContextType = {
     translateX: number;
     translateY: number;
   };
   
-const Card = ({ title, image, onSwipe} : CardProps) => {
+const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
     
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
-  
-    const hapti = (() => {
-  
-      // Haptics.NotificationFeedbackType.Success
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-        });
+
     const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     ContextType
@@ -47,10 +41,9 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         // translateX.value = withSpring(0);
         // translateY.value = withSpring(snapPoint(translateY.value,velocityY, snapPoints ))
         if (translateX.value > 160) {
-          hapti()
-          onSwipe("right");
+          // onSwipe("right");
         } else if (translateX.value < -160) {
-          onSwipe("left");
+          // onSwipe("left");
         } else {
           translateX.value = withSpring(0);
           translateY.value = withSpring(0);
@@ -75,8 +68,6 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         ( translateX.value,
           [-SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 2],
           [1, 0, 0]);
-         
-
           return {
             opacity : opacityl,
           };
@@ -86,7 +77,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         const opacityl = interpolate
         ( translateX.value,
           [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 4],
-          [0.85, 1, 1]);
+          [0.75, 1, 0.75]);
 
           return {
             opacity : opacityl,
@@ -95,7 +86,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
         const opacDStyle = useAnimatedStyle(() => {
           const opacityl = interpolate
           ( translateY.value,
-            [-SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 4],
+            [-SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 2],
             [0, 0, 1]);
             return {
               opacity : opacityl,
@@ -133,9 +124,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
     return (
       <View>
          <PanGestureHandler onGestureEvent={onGestureEvent}>
-        
-        
-        <Animated.View style={[ rStyle, styles.card,opacCStyle, ]} >
+        <Animated.View style={[ rStyle, styles.card,opacCStyle ]}>
         <Animated.View
                   style={[{
                     // transform: [{ rotate: "30deg" }],
@@ -144,7 +133,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
                   },opacRStyle]}
                 >
                   <Image style={[{alignSelf : "center"}]}
-                  source={require('../assets/icons/icon_dislike.png')}  
+                  source={require('../assets/icons/icons/icon_dislike.png')}  
                   />
             </Animated.View>
             <Animated.View
@@ -156,7 +145,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
                   },opacLStyle]}
                 >
                   <Image style={[{alignSelf : "center"}]}
-                  source={require('../assets/icons/icon_like.png')}
+                  source={require('../assets/icons/icons/icon_like.png')}
                     
                   />
             </Animated.View>
@@ -171,7 +160,7 @@ const Card = ({ title, image, onSwipe} : CardProps) => {
                 >
                   <Image style={[{alignSelf : "center",width: 126.27,
                     height: 118.64, }]}
-                  source={require('../assets/icons/icon_discovery.png')}
+                  source={require('../assets/icons/icons/icon_discovery.png')}
                     
                   />
             </Animated.View>
@@ -187,8 +176,7 @@ const styles = StyleSheet.create({
   card : {
     justifyContent : 'center',
     alignItems : 'center',
-    borderColor : 'red',
-                    borderWidth : 3,
+    
   },
   image : {
     borderRadius : 24,
@@ -201,7 +189,4 @@ const styles = StyleSheet.create({
 
 
   export default Card;
-
-
-
 

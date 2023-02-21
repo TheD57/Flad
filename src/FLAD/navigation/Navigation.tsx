@@ -4,6 +4,7 @@ import Home from '../screens/spot';
 import FavoritePage from '../screens/favoritePage';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import Spot from '../screens/spot';
 
 export default function StackNavigation() {
     const Stack = createBottomTabNavigator();
@@ -12,10 +13,10 @@ export default function StackNavigation() {
         <Stack.Navigator initialRouteName="Home"
         screenOptions={{
           
-        }}>
+        }} >
           <Stack.Screen 
             name="Home" 
-            component={FavoritePage} 
+            component={Home} 
             options={{ headerShown: false }}
           />
           <Stack.Screen 

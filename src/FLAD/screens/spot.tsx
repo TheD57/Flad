@@ -5,7 +5,7 @@ import * as Haptics from 'expo-haptics';
 
 import Card from '../components/Card';
 
-import { cards as cardArray } from '../FakeData/data'
+import { cards as cardArray } from '../data/data'
 import FladButton from '../components/button/button';
 import axios from 'axios';
 
@@ -89,69 +89,65 @@ export default function Spot() {
   const onSwipe = (index: number, direction: 'left' | 'right') => {
     if (direction === 'right') {
       // Swiped right
-      console.log("===================")
     } else if (direction === 'left') {
       // Swiped left
     }
     // update the state of the cards state when it remove thisy
     setCards(cards.filter((_, i) => i !== index));
-    setcurrentCard(cards[cards.length -1]);
   };
 
-  const hapti  = (() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-    getValueFor(MY_SECURE_AUTH_STATE_KEY)
-    .then(key => { (key != null) ? getUserData(key) :console.log("error key is nullll") } ) ;
-      // Haptics.NotificationFeedbackType.Success
-  });
+  // const hapti  = (() => {
+  //   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+  //   getValueFor(MY_SECURE_AUTH_STATE_KEY)
+  //   .then(key => { (key != null) ? getUserData(key) :console.log("error key is nullll") } ) ;
+  //     // Haptics.NotificationFeedbackType.Success
+  // });
 
 ////////////////////////////////////////////////////////////////
-    const [locationData, setLocationData] = useState<LocationData>();
-    const [prevLocationData, setPrevLocationData] = useState<LocationData>();
-    const [nearbyUsers, setNearbyUsers] = useState<NearbyUser[]>([]);
-    const [currentMusic, setCurrentMusic] = useState<string>("");
+  //   const [locationData, setLocationData] = useState<LocationData>();
+  //   const [prevLocationData, setPrevLocationData] = useState<LocationData>();
+  //   const [nearbyUsers, setNearbyUsers] = useState<NearbyUser[]>([]);
+  //   const [currentMusic, setCurrentMusic] = useState<string>("");
 
-    async function getLocation() {
-      var { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          console.log('Permission to access location was denied');
-          return;
-        }
+  //   async function getLocation() {
+  //     var { status } = await Location.requestForegroundPermissionsAsync();
+  //       if (status !== 'granted') {
+  //         console.log('Permission to access location was denied');
+  //         return;
+  //       }
 
-      let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocationData({
-        latitude: currentLocation.coords.latitude,
-        longitude: currentLocation.coords.longitude,
-        timestamp: currentLocation.timestamp
-      });
-    }; 
-    async function sendLocationToServer() {
-      getLocation();
-        if (!locationData) return;
-        if (prevLocationData && locationData.latitude === prevLocationData.latitude && locationData.longitude === prevLocationData.longitude) {
-          return;
-        }
-        try {
-          const response = await axios.post(
-            'http://localhost/api/users/david/nextToMe',
-            locationData
-          );
+  //     let currentLocation = await Location.getCurrentPositionAsync({});
+  //     setLocationData({
+  //       latitude: currentLocation.coords.latitude,
+  //       longitude: currentLocation.coords.longitude,
+  //       timestamp: currentLocation.timestamp
+  //     });
+  //   }; 
+  //   async function sendLocationToServer() {
+  //     getLocation();
+  //       if (!locationData) return;
+  //       if (prevLocationData && locationData.latitude === prevLocationData.latitude && locationData.longitude === prevLocationData.longitude) {
+  //         return;
+  //       }
+  //       try {
+  //         const response = await axios.post(
+  //           'http://localhost/api/users/david/nextToMe',
+  //           locationData
+  //         );
 
-          if (response.status !== 200) {
-            throw new Error('Failed to send location to server');
-          }
+  //         if (response.status !== 200) {
+  //           throw new Error('Failed to send location to server');
+  //         }
 
-          setPrevLocationData(locationData);
-          setNearbyUsers(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-    };
+  //         setPrevLocationData(locationData);
+  //         setNearbyUsers(response.data);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //   };
   
-  setInterval(sendLocationToServer, 30000)
+  // setInterval(sendLocationToServer, 30000)
   return (
-
-
     <View style={styles.spot}>
       <ImageBackground blurRadius={20}
                              style={{
@@ -173,12 +169,11 @@ export default function Spot() {
         <View key={card.name} style = {{    position:'absolute'
       }} >
         
-        <Pressable onLongPress={hapti}>
+        <Pressable >
 
           <Card
             title={card.name}
             image={card.sourceUrl}
-            onSwipe={(direction) => onSwipe(index, direction)}
           />
         </Pressable>
         {/* <Button
@@ -210,6 +205,7 @@ export default function Spot() {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor : '#000'
     }
   })
   

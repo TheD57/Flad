@@ -1,6 +1,6 @@
 class User {
     //attributes from DAFL
-    private idDafl : any;;
+    private idFlad : any;;
     private idSpotify : any;
     //constructors
     constructor(){

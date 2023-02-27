@@ -39,13 +39,14 @@ class UserService {
         email: string,
         password: string
     ): Promise<string | Error> {
-        try {
             // should maybe creat a method base on id and other information for better security
             // need to view with Emre
             const user = await this.user.findOne({ email });
+            console.log(user?._id);
             // const user = await this.user.findById(idFlad);
 
-            if (!user) {
+            if (user === undefined || user === null) {
+                console.log("Could")
                 throw new Error('Unable to find user with that email address');
             }
 
@@ -54,9 +55,7 @@ class UserService {
             } else {
                 throw new Error('Wrong credentials given');
             }
-        } catch (error) {
-            throw new Error('Unable to create user');
-        }
+       
     }
 }
 

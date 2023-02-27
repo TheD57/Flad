@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import { Animated, StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
+import { Animated, Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import CardMusic from '../components/CardMusic';
+import normalize from '../components/Normalize';
 import Music from '../Model/Music'
+import {useNavigation} from "@react-navigation/native";
 
 export default function favoritePage() {
+    const navigation = useNavigation();
+
     const MUSIC_LIST : Music[] = [
         new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
         new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
@@ -32,6 +36,11 @@ export default function favoritePage() {
                         keyExtractor={(item: Music) => item.title }
                       />
                 </View>
+                <TouchableOpacity style={[styles.button, styles.shadow]} 
+                    // @ts-ignore
+                    onPress={() => navigation.navigate('Genre')}>
+                        <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
+                    </TouchableOpacity>
             </ScrollView>
         </View>
     );
@@ -57,5 +66,29 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#787878',
         marginBottom: 20
+    },
+    button: {
+        marginTop: '10%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        backgroundColor: 'white',
+        width: normalize(100),
+        height: normalize(100),
+        borderRadius: 21
+    },
+    buttonImage: {
+        width: normalize(46),
+        height: normalize(46),
+    },
+    shadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 2,
+          height: 3,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 3.84,
     }
 });

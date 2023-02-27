@@ -1,14 +1,33 @@
-import React, {Component, useState } from 'react';
-import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import React, {Component, useEffect, useState } from 'react';
+import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import normalize from '../components/Normalize';
-
+import * as SecureStore from 'expo-secure-store';
+import * as AuthSession from 'expo-auth-session';
+import axios from 'axios';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         {children}
     </TouchableWithoutFeedback>
 )
+
+export const MY_SECURE_AUTH_STATE_KEY = 'MySecureAuthStateKey';
+
+WebBrowser.maybeCompleteAuthSession();
+
+// Endpoint
+const discovery = {
+authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+tokenEndpoint: 'https://accounts.spotify.com/api/token',
+};
+// save the spotifyToken
+async function save(key : string, value : string) {
+await SecureStore.setItemAsync(key, value);
+}
+
 
 export default function InscriptionPage() {
     const [rememberMe, setRememberMe] = useState(false);
@@ -17,6 +36,29 @@ export default function InscriptionPage() {
     const toggleRememberMe = () => {
         setRememberMe(!rememberMe);
     }
+//spotify auth
+    const [request, response, promptAsync] = useAuthRequest(
+        {
+          responseType: AuthSession.ResponseType.Token,
+          clientId: '1f1e34e4b6ba48b388469dba80202b10',
+          scopes: ['user-read-private','user-read-email','user-read-playback-state','user-read-currently-playing','user-read-recently-played','playlist-modify-public','ugc-image-upload','user-modify-playback-state'],
+          redirectUri: makeRedirectUri({
+            scheme: 'flad'
+          }),
+        },
+        discovery
+      );
+    useEffect(() => {
+        if (response && response.type === 'success') {
+          const auth = response.params.access_token;
+          const storageValue = JSON.stringify(auth);
+    
+          if (Platform.OS !== 'web') {
+            // Securely store the auth on your device
+            save(MY_SECURE_AUTH_STATE_KEY, storageValue);
+          }
+        }
+      }, [response]);
 
     return (
         <DismissKeyboard>
@@ -39,7 +81,9 @@ export default function InscriptionPage() {
                         <TextInput style={[styles.input, styles.shadow]}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
-                    <TouchableOpacity style={[styles.buttonSpotify, styles.shadow]}>
+                    <TouchableOpacity onPress={() => {
+                    promptAsync();
+                  }} style={[styles.buttonSpotify, styles.shadow]}>
                         <Text style={styles.textIntoButton}>Lier compte</Text>
                         <Image source={require("../assets/icons/icons/Spotify.png")} style={{width: 30, height: 30}}/>
                     </TouchableOpacity>

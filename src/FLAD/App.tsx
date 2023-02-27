@@ -6,12 +6,12 @@ import StartNavigation from './navigation/StartNavigation';
 export default function App() {
 
   return (
-    <SafeAreaProvider>
-        <StartNavigation/>
-    </SafeAreaProvider>
-    // <SafeAreaView style={styles.mainSafeArea}>
-    //   {/* <Navigation/> */}
-    // </SafeAreaView>
+    // <SafeAreaProvider>
+    //     <StartNavigation/>
+    // </SafeAreaProvider>
+    <SafeAreaView style={styles.mainSafeArea}>
+      <Navigation/>
+    </SafeAreaView>
 
   );
 }

@@ -1,7 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import FavoriteNavigation from './FavoriteNavigation';
+import SettingNavigation from './SettingNavigation';
+import Spot from '../screens/spot';
+
 // @ts-ignore
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -23,16 +26,16 @@ export default function Navigation() {
             initialRouteName="Spots" 
             screenOptions={{
               //tabBarShowLabel: false, //to remove the titles under the icons
-              tabBarStyle: {height: 60, position: 'absolute', bottom: 20, borderRadius: 90, marginHorizontal: 25},
+              tabBarStyle: {height: 60, position: 'absolute', bottom: 20, borderRadius: 30, marginHorizontal: 25},
               tabBarLabelStyle: { bottom: 5 }
 
             }}>
-              <BottomTabNavigator.Screen name="Spots" component={FavoriteNavigation}
+              <BottomTabNavigator.Screen name="Spots" component={Spot}
                         options={{ 
                             headerShown: false,
                             tabBarIcon: ({color}) => <TabBarIcon name="music" color={color}/>,
                          }}/>
-              <BottomTabNavigator.Screen name="Favories" component={FavoriteNavigation}
+              <BottomTabNavigator.Screen name="Favorites" component={FavoriteNavigation}
                         options={{ 
                             headerShown: false,
                             tabBarIcon: ({color}) => <TabBarIcon name="heart" color={color}/>,
@@ -42,7 +45,7 @@ export default function Navigation() {
                             headerShown: false,
                             tabBarIcon: ({color}) => <TabBarIcon name="comment" color={color}/>,
                          }}/>
-              <BottomTabNavigator.Screen name="Paramètres" component={FavoriteNavigation}
+              <BottomTabNavigator.Screen name="Setting" component={SettingNavigation}
                         options={{ 
                             headerShown: false,
                             tabBarIcon: ({color}) => <TabBarIcon name="cog" color={color}/>,

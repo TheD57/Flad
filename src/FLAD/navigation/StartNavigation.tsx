@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import LoginPage from '../screens/loginPage';
-import InscriptionPage from '../screens/InscriptionPage';
+import React from 'react';
+import Login from '../screens/LoginPage';
+import Register from '../screens/Register';
 import Onboarding from '../components/Onboarding';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,12 +17,12 @@ export default function StartNavigation() {
           />
           <Stack.Screen 
             name="Login" 
-            component={LoginPage} 
+            component={Login} 
             options={{ headerShown: false }}
           />
           <Stack.Screen 
-            name="Inscription" 
-            component={InscriptionPage} 
+            name="Register" 
+            component={Register} 
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

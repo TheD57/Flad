@@ -81,7 +81,7 @@ export default function Onboarding() {
                             <TouchableOpacity style={styles.buttonInscription} onPress={() => {handleModal(); navigation.navigate('Register');}}>
                                 <Text style={styles.text}>S’INSCRIRE MAINTENANT</Text>
                             </TouchableOpacity>
-                            <Image source={require("../assets/images/FladyShadow.png")} style={styles.mascot}/>
+                            <Image source={require("../assets/images/Flady.gif")} style={styles.mascot}/>
                             <TouchableOpacity style={styles.button2Connection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
                                 <Text style={styles.text}>SE CONNECTER</Text>
                             </TouchableOpacity>
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
         bottom: normalize(46)
     },
     mascot: {
-        width: normalize(150),
-        height: normalize(150),
+        width: normalize(130),
+        height: normalize(130),
         position: 'absolute',
         bottom: normalize(140),
         right: normalize(0)

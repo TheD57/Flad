@@ -122,17 +122,17 @@ export default function SettingProfil() {
                                 </TouchableOpacity>                             
                             </View>
                             <View style={styles.bodyModal}>
-                                <View>
-                                    <Text style={styles.textOption}>Ancien</Text>
-                                    <TextInput placeholderTextColor='#828288' placeholder="saisir l'ancien mot de passe"/>
+                                <View style={styles.optionModalWithUnderline}>
+                                    <Text style={styles.textOptionModal}>Ancien</Text>
+                                    <TextInput placeholderTextColor='#828288' placeholder="saisir l'ancien mot de passe" style={styles.textInputOldModal}/>
                                 </View>
-                                <View>
-                                    <Text style={styles.textOption}>Nouveau</Text>
-                                    <TextInput placeholderTextColor='#828288' placeholder='saisir le mot de passe' style={styles.textInputMail}/>
+                                <View style={styles.optionModalWithUnderline}>
+                                    <Text style={styles.textOptionModal}>Nouveau</Text>
+                                    <TextInput placeholderTextColor='#828288' placeholder='saisir le mot de passe' style={styles.textInputNewModal}/>
                                 </View>
-                                <View>
-                                    <Text style={styles.textOption}>Confirmer</Text>
-                                    <TextInput placeholderTextColor='#828288' placeholder='mot de passe'/>
+                                <View style={styles.optionModal}>
+                                    <Text style={styles.textOptionModal}>Confirmer</Text>
+                                    <TextInput placeholderTextColor='#828288' placeholder='mot de passe' style={styles.textInputConfirmModal}/>
                                 </View>
                             </View>
                             <View style={styles.warningView}>
@@ -314,10 +314,42 @@ const styles = StyleSheet.create({
     },
     bodyModal: {
         paddingVertical: 12,
-        paddingHorizontal: 10,
+        paddingLeft: 30,
         marginHorizontal: normalize(25),
         backgroundColor: "#232123",
         borderRadius: 13,
         alignItems: 'flex-start'
+    },
+    optionModalWithUnderline: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderColor: '#403F3F',
+        paddingBottom: 10,
+        marginBottom: 10
+    },
+    optionModal: {
+        flexDirection: 'row'
+    },
+    textOptionModal: {
+        fontSize: normalize(18),
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    textInputNewModal: {
+        marginLeft: 40,
+        color: 'white',
+        width: '67.5%',
+        fontSize: normalize(18)
+    },
+    textInputConfirmModal: {
+        marginLeft: 30,
+        color: 'white',
+        fontSize: normalize(18)
+    },
+    textInputOldModal: {
+        marginLeft: 55,
+        color: 'white',
+        width: '67.5%',
+        fontSize: normalize(18)
     }
 })

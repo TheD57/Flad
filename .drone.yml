@@ -12,10 +12,35 @@ steps:
     image: node:latest
     commands:
       - cd ./src/FLAD/
-      - npm install expo-cli	
       - npm install
       - npm run
       
+  - name: docker-build-and-push
+    image: node:latest
+    settings:
+      context: src/Api
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/emre.kartal/FLAD
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    commands:
+      - cd ./src/Api
+      - npm install
+      - npm run build
+
+  #container deployment
+  - name: deploy-container
+    image: node:latest
+    environment:
+        IMAGENAME: hub.codefirst.iut.uca.fr/emre.kartal/FLAD:latest
+        CONTAINERNAME: FladApi
+        COMMAND: create
+        OVERWRITE: true
+    depends_on: [ docker-build-and-push ]
+    
+
   - name: code-analysis
     image: node:latest
     environment:

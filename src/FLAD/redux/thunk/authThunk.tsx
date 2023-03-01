@@ -4,31 +4,52 @@ import axios from "axios";
 import { json } from "express";
 import { useEffect } from "react";
 import { API_URL } from "../../fladConfig";
-import { Credentials, restoreToken, setLoginState } from "../actions/userActions";
+import { Credentials, CredentialsRegister, restoreToken, setLoginState } from "../actions/userActions";
 import * as SecureStore from 'expo-secure-store';
 
 const key = 'userToken';
   
-export const registerUser = ( resgisterCredential : any) => {
+export const registerUser = ( resgisterCredential : CredentialsRegister) => {
     //@ts-ignore
     return async dispatch => {
       try {
-        const config = {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
+        console.log(resgisterCredential);
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        }
         const resp = await axios.post(
             `${API_URL}/api/users/register`,
             resgisterCredential,
             config
           )
-          if (resp.data.msg === 'success') { // response success checking logic could differ
-            await SecureStore.setItemAsync(key, resp.data.token);
-            dispatch(setLoginState(resp.data.user) ); // our action is called here
+
+          if (resp.data.token) {
+            console.log(resp.data.token);
+            const token = resp.data.token;
+          // await SecureStore.setItemAsync(key, token);
+          const headers = {
+                  'Authorization': 'Bearer ' + token};
+          const user = await axios.get(
+            "https://flad-api-production.up.railway.app/api/users",
+            {headers}
+              )
+          dispatch(setLoginState(resp.data.user) ); // our action is called here
+            // console.log(user.data);
+          // dispatch(setLoginState(user.data) ); // our action is called here
           } else {
-            console.log('Login Failed', 'Username or Password is incorrect');
+          console.log('Login Failed', 'Username or Password is incorrect');
           }
+
+
+          // if (resp.data.msg === 'success') { // response success checking logic could differ
+          //   await SecureStore.setItemAsync(key, resp.data.token);
+          //   dispatch(setLoginState(resp.data.user) ); // our action is called here
+          // } else {
+          //   console.log('Login Failed', 'Username or Password is incorrect');
+          // }
 
       } catch (error) {
         console.log('Error---------', error);

@@ -79,7 +79,7 @@ const FladLoading = () => {
       <View style={{flex : 1, justifyContent : 'center', alignItems :'center'}}>
     
         <Animated.View style={[{backgroundColor : '#B40404', justifyContent : 'center', alignItems : 'center'}, breatheStyleSquare]}>
-            <Animated.Image source={require('../assets/icons/icon.png')} style={[{height: size, width : size, borderColor : '#fff',borderRadius : size/2, borderWidth : 3}]}/>
+            <Animated.Image source={require('../assets/icons/icon.png')} style={[{height: size, width : size, borderColor : '#fff',borderRadius : size/2}]}/>
         </Animated.View>
         {/* <Animated.View style={[ {backgroundColor : 'green'},breatheStyleSquare]}>
         </Animated.View> */}

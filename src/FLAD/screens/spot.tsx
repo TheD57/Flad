@@ -1,4 +1,4 @@
-import { View, Text, Image ,PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable, TouchableOpacity } from 'react-native'
+import { View, Text, Image ,PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
@@ -191,6 +191,7 @@ export default function Spot() {
                                  uri:currentCard.sourceUrl ,
                              }}
       ></ImageBackground>
+
       <View style={{flex : 1.65}}>
       <LinearGradient colors={['rgba(2, 2, 2, 0.58) 0%','rgba(0, 0, 0, 0) 90.56%']}style={styles.gradient}>
       <Text
@@ -250,7 +251,8 @@ export default function Spot() {
       </View>
 
       </View>
-      </>)
+      </>
+      )
       : (<View style={{justifyContent : 'center', alignItems : 'center', flex : 1}}>
         <View style={{flex:7}}>
 
@@ -299,5 +301,9 @@ export default function Spot() {
       right : 0,
       height : 209,
     },
+
+      mainSafeArea: {
+        flex: 1,
+      }
   })
   

@@ -110,6 +110,7 @@ const scopes = scopesArr.join(' ');
             encodeURIComponent(redirectUrl),
         })
         console.log(result);
+        return result.params.code;
       } catch (err) {
         console.error(err)
       }
@@ -117,6 +118,7 @@ const scopes = scopesArr.join(' ');
     const getTokens = async () => {
       try {
         const authorizationCode = await getAuthorizationCode() //we wrote this function above
+        console.log(authorizationCode, "shhhhhhhhhhhhhheeeeeeeeeeeeeeeetttttttttttt");
         const response = await fetch('https://accounts.spotify.com/api/token', {
           method: 'POST',
           headers: {
@@ -126,14 +128,14 @@ const scopes = scopesArr.join(' ');
           body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https://auth.expo.io/@anonymous/FLAD-7eafd441-fd6b-4fb6-924c-ec2b0ed5ce6d`,
         });
         const responseJson = await response.json();
+        console.log(responseJson.access_token, "okkkkkkkkkkkkkkk") ;
         // destructure the response and rename the properties to be in camelCase to satisfy my linter ;)
         const {
           access_token: accessToken,
           refresh_token: refreshToken,
           expires_in: expiresIn,
         } = responseJson;
-    
-       console.log(responseJson);
+        
       } catch (err) {
         console.error(err);
       }

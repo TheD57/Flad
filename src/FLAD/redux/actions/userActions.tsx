@@ -5,6 +5,13 @@ export interface Credentials {
   email : string,
   password : string
 }
+export interface CredentialsRegister {
+  email : string,
+  password : string,
+  name : string,
+  idFlad : string,
+  idSpotify : string
+}
 // export const setLoggedInState = loggedInState => (
 //   {
 //     type: types.SET_LOGGED_IN_STATE,

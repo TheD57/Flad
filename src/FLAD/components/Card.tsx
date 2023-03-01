@@ -40,8 +40,8 @@ const Card = ({ title, image, onSwipe } : CardProps) => {
     
       },
       onEnd : (event, context)  => {
-        console.log(translateX.value);
-
+        console.log(translateX.value - translateY.value);
+        // console.log(translateY.value);
         // translateX.value = withSpring(0);
         // translateY.value = withSpring(snapPoint(translateY.value,velocityY, snapPoints ))
         if (translateX.value > 160) {
@@ -82,22 +82,26 @@ const Card = ({ title, image, onSwipe } : CardProps) => {
       const opacCStyle = useAnimatedStyle(() => {
         const opacityl = interpolate
         ( translateX.value,
-          [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 4],
+          [-SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 4],
           [0.35, 0, 0.35]);
 
           return {
             opacity : opacityl,
           };
         });
+       
         const opacDStyle = useAnimatedStyle(() => {
           const opacityl = interpolate
           ( translateY.value,
-            [-SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 2],
-            [0, 0, 1]);
+            [ 100, 300],
+            [ 0, 1]);
+            
             return {
+              backgroundColor : 'red',
               opacity : opacityl,
             };
           });
+          
 const  horizontalThreshold = SCREEN_WIDTH * 0.65;
 
         const rotateStyle = useAnimatedStyle(() => {
@@ -148,14 +152,14 @@ const  horizontalThreshold = SCREEN_WIDTH * 0.65;
         ],
       };
     });
-    
+    console.log('==========================================',SCREEN_WIDTH/4 , "===============================");
     return (
       <View>
          <PanGestureHandler onGestureEvent={onGestureEvent}>
         
         <Animated.View style={[ styleCardsNew, styles.container]}>
         <Animated.View style={[  styles.image,{backgroundColor: 'black',elevation: 100,
-                    position: "absolute",
+                    position: "absolute",borderWidth : 8, borderColor : '#DA1D1D',
                     zIndex: 1000,}, opacCStyle]}>
         </Animated.View>
         <Image source={{uri : image}} style={[styles.image]} />
@@ -163,6 +167,7 @@ const  horizontalThreshold = SCREEN_WIDTH * 0.65;
         <Animated.View
                   style={[{
                     // transform: [{ rotate: "30deg" }],
+                    
                     elevation: 100,
                     position: "absolute",
                     zIndex: 1000,

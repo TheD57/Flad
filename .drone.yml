@@ -18,7 +18,8 @@ steps:
   - name: docker-build-and-push
     image: node:latest
     settings:
-      context: src/Api
+      dockerfile: src/Api/Dockerfile
+      context: src/
       registry: hub.codefirst.iut.uca.fr
       repo: hub.codefirst.iut.uca.fr/emre.kartal/FLAD
       username:

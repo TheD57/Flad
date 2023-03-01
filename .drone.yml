@@ -25,10 +25,6 @@ steps:
         from_secret: SECRET_REGISTRY_USERNAME
       password:
         from_secret: SECRET_REGISTRY_PASSWORD
-    commands:
-      - cd ./src/Api
-      - npm install
-      - npm run build
 
   #container deployment
   - name: deploy-container

@@ -29,10 +29,10 @@ steps:
 
   #container deployment
   - name: deploy-container
-    image: node:latest
+    image: flady
     environment:
-        IMAGENAME: hub.codefirst.iut.uca.fr/emre.kartal/FLAD:latest
-        CONTAINERNAME: FladApi
+        IMAGENAME: hub.codefirst.iut.uca.fr/emre.kartal/flady:latest
+        CONTAINERNAME: flady
         COMMAND: create
         OVERWRITE: true
     depends_on: [ docker-build-and-push ]

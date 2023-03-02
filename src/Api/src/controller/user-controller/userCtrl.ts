@@ -161,8 +161,9 @@ class UserController implements Controller {
     ): Promise<Response | void> => {
         try {
             // the FladId should be created by the Userservice
-            const { name, email, password,idFlad, idSpotify } = req.body;
-
+            const { name, email, password , idFlad, idSpotify } = req.body;
+            console.log(name, email, password, idFlad, idSpotify);
+            
             const token = await this.userService.register(
                 name,
                 email,

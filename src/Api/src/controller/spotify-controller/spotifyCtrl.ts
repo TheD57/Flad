@@ -137,7 +137,7 @@ class SpotifyController implements Controller {
         
       }    
     
-    public getMusic(){
+    public getMusic() : null{
 
       return null;
     }

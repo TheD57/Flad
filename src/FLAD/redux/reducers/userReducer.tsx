@@ -1,7 +1,8 @@
+import { User } from "../../Model/User";
 import { userTypes } from "../types/userTypes";
 const initialState = {
   loading: false,
-  user: {}, // for user object
+  user: User, // for user object
   userFladToken: null, // for storing the JWT
   userSpotifyToken : null,
   error: null,
@@ -13,28 +14,29 @@ const initialState = {
       // just for the navigation and speciafly use 
       // and 
       case userTypes.RESTORE_TOKEN:
-        console.log(state.loading, "((((((((((((((((((((((((((((((((((((userRducer))))))))))))))))))))))))))))))))))))");  
-
-        console.log(state.userFladToken, "userRducer");  
-        console.log(state.loading, "((((((((((((((((((((((((((((((((((((userRducer))))))))))))))))))))))))))))))))))))");  
-
           return {
             ...state,
             userFladToken : action.playload,
             loading: true,
             // isLogedIn: true,
           };
-
       case userTypes.LOGIN:
+        console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");  
+        console.log(action.playload, "LOOGGIIINN");  
+        console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");  
         return {
           ...state,
-          user :action.payload,
+          user :action.playload,
           isLogedIn: true 
         };
       case userTypes.SIGNUP:
+        console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");  
+
+        console.log(action.playload, "LOOGGIIINN");  
+        console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");  
       return {
         ...state,
-        user :action.payload,
+        user :action.playload,
         isLogedIn: true 
       };
       // case USER_SIGNUP:

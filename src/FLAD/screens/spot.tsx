@@ -112,6 +112,25 @@ export default function Spot() {
     likeButtonref.current?.play(0,55);
   }, [])
 
+
+//   function addWatchLater(props: Movie) {
+//     dispatch(addMovieToWatchLater(props));
+//     dispatch(removeMovieTrending(props));
+//     if (displayIndex == trendingMovies.length - 1) {
+//         setdisplayIndex(0);
+//         swiper.swipeLeft();
+//     }
+// }
+
+// function addFavourite(props: Movie) {
+//     dispatch(addMovieToFavourite(props));
+//     dispatch(removeMovieTrending(props));
+//     if (displayIndex == trendingMovies.length - 1) {
+//         setdisplayIndex(0);
+//         swiper.swipeLeft();
+//     }
+// }
+
    
   // const hapti  = (() => {
   //   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)

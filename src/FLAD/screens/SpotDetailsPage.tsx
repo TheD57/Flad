@@ -9,6 +9,8 @@ import { Buffer } from 'buffer';
 import { Audio } from 'expo-av';
 import { useEffect, useState } from "react";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
+import { RequestHandler } from "../services/spotify/spotifyRequestHandler/utils";
+import { FetchRequest } from "expo-auth-session/build/Fetch";
 
 interface SpotProps {
     spot: { name: string, sourceUrl: string, index : number };
@@ -149,27 +151,32 @@ const SpotDetailsPage = ({ route }) => {
       };
       
     var id = '0cFS3AMF9Lhj3CNoFvwjvY'
+    const requestor = new RequestHandler()
+
     const getCurrentTrack = async () => {
         try {
-            var GetTrackOptions = {
-                method: 'GET',
-                url: 'https://api.spotify.com/v1/tracks/'+id,
+          const opt : FetchRequest ={headers : Record}
+            requestor.spotifyFetch(`tracks${id}`,)
+
+            // var GetTrackOptions = {
+            //     method: 'GET',
+            //     url: 'https://api.spotify.com/v1/tracks/'+id,
                
-                headers: {
-                  'Authorization': 'Bearer ' + spotify,
-                  'Content-Type' : 'application/json',
-                  'market' : 'FR',
-                },
-                json: true
-              };
-            const resp = await axios(GetTrackOptions)
-            console.log("============");
-            console.log(resp.data.href);
-            console.log("================================"+resp.data.album.images[0].url+ "================================");
-            var tmp = currentspot;
+            //     headers: {
+            //       'Authorization': 'Bearer ' + spotify,
+            //       'Content-Type' : 'application/json',
+            //       'market' : 'FR',
+            //     },
+            //     json: true
+            //   };
+            // const resp = await axios(GetTrackOptions)
+            // console.log("============");
+            // console.log(resp.data.href);
+            // console.log("================================"+resp.data.album.images[0].url+ "================================");
+            // var tmp = currentspot;
         
-            tmp.sourceUrl = resp.data.album.images[0].url;
-            setCurrentspot(tmp);
+            // tmp.sourceUrl = resp.data.album.images[0].url;
+            // setCurrentspot(tmp);
             // await axios(authOptions).then(async (response) =>{
             //     console.log(response.data.item.preview_url);
             //     const id =  response.data.item.id;
@@ -207,7 +214,7 @@ const SpotDetailsPage = ({ route }) => {
         }
       }
       const animationState = new Value(State.UNDETERMINED);
-      
+
     
     return (
 <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>

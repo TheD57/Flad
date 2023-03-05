@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { Animated, Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import CardMusic from '../components/CardMusic';
 import normalize from '../components/Normalize';
@@ -17,7 +17,26 @@ export default function favoritePage() {
         new Music("Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png"),
         new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
         new Music("Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png"),
-      ]
+      ] 
+      // to do
+   const [filteredDataSource, setFilteredDataSource] = useState<Music[]>([]);
+   const [search, setSearch] = useState('');
+      const searchMusic = (text: string) => {
+        if (text) {
+            const newData = MUSIC_LIST.filter(function (item: Music) {
+                const search = item.title
+                    ? item.title.toUpperCase() : ''.toUpperCase();
+                const textsearch = text.toUpperCase();
+                return search.indexOf(textsearch) > -1;
+            });
+            setFilteredDataSource(newData);
+            setSearch(text);
+        } else {
+            setFilteredDataSource([]);
+            setSearch(text);
+        }
+    };
+
     return (
         <View style={styles.body}>
             <View style={styles.titleContainer}>

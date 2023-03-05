@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { API_URL } from "../../fladConfig";
 import { Credentials, CredentialsRegister, restoreToken, setLoginState } from "../actions/userActions";
 import * as SecureStore from 'expo-secure-store';
+import { User } from "../../Model/User";
+import { UserFactory } from "../../Model/factory/UserFactory";
 
 const key = 'userToken';
   
@@ -36,7 +38,7 @@ export const registerUser = ( resgisterCredential : CredentialsRegister) => {
             "https://flad-api-production.up.railway.app/api/users",
             {headers}
               )
-          dispatch(setLoginState(resp.data.user) ); // our action is called here
+          dispatch(setLoginState( UserFactory.JsonToModel(user.data) )); // our action is called here
             // console.log(user.data);
           // dispatch(setLoginState(user.data) ); // our action is called here
           } else {
@@ -90,7 +92,7 @@ return async dispatch => {
           {headers}
             )
         // dispatch(setLoginState(resp.data.user) ); // our action is called here
-          
+          console.log(user.data);
         dispatch(setLoginState(user.data) ); // our action is called here
         } else {
         console.log('Login Failed', 'Username or Password is incorrect');

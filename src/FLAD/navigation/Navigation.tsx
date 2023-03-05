@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import FavoriteNavigation from './FavoriteNavigation';
@@ -10,6 +10,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SpotNavigation from './SpotNavigation';
 import Login from '../screens/login';
 import FladLoading from '../components/FladLoadingScreen';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFavoritesMusic } from '../redux/actions/appActions';
+// import { fetchFavoritesMusic } from '../redux/thunk/spotThunk';
 
 export default function Navigation() {
   const BottomTabNavigator = createBottomTabNavigator();
@@ -22,6 +25,15 @@ export default function Navigation() {
       text: 'rgb(138, 138, 138)',
     }
   };
+  //@ts-ignore
+  const favoritesMusicLength : number = useSelector(state => state.appReducer.favoriteMusic.length);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //       const loadFavoritesMusics = async () => {
+  //           await dispatch(fetchFavoritesMusic());
+  //       };
+  //       loadFavoritesMusics();
+  //   }, [dispatch]);
   return (
       // @ts-ignore
       <NavigationContainer theme={MyTheme}>
@@ -41,8 +53,8 @@ export default function Navigation() {
               <BottomTabNavigator.Screen name="Favorites" component={FavoriteNavigation}
                         options={{
                           // use Selector state redux badgeCount ? badgeCount : undefined
-                          
-                          tabBarBadge : 2,
+
+                          tabBarBadge : favoritesMusicLength,
                           tabBarBadgeStyle : {backgroundColor : 'yellow'}, 
                             headerShown: false,
                             tabBarIcon: ({color}) => <TabBarIcon name="heart" color={color}/>,

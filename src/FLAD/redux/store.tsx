@@ -4,7 +4,7 @@ import userReducer from './reducers/userReducer';
 
 // Reference here all your application reducers
 const reducer = {
-  // appReducer: appReducer,
+  appReducer: appReducer,
   userReducer: userReducer
 }
 

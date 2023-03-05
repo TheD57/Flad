@@ -4,7 +4,7 @@ import { StyleSheet, Text, View , Image } from 'react-native';
 import normalize from '../components/Normalize';
 
 type CustomCardMusic = { //Props
-    image: ImageSource;
+    image: string;
     title: string;
     description: string;
 }

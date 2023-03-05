@@ -1,12 +1,16 @@
 export default class Music {
+  private _id : string; 
   private _title: string;
   private _bio: string;
-  private _image: ImageSource;
+  private _image: string;
+  private _trackPreviewUrl : string;
 
-  constructor(title: string, bio: string, image: ImageSource) {
+  constructor(id : string,title: string, bio: string, image: string, trackPreviewUrl: string) {
     this._title = title;
     this._bio = bio;
     this._image = image;
+    this._id = id;
+    this._trackPreviewUrl = trackPreviewUrl;
   }
 
   get title(): string {
@@ -25,11 +29,27 @@ export default class Music {
     this._bio = value;
   }
 
-  get image(): ImageSource {
+  get image(): string {
     return this._image;
   }
 
-  set image(value: ImageSource) {
+  set image(value: string) {
     this._image = value;
+  }
+
+  get id(): string {
+    return this._id;
+  }
+
+  set id(value: string) {
+    this._id = value;
+  }
+
+  get trackPreviewUrl(): string {
+    return this._trackPreviewUrl;
+  }
+
+  set trackPreviewUrl(value: string) {
+    this._trackPreviewUrl = value;
   }
 }

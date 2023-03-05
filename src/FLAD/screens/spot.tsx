@@ -113,8 +113,8 @@ export default function Spot() {
   }, [])
 
 
-//   function addWatchLater(props: Movie) {
-//     dispatch(addMovieToWatchLater(props));
+//   function addLike(props: Movie) {
+//     dispatch(addFavoriteMu(props));
 //     dispatch(removeMovieTrending(props));
 //     if (displayIndex == trendingMovies.length - 1) {
 //         setdisplayIndex(0);
@@ -122,14 +122,6 @@ export default function Spot() {
 //     }
 // }
 
-// function addFavourite(props: Movie) {
-//     dispatch(addMovieToFavourite(props));
-//     dispatch(removeMovieTrending(props));
-//     if (displayIndex == trendingMovies.length - 1) {
-//         setdisplayIndex(0);
-//         swiper.swipeLeft();
-//     }
-// }
 
    
   // const hapti  = (() => {

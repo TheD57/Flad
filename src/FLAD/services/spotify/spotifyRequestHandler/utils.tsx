@@ -31,7 +31,7 @@ export class RequestHandler{
             },
             data: options.body
         });
-        console.log()
+        // console.log(resp);
         return resp;
         // if (
         //     // @ts-ignore

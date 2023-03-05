@@ -12,6 +12,7 @@ import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { RequestHandler } from "../services/spotify/spotifyRequestHandler/utils";
 import { FetchRequest } from "expo-auth-session/build/Fetch";
 import Music from "../Model/Music";
+import SpotifyService from "../services/spotify/spotify.service";
 
 interface SpotProps {
     spot: { name: string, sourceUrl: string, index : number };
@@ -215,7 +216,13 @@ const MusicDetail = ({ route }) => {
     //     }
     //   }
       const animationState = new Value(State.UNDETERMINED);
-
+      const playMusic = async (id: string) => {
+         try { 
+              const service = new SpotifyService("BQC4k_OPQXENwmm2S8qLm9whlJT9IjeKsuG6kJNyVCSd88b0L-zOY84VqwvQxFsc9G3GvtPyUMezwxi8BBBloitzbhWX5tmTKTaLsJosGTnb7xivwNhRv0-LnNYbZWB24ZGAg0xPmDLn0yYmYlo7M_SMK5cCZdYQcZNXAuMYaI18GVXKoICBaKfCn4GcqBiRRgXyCVQnNGU4") ;
+              console.log("=====================================================)))))))))))))))"+id+"================================")
+              await service.playMusic(id);
+            }catch(error){}
+        }
     
     return (
 <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
@@ -237,9 +244,9 @@ const MusicDetail = ({ route }) => {
                         
                     ]}
                     />
-                    <Button title="Current Track"
+                    <Button title="Play Track On Device"
                   onPress={() => {
-                    getCurrentTrack()
+                    playMusic(currentspot.id)
                     // promptAsync();
                   }}
                 />

@@ -1,7 +1,7 @@
 import axios from "axios";
 import MusicFactory from "../../Model/factory/MusicFactory";
 import Music from "../../Model/Music";
-import { RequestHandler } from "./spotifyRequestHandler/utils";
+import { FetchOptions, RequestHandler } from "./spotifyRequestHandler/utils";
 
 export default class SpotifyService implements IspotifyService {
     private readonly API_URL = "https://flad-api-production.up.railway.app/api/";
@@ -46,15 +46,29 @@ export default class SpotifyService implements IspotifyService {
 		return respMusic.data.items[0].track.id;
 	}
 
-	public async playMusic(): Promise<string | null>{
-		var requestData :string = '/me/player/recently-played';
-		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined,this.token);
-		if (respMusic.status != 200) {
-		}
-		if (respMusic.data.items.length <= 0) {
-			return null;
-		  }
-		return respMusic.data.items[0].track.id;
+	public async playMusic(idMusic : string): Promise<void>{
+		var requestData :string = '/me/player/play';
+
+		const fetchOptions: FetchOptions = {
+			method: 'PUT',
+			body: {
+			  uris: [`spotify:track:${idMusic}`],
+			  position_ms: 0
+			}
+		  };
+		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, fetchOptions,this.token);
+		// need to handle when 
+		// if (respMusic.status != 200) {
+		// 	if (respMusic.status == 400 && respMusic.data.message =='need to use Spotify premium'){
+
+		// 	}
+		// }
+		// if(respMusic){
+		// 	console.log(respMusic);
+		// 	console.log(respMusic.data);
+
+		// }
+		return ;
 	}
 	
 	async getSpotifyCredentials() {

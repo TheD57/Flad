@@ -50,6 +50,9 @@ class App {
     private initialiseControllers(controllers: Controller[]): void {
         controllers.forEach((controller: Controller) => {
             this.express.use('/api', controller.router);
+            this.express.get('/toto', (req, res) => {
+                res.send('Hello World!');
+              })
         });
     }
 

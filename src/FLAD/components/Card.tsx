@@ -1,6 +1,6 @@
 import { View, Text, Image , Dimensions, StyleSheet } from 'react-native'
 import React, { useRef, useState } from 'react'
-import Animated,{ Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated,{ Extrapolate, interpolate, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
@@ -14,17 +14,18 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 interface CardProps {
     title: string;
     image: any;
+    onSwipe: (direction: "left" | "right") => void;
   }
   type ContextType = {
     translateX: number;
     translateY: number;
   };
   
-const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
+const Card = ({ title, image, onSwipe } : CardProps) => {
     
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
-
+    const scale = useSharedValue(1);
     const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     ContextType
@@ -34,15 +35,20 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
         context.translateY = translateY.value;
       },
       onActive : (event, context)  => {
-        translateX.value = event.translationX + context.translateX -5;
+        translateX.value = event.translationX + context.translateX;
         translateY.value = event.translationY + context.translateY;
+    
       },
       onEnd : (event, context)  => {
+        console.log(translateX.value - translateY.value);
+        // console.log(translateY.value);
         // translateX.value = withSpring(0);
         // translateY.value = withSpring(snapPoint(translateY.value,velocityY, snapPoints ))
         if (translateX.value > 160) {
-          // onSwipe("right");
+          console.log("translateX2");
+         runOnJS(onSwipe)("right");
         } else if (translateX.value < -160) {
+          runOnJS(onSwipe)("left");
           // onSwipe("left");
         } else {
           translateX.value = withSpring(0);
@@ -58,7 +64,7 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
       const opacityl = interpolate
       ( translateX.value,
         [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 4],
-        [0, 0, 1]);
+        [ 0,0, 1]);
         return {
           opacity : opacityl,
         };
@@ -76,22 +82,27 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
       const opacCStyle = useAnimatedStyle(() => {
         const opacityl = interpolate
         ( translateX.value,
-          [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 4],
-          [0.75, 1, 0.75]);
+          [-SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 4],
+          [0.35, 0, 0.35]);
 
           return {
             opacity : opacityl,
           };
         });
+       
         const opacDStyle = useAnimatedStyle(() => {
           const opacityl = interpolate
           ( translateY.value,
-            [-SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 2],
-            [0, 0, 1]);
+            [ 100, 300],
+            [ 0, 1]);
+            
             return {
+              backgroundColor : 'red',
               opacity : opacityl,
             };
           });
+          
+const  horizontalThreshold = SCREEN_WIDTH * 0.65;
 
         const rotateStyle = useAnimatedStyle(() => {
           const rot = interpolate
@@ -106,7 +117,28 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
 
             };
           });
-    
+          const styleCardsNew = useAnimatedStyle(() => {
+            const factor = 1;
+            const rot = interpolate
+            ( translateX.value,
+              [0, factor * horizontalThreshold],
+              [0, 15],
+              );
+             
+              return {
+                transform: [
+                  { scale: scale.value },
+                  { translateX: translateX.value },
+                  { translateY: translateY.value },
+                  { rotateZ: `${rot}deg` },
+                ]
+  
+              };
+            });
+
+
+             // Calculate the distance of the card from its starting position
+       
     const rStyle = useAnimatedStyle(() => {
       
       return {
@@ -120,14 +152,23 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
         ],
       };
     });
-    
+    console.log('==========================================',SCREEN_WIDTH/4 , "===============================");
     return (
       <View>
          <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View style={[ rStyle, styles.card,opacCStyle ]}>
+        
+        <Animated.View style={[ styleCardsNew, styles.container]}>
+        <Animated.View style={[  styles.image,{backgroundColor: 'black',elevation: 100,
+                    position: "absolute",borderWidth : 8, borderColor : '#DA1D1D',
+                    zIndex: 1000,}, opacCStyle]}>
+        </Animated.View>
+        <Image source={{uri : image}} style={[styles.image]} />
+        <>
         <Animated.View
                   style={[{
                     // transform: [{ rotate: "30deg" }],
+                    
+                    elevation: 100,
                     position: "absolute",
                     zIndex: 1000,
                   },opacRStyle]}
@@ -138,10 +179,13 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
             </Animated.View>
             <Animated.View
                   style={[{
+                    width: '100%',
+                    height: '100%',
                     position: "absolute",
                     justifyContent : "center",
                     alignContent : "center",
                     zIndex: 1000,
+                    elevation: 100,
                   },opacLStyle]}
                 >
                   <Image style={[{alignSelf : "center"}]}
@@ -151,10 +195,12 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
             </Animated.View>
             <Animated.View
                   style={[{
+                    width: '100%',
+                    height: '100%',
                     position: "absolute",
                     justifyContent : "center",
                     alignContent : "center",
-                    
+                    elevation: 100,
                     zIndex: 1000,
                   },opacDStyle]}
                 >
@@ -164,8 +210,9 @@ const Card : React.FC<CardProps> = ({ title, image} : CardProps) => {
                     
                   />
             </Animated.View>
-          <Image source={{uri : image}} style={[styles.image]} />
-        </Animated.View>
+            </>
+            
+        </Animated.View>     
          </PanGestureHandler>
       </View>
     );
@@ -176,17 +223,21 @@ const styles = StyleSheet.create({
   card : {
     justifyContent : 'center',
     alignItems : 'center',
-    
   },
   image : {
     borderRadius : 24,
-    resizeMode: 'cover',
-    height: 529,
-    width: 312,
-    backgroundColor: 'black',
+    resizeMode: 'stretch',
+    height: 362,
+    width: 362,
+},
+container: {
+  flex: 1,
+  width: '100%',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 }
 })
 
-
-  export default Card;
+export default Card;
 

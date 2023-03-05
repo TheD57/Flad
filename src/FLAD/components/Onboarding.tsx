@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Text, FlatList, Animated, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import Modal from "react-native-modal";
+import { Modal,  View, StyleSheet, Text, FlatList, Animated, TouchableOpacity, ImageBackground, Image } from 'react-native';
+// import Modal from "react-native-modal";
 import {useNavigation} from "@react-navigation/native";
 
 import normalize from '../components/Normalize';
@@ -53,11 +53,11 @@ export default function Onboarding() {
                     onViewableItemsChanged={viewableItemsChanged}  
                     viewabilityConfig={viewConfig}
                     ref={slidesRef}
-                />   
+                />    
                 <Paginator data={slides} scrollX={scrollX}/>
                 <NextButton scrollTo={scrollTo} percentage={(currentIndex + 1) * (100 / slides.length)} />    
             </View>
-            <Modal isVisible={isModalVisible}>
+            <Modal animationType="slide" visible={isModalVisible} transparent={true} presentationStyle={'pageSheet'}>
                 <View style={styles.modalContent}>
                     <ImageBackground source={require("../assets/images/Background_Start_Page.png")} style={styles.backgroundImage}>
                         <View style={styles.modalView}>
@@ -124,11 +124,10 @@ const styles = StyleSheet.create({
         right: 10
     },
     modalContent: {
-        position: 'absolute',
-        top: '7%',
-        left: '-5%',
-        right: '-5%',
-        height: '100%',
+
+       flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     },
     modalView: {
         flex: 1,

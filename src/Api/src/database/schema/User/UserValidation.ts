@@ -7,7 +7,8 @@ const register = Joi.object({
 
     password: Joi.string().min(6).required(),
     // can add an field like confimPassword and cheked that the password is equal to the confirmPassword
-
+    idSpotify: Joi.string(),
+    idFlad : Joi.string(),
 });
 
 const login = Joi.object({

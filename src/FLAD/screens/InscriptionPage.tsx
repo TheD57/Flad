@@ -1,7 +1,16 @@
-import React, {Component, useState } from 'react';
-import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import React, {Component, useEffect, useState } from 'react';
+import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import normalize from '../components/Normalize';
+import * as SecureStore from 'expo-secure-store';
+import * as AuthSession from 'expo-auth-session';
+import axios from 'axios';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { registerUser } from '../redux/thunk/authThunk';
+import { useDispatch } from 'react-redux';
+import { CredentialsRegister } from '../redux/actions/userActions';
+import { Buffer } from 'buffer';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -10,12 +19,118 @@ const DismissKeyboard = ({ children }) => (
     </TouchableWithoutFeedback>
 )
 
+export const MY_SECURE_AUTH_STATE_KEY = 'MySecureAuthStateKey';
+
+WebBrowser.maybeCompleteAuthSession();
+
+// Endpoint
+const discovery = {
+authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+tokenEndpoint: 'https://accounts.spotify.com/api/token',
+};
+// save the spotifyToken
+async function save(key : string, value : string) {
+await SecureStore.setItemAsync(key, value);
+}
+
+
 export default function InscriptionPage() {
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
+    const [spotifyToken, setSpotifyToken] = useState('');
+    const [spotifyID, setSpotifyIds] = useState('')
 
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const toggleRememberMe = () => {
         setRememberMe(!rememberMe);
+    }
+   
+//spotify auth
+    const [request, response, promptAsync] = useAuthRequest(
+        {
+          responseType: AuthSession.ResponseType.Token,
+          clientId: '1f1e34e4b6ba48b388469dba80202b10',
+          scopes: ['user-read-private','user-read-email','user-read-playback-state','user-read-currently-playing','user-read-recently-played','playlist-modify-public','ugc-image-upload','user-modify-playback-state'],
+          redirectUri: makeRedirectUri({
+            scheme: 'flad'
+          }),
+        },
+        discovery
+      );
+    useEffect(() => {
+        if (response && response.type === 'success') {
+          const auth = response.params.access_token;
+          const storageValue = JSON.stringify(auth);
+    
+          if (Platform.OS !== 'web') {
+            // Securely store the auth on your device
+            save(MY_SECURE_AUTH_STATE_KEY, storageValue);
+          }
+        }
+      }, [response]);
+
+      const dispatch = useDispatch();
+
+      const submitForm = () => {
+        const credentials: CredentialsRegister = {
+            email: email,
+            password: password,
+            idSpotify : spotifyToken,
+            name : username,
+            idFlad : "3030"
+          };
+        //@ts-ignore
+        dispatch(registerUser(credentials))
+      }
+      const scopesArr = ['user-read-private','user-read-email','user-read-playback-state','user-read-currently-playing','user-read-recently-played','playlist-modify-public','ugc-image-upload','user-modify-playback-state'];
+const scopes = scopesArr.join(' ');
+    //work so use this for my implementation
+    const getAuthorizationCode = async () => {
+      try {
+        const redirectUrl = "https://auth.expo.io/@anonymous/FLAD-7eafd441-fd6b-4fb6-924c-ec2b0ed5ce6d"; //this will be something like https://auth.expo.io/@your-username/your-app-slug
+        const result = await AuthSession.startAsync({
+          authUrl:
+            'https://accounts.spotify.com/authorize' +
+            '?response_type=code' +
+            '&client_id=' +
+            "1f1e34e4b6ba48b388469dba80202b10" +
+            (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+            '&redirect_uri=' +
+            encodeURIComponent(redirectUrl),
+        })
+        console.log(result);
+        return result.params.code;
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    const getTokens = async () => {
+      try {
+        const authorizationCode = await getAuthorizationCode() //we wrote this function above
+        console.log(authorizationCode, "shhhhhhhhhhhhhheeeeeeeeeeeeeeeetttttttttttt");
+        const response = await fetch('https://accounts.spotify.com/api/token', {
+          method: 'POST',
+          headers: {
+            Authorization: 'Basic ' + (Buffer.from('1f1e34e4b6ba48b388469dba80202b10' + ':' + '779371c6d4994a68b8dd6e84b0873c82').toString('base64')),
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https://auth.expo.io/@anonymous/FLAD-7eafd441-fd6b-4fb6-924c-ec2b0ed5ce6d`,
+        });
+        const responseJson = await response.json();
+        console.log(responseJson, "okkkkkkkkkkkkkkk") ;
+        // destructure the response and rename the properties to be in camelCase to satisfy my linter ;)
+        const {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_in: expiresIn,
+        } = responseJson;
+        await setSpotifyToken(accessToken);
+        console.log(spotifyToken);
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     return (
@@ -28,22 +143,31 @@ export default function InscriptionPage() {
                     <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
                     <Text style={styles.text}>S'INSCRIRE</Text>
                     <View>
-                        <TextInput style={[styles.input, styles.shadow]}/>
+                        <TextInput style={[styles.input, styles.shadow]} placeholder="Username"
+        value={username}
+        onChangeText={setUsername}/>
                         <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
                     </View>
                     <View>
-                        <TextInput style={[styles.input, styles.shadow]}/>
+                        <TextInput style={[styles.input, styles.shadow]} placeholder="Email"
+        value={email}
+        onChangeText={setEmail}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
                     <View>
-                        <TextInput style={[styles.input, styles.shadow]}/>
+                        <TextInput style={[styles.input, styles.shadow]} placeholder="Password"
+        value={password} secureTextEntry={true} 
+        onChangeText={setPassword}/>
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
-                    <TouchableOpacity style={[styles.buttonSpotify, styles.shadow]}>
+                    <TouchableOpacity onPress={async() => {
+                    await getTokens();
+                  }} style={[styles.buttonSpotify, styles.shadow]}>
                         <Text style={styles.textIntoButton}>Lier compte</Text>
                         <Image source={require("../assets/icons/icons/Spotify.png")} style={{width: 30, height: 30}}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => console.log("Oui")}>
+                    
+                    <TouchableOpacity style={[styles.button, styles.shadow]} onPress={() => submitForm()}>
                         <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
                     </TouchableOpacity>
                     <View style={styles.connectionText}>

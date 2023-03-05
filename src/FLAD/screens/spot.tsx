@@ -1,7 +1,8 @@
-import { View, Text, Image, Animated ,PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable } from 'react-native'
+import { View, Text, Image ,PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
+import Animated from 'react-native-reanimated';
 
 import Card from '../components/Card';
 
@@ -11,10 +12,15 @@ import axios from 'axios';
 
 import * as SecureStore from 'expo-secure-store';
 import { MY_SECURE_AUTH_STATE_KEY } from './login';
+import * as AuthSession from 'expo-auth-session';
 
 import * as Location from 'expo-location';
-
-
+import Icons from '../assets/icons/icons/icon';
+import LottieView from 'lottie-react-native'
+import Lotties from '../assets/lottie/Lottie';
+import FladLoading from '../components/FladLoadingScreen';
+import { SharedElement } from 'react-navigation-shared-element';
+import { useNavigation } from '@react-navigation/native';
 interface SpotProps {
 
 }
@@ -94,8 +100,38 @@ export default function Spot() {
     }
     // update the state of the cards state when it remove thisy
     setCards(cards.filter((_, i) => i !== index));
+    setcurrentCard(cards[index-1]);
   };
 
+  const likeButtonref = useRef<LottieView>(null);
+  const dislikeButtonref = useRef<LottieView>(null);
+  const discoveryButtonref = useRef<LottieView>(null);
+
+  const onLike = useCallback( () => {
+    likeButtonref.current?.reset();
+    likeButtonref.current?.play(0,55);
+  }, [])
+
+
+//   function addWatchLater(props: Movie) {
+//     dispatch(addMovieToWatchLater(props));
+//     dispatch(removeMovieTrending(props));
+//     if (displayIndex == trendingMovies.length - 1) {
+//         setdisplayIndex(0);
+//         swiper.swipeLeft();
+//     }
+// }
+
+// function addFavourite(props: Movie) {
+//     dispatch(addMovieToFavourite(props));
+//     dispatch(removeMovieTrending(props));
+//     if (displayIndex == trendingMovies.length - 1) {
+//         setdisplayIndex(0);
+//         swiper.swipeLeft();
+//     }
+// }
+
+   
   // const hapti  = (() => {
   //   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
   //   getValueFor(MY_SECURE_AUTH_STATE_KEY)
@@ -147,56 +183,108 @@ export default function Spot() {
   //   };
   
   // setInterval(sendLocationToServer, 30000)
+  const navigator = useNavigation();
+
+  const {width : wWidht} = Dimensions.get("window");
+  const hapti = (card : any) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+    navigator.navigate("DetailsSpot", {"spot": card})
+    // Haptics.NotificationFeedbackType.Success
+      };
   return (
-    <View style={styles.spot}>
-      <ImageBackground blurRadius={20}
+
+    <View style={{flex: 1,
+    }}>
+      { cards.length > 0 ? (
+      <>
+      <ImageBackground blurRadius={7}
                              style={{
                                  position: 'absolute',
-                                 width: "120%",
-                                 height: "120%",
+                                 width: "100%",
+                                 height: "100%",
                                  justifyContent: "center",
                                  alignItems: "center",
-                                 opacity: 0.28
+                                 opacity: 0.48
                              }}
                              source={{
                                  uri:currentCard.sourceUrl ,
                              }}
-            ></ImageBackground>
-      
-      {cards.map((card, index) => (
-        
+      ></ImageBackground>
 
-        <View key={card.name} style = {{    position:'absolute'
-      }} >
-        
-        <Pressable >
-
-          <Card
-            title={card.name}
-            image={card.sourceUrl}
-          />
-        </Pressable>
-        {/* <Button
-          title="Success"
-          onPress={
-            () =>
-              Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Success
-              )
-          }
-        ></Button> */}
-        <FladButton name="discovery"/>
-        </View>
-      ))}
-
-    
-      {/* <LinearGradient
-        // Background Linear Gradient
-        colors={['rgba(0,0,0,0.8)', 'transparent']}
-        
-      /> */}
-      
+      <View style={{flex : 1.65}}>
+      <LinearGradient colors={['rgba(2, 2, 2, 0.58) 0%','rgba(0, 0, 0, 0) 90.56%']}style={styles.gradient}>
+      <Text
+      style={{
+        fontStyle : 'normal',
+        left: wWidht/9 ,
+        top: 65,
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontWeight: "800",
+      }}>LOST FOREST</Text>
+      <Text
+      style={{
+        fontStyle : 'normal',
+        left: wWidht/9 ,
+        top: 65,
+        color: "#FFFFFF",
+        fontSize: 18,
+        fontWeight: "800",
+      }}>Laylow</Text>
+      </LinearGradient>
       </View>
+      <View style={{flex : 8.35}}>
+      
+      <View style={{flex : 1.83, justifyContent: 'center', alignItems: 'center' }}>
+
+        {cards.map((card, index) => (
+          <View key={card.name} style = {{ position:'absolute'}} >
+            
+            <Pressable onLongPress={() => {hapti(card)}} >
+            {/* <SharedElement id={card.name}> */}
+              <Card
+                title={card.name}
+                image={card.sourceUrl}
+                onSwipe={(direction) => {onSwipe(index, direction)}}
+              />
+            {/* </SharedElement> */}
+            </Pressable>
+          </View>
+          ))
+        }
+      </View>
+
+      <View style={{flex : 1,flexDirection : 'row', alignItems: "flex-start", justifyContent : 'center'}}>
+        <Animated.View style={{flexDirection : 'row', width : '92%', alignItems: "center", justifyContent : 'space-evenly'}}>
+            <TouchableOpacity style={styles.button} onPress={onLike}>
+                <LottieView autoPlay={false} loop={false} ref={likeButtonref} source={Lotties.likeAnimation} style={styles.lottie}/>  
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={onLike}>
+                <LottieView autoPlay={false} loop={false} ref={likeButtonref} source={Lotties.likeAnimation} style={styles.lottie}/>  
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={onLike}>
+                <LottieView autoPlay={false} loop={false} ref={likeButtonref} source={Lotties.likeAnimation} style={styles.lottie}/>  
+            </TouchableOpacity>
+            
+        </Animated.View>
+      </View>
+
+      </View>
+      </>
+      )
+      : (<View style={{justifyContent : 'center', alignItems : 'center', flex : 1}}>
+        <View style={{flex:7}}>
+
+                        <FladLoading></FladLoading>
+        </View>
+        <View style={{flex : 3 , justifyContent: 'flex-start'}}>
+        <Text style={{color: "grey", fontWeight: "400", textAlign: "center"}}>Vous avez explorer toutes les spot autour de vous.
+                            {"\n"}Continuer dans discoverie pour découvrir de nouvelles music basées dur vos gouts musicaux.</Text>
+        </View>
+                                            
+      </View>)
+    }
+    </View>
       
   );
 };
@@ -205,7 +293,36 @@ export default function Spot() {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      alignContent : 'center',
+      flexDirection : 'column',
       backgroundColor : '#000'
-    }
+    },
+    lottie : {
+      width : '100%',
+    }, 
+    button : {
+      setOpacityTo: 0.8,
+      alignItems : 'center',
+      borderRadius : 100,
+      justifyContent : 'center',
+      width: 61,
+      height: 61,
+      
+      backgroundColor: '#24243A',
+      opacity : 0.8,
+      shadowRadius : 2,
+      
+    },
+    gradient : {
+      position : "absolute",
+      top : 0,
+      left : 0,
+      right : 0,
+      height : 209,
+    },
+
+      mainSafeArea: {
+        flex: 1,
+      }
   })
   

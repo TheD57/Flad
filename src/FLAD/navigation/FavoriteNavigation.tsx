@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import FavoritePage from '../screens/favoritePage';
+import React from 'react';
+import Favorite from '../screens/Favorite';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ArtistLayout } from '../components/Genre';
 
 export default function MusicNavigation() {
     const Stack = createStackNavigator();
     return (
-      <Stack.Navigator initialRouteName="FavoritePage">
+      <Stack.Navigator initialRouteName="Favorite">
         <Stack.Screen 
-          name="FavoritePage" 
-          component={FavoritePage} 
+          name="Favorite" 
+          component={Favorite} 
           options={{ headerShown: false }}
         />
         <Stack.Screen 

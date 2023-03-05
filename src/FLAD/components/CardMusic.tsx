@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
-import { Animated, StyleSheet, Text, View, FlatList , Image} from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View , Image } from 'react-native';
+
+import normalize from '../components/Normalize';
 
 type CustomCardMusic = { //Props
     image: ImageSource;
@@ -30,8 +32,8 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   imageContainer: {
-    width: 80,
-    height: 80,
+    width: normalize(92),
+    height: normalize(92),
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
@@ -51,11 +53,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: 'white',
-    fontSize: 20,
+    fontSize: normalize(23),
     marginBottom: 10
   },
   description: {
     color: 'white',
-    fontSize: 16
+    fontSize: normalize(18)
   }
 });

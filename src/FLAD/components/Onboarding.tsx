@@ -78,10 +78,10 @@ export default function Onboarding() {
                             }}>
                                 <Text style={styles.text}>CONTINUER AVEC SPOTIFY</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonInscription} onPress={() => {handleModal(); navigation.navigate('Inscription');}}>
+                            <TouchableOpacity style={styles.buttonInscription} onPress={() => {handleModal(); navigation.navigate('Register');}}>
                                 <Text style={styles.text}>S’INSCRIRE MAINTENANT</Text>
                             </TouchableOpacity>
-                            
+                            <Image source={require("../assets/images/Flady.gif")} style={styles.mascot}/>
                             <TouchableOpacity style={styles.button2Connection} onPress={() => {handleModal(); navigation.navigate('Login');}}>
                                 <Text style={styles.text}>SE CONNECTER</Text>
                             </TouchableOpacity>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 50
+        marginBottom: normalize(110)
     },
     closeButtonCircle: {
         backgroundColor: 'gray',
@@ -187,6 +187,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        bottom: 40
+        bottom: normalize(46)
+    },
+    mascot: {
+        width: normalize(130),
+        height: normalize(130),
+        position: 'absolute',
+        bottom: normalize(140),
+        right: normalize(0)
     }
 })

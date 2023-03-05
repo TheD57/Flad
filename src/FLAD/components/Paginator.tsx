@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Animated, useWindowDimensions } from 'react-native';
 
+import normalize from '../components/Normalize';
 
 export default function Paginator({ data, scrollX }) {
     const { width } = useWindowDimensions();
 
     return (
-        <View style={{flexDirection: 'row', height: 64}}>
+        <View style={{flexDirection: 'row', height: 64, marginBottom: normalize(50)}}>
             {data.map((_, i) => {
                 const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
 

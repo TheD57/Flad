@@ -1,11 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity , Animated } from 'react-native';
 import Svg, { G, Circle } from 'react-native-svg';
 import { AntDesign } from '@expo/vector-icons';
 
+import normalize from '../components/Normalize';
+
 // @ts-ignore
 export default function NextButton({ percentage, scrollTo }) {
-    const size = 128;
+    const size = normalize(148);
     const strokeWidth = 2;
     const center = size / 2;
     const radius = size / 2 - strokeWidth / 2;
@@ -57,7 +59,7 @@ export default function NextButton({ percentage, scrollTo }) {
                     <Circle stroke="#E6E7E8" fill="#141414" cx={center} cy={center} r={radius} strokeWidth={strokeWidth}/>
                     <Circle
                         ref={progressRef}
-                        stroke="#b50909"
+                        stroke="#F80404"
                         fill="#141414"
                         cx={center}
                         cy={center}
@@ -82,8 +84,8 @@ const styles = StyleSheet.create({
     },
     button: {
         position: 'absolute',
-        backgroundColor: '#b50909',
+        backgroundColor: '#F80404',
         borderRadius: 100,
-        padding: 20
+        padding: normalize(23)
     }
 })

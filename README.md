@@ -7,7 +7,7 @@
 **Nom de l’application** : FLAD :musical_note:
 </br>
 
-**Thème de l’application** :  Réseau social cross-plateforme dans le thème de la musique destiné aux utilisateurs d'appareils mobiles.
+**Thème de l’application** :  Il s'agit d'un réseau social cross-plateforme axé sur la musique et destiné aux utilisateurs de terminaux mobiles. Son objectif est de permettre aux utilisateurs situés à moins de 100 mètres les uns des autres de visualiser les musiques écoutées par chacun. Ils pourront faire connaissance grâce à un chat et, qui sait, devenir amis. :grin:
 </br>
 
 **Contexte** : 👇
@@ -19,7 +19,7 @@
 
 La racine de notre gitlab est composée de deux dossiers essentiels au projet:
 
-[**src**](src) : **Toute la partie codage de l'application web**
+[**src**](src) : **Toute la partie codage de l'application mobile** (contient un dossier API pour l'API FLAD qui effectue les requêtes vers l'API SPOTIFY et la base de données, ainsi qu'un dossier FLAD qui contient toute la partie côté client de l'application)
 
 [**doc**](doc) : **Documentation de l'application**
 
@@ -76,6 +76,9 @@ Maintenant vous pouvez à tout moment lancer l'application grâce à la commande
 <br>
 :information_source: *Cliquer sur la touche 'w' si vous voulez le visualiser sur un navigateur (ce que je ne conseille pas) ou installer l'application 'Expo go' de votre téléphone et scanner le QR code proposer pour le visualiser (à noter que l'ordinateur dans lequel il se voit lancer doit être dans le même réseau local que votre téléphone)*
 
+- ### Comment s'inscrire sur l'application ? 
+
+Tout d'abord, il faut fournir votre *adresse e-mail* et votre *nom Spotify* aux **techniciens de l'application** (voir plus bas). Ils s'occuperont de vous ajouter définitivement à l'application. Une fois que cela est fait, inscrivez-vous via la **page d'inscription** de l'application en cliquant d'abord sur le bouton 'lier mon compte'. Vous serez normalement redirigé sur la page Spotify où vous devrez vous connecter. Une fois connecté, entrez votre nom, votre adresse e-mail et votre mot de passe en tant qu'utilisateur FLAD (n'oubliez pas ces informations car vous en aurez besoin pour vous connecter). Ensuite, cliquez sur le bouton 'suivant' et bienvenue sur l'application !
 
 ## Environnement de Travail
 
@@ -102,9 +105,9 @@ Notre environnement de travail se base sur plusieurs outils et langages :👇
 
 La composition pour le projet se voit réaliser par deux élèves de l'IUT d'Aubière:
 <br>
-⚙️ Emre KARTAL
+⚙️ Emre KARTAL : emre.kartal@etu.uca.fr
 <br>
-⚙️ David D'ALMEIDA
+⚙️ David D'ALMEIDA : david.d_almeida@etu.uca.fr
 
 <div align = center>
 © PM2

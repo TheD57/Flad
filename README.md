@@ -21,7 +21,7 @@ La racine de notre gitlab est composée de deux dossiers essentiels au projet:
 
 [**src**](src) : **Toute la partie codage de l'application mobile** (contient un dossier API pour l'API FLAD qui effectue les requêtes vers l'API SPOTIFY et la base de données, ainsi qu'un dossier FLAD qui contient toute la partie côté client de l'application)
 
-[**doc**](doc) : **Documentation de l'application**
+[**doc**](doc) : **Documentation de l'application** 
 
 ## Fonctionnement
 

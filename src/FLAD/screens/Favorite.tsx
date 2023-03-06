@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import CardMusic from '../components/CardMusic';
 import normalize from '../components/Normalize';
 import Music from '../Model/Music'
@@ -39,33 +39,39 @@ export default function favoritePage() {
 
     return (
         <View style={styles.body}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Favoris</Text>
-                <Text style={styles.description}>Retrouvez ici vos musiques favorites</Text>
-            </View>
-            <ScrollView>
-                <View>
-                    <FlatList style={{marginBottom: 80}}
-                        data={MUSIC_LIST}
-                        renderItem={({ item }) => (
-                            //<TouchableHighlight onPress={() => navigation.navigate("")}>
-                                <CardMusic image={item.image} title={item.title} description={item.bio}/>
-                            //</TouchableHighlight>
-                        )}
-                        keyExtractor={(item: Music) => item.title }
-                    />
+            <SafeAreaView style={styles.mainSafeArea}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Favoris</Text>
+                    <Text style={styles.description}>Retrouvez ici vos musiques favorites</Text>
                 </View>
-                <TouchableOpacity style={[styles.button, styles.shadow]} 
-                    // @ts-ignore
-                    onPress={() => navigation.navigate('Genre')}>
-                        <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
-                    </TouchableOpacity>
-            </ScrollView>
+                <ScrollView>
+                    <View>
+                        <FlatList style={{marginBottom: 80}}
+                            data={MUSIC_LIST}
+                            renderItem={({ item }) => (
+                                //<TouchableHighlight onPress={() => navigation.navigate("")}>
+                                <CardMusic image={item.image} title={item.title} description={item.bio}/>
+                                //</TouchableHighlight>
+                                )}
+                                keyExtractor={(item: Music) => item.title }
+                                />
+                    </View>
+                    <TouchableOpacity style={[styles.button, styles.shadow]} 
+                        // @ts-ignore
+                        onPress={() => navigation.navigate('Genre')}>
+                            <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
+                        </TouchableOpacity>
+                </ScrollView>
+            </SafeAreaView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    mainSafeArea: {
+        flex: 1,
+        backgroundColor: "#141414",
+    },
     body: {
         flex: 1,
         justifyContent: 'center',

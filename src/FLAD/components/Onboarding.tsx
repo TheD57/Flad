@@ -180,20 +180,20 @@ const styles = StyleSheet.create({
     },
     button2Connection: {
         width: '100%',
-        height: 80,
+        height: normalize(92),
         backgroundColor: '#232123',
         borderTopColor: '#3C3C3C',
         borderTopWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        bottom: normalize(46)
+        bottom: normalize(0)
     },
     mascot: {
         width: normalize(130),
         height: normalize(130),
         position: 'absolute',
-        bottom: normalize(140),
+        bottom: normalize(90),
         right: normalize(0)
     }
 })

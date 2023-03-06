@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, StyleSheet, Text, ImageBackground, Button, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform } from 'react-native';
+import { View, Image, StyleSheet, Text, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import normalize from '../components/Normalize';
 import * as SecureStore from 'expo-secure-store';
 import * as AuthSession from 'expo-auth-session';
-import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { registerUser } from '../redux/thunk/authThunk';

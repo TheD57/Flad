@@ -47,9 +47,9 @@ export default function AuthNavigation() {
         <>
                  {isLogin ? (
          /* {userToken != null ? ( */
-        <SafeAreaView style={styles.mainSafeArea} >
+        <SafeAreaProvider>
             <Navigation/>
-        </SafeAreaView>
+        </SafeAreaProvider>
     
         ) : 
         <SafeAreaProvider >
@@ -59,9 +59,3 @@ export default function AuthNavigation() {
     </>
     )
   }
-  const styles = StyleSheet.create({
-    mainSafeArea: {
-      flex: 1,
-      backgroundColor: "#141414",
-    }
-  });

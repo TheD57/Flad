@@ -78,7 +78,16 @@ Maintenant vous pouvez à tout moment lancer l'application grâce à la commande
 
 - ### Comment s'inscrire sur l'application ? 
 
-Tout d'abord, il faut fournir votre *adresse e-mail* et votre *nom Spotify* aux **techniciens de l'application** (voir plus bas). Ils s'occuperont de vous ajouter définitivement à l'application. Une fois que cela est fait, inscrivez-vous via la **page d'inscription** de l'application en cliquant d'abord sur le bouton 'lier mon compte'. Vous serez normalement redirigé sur la page Spotify où vous devrez vous connecter. Une fois connecté, entrez votre nom, votre adresse e-mail et votre mot de passe en tant qu'utilisateur FLAD (n'oubliez pas ces informations car vous en aurez besoin pour vous connecter). Ensuite, cliquez sur le bouton 'suivant' et bienvenue sur l'application !
+Tout d'abord, il faut fournir votre *adresse e-mail* et votre *nom Spotify* aux **techniciens de l'application** (voir plus bas). Ils s'occuperont de vous ajouter définitivement à l'application. Une fois que cela est fait, inscrivez-vous via la **page d'inscription** de l'application en cliquant d'abord sur le bouton 'lier mon compte':
+
+<div align = center>
+
+<img src="doc/Images/Real_RegisterPage.jpg" width="250" >
+
+</div>
+
+
+Vous serez normalement redirigé sur la page Spotify où vous devrez vous connecter. Une fois connecté, entrez votre nom, votre adresse e-mail et votre mot de passe en tant qu'utilisateur FLAD (n'oubliez pas ces informations car vous en aurez besoin pour vous connecter). Ensuite, cliquez sur le bouton 'suivant' et bienvenue sur l'application !
 
 ## Environnement de Travail
 

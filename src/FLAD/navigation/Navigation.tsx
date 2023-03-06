@@ -1,10 +1,11 @@
 import React from 'react';
+import { View, StyleSheet, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import FavoriteNavigation from './FavoriteNavigation';
 import SettingNavigation from './SettingNavigation';
-import Spot from '../screens/spot';
 
+import normalize from '../components/Normalize';
 // @ts-ignore
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SpotNavigation from './SpotNavigation';
@@ -29,14 +30,17 @@ export default function Navigation() {
             initialRouteName="Spots" 
             screenOptions={{
               //tabBarShowLabel: false, //to remove the titles under the icons
-              tabBarStyle: {height: 60, position: 'absolute', bottom: 20, borderRadius: 30, marginHorizontal: 25},
-              tabBarLabelStyle: { bottom: 5 }
+              tabBarStyle: styles.tabBar,
+              ...(Platform.OS === 'android' 
+              ? { tabBarLabelStyle: { bottom: normalize(10) } }
+              : { tabBarLabelStyle: { bottom: normalize(-22) } }
+            ),
 
             }}>
               <BottomTabNavigator.Screen name="Spots" component={SpotNavigation}
                         options={{ 
                             headerShown: false,
-                            tabBarIcon: ({color}) => <TabBarIcon name="music" color={color}/>,
+                            tabBarIcon: ({color}) => <View style={styles.IconContainer}><TabBarIcon name="music" color={color}/></View>,
                          }}/>
               <BottomTabNavigator.Screen name="Favorites" component={FavoriteNavigation}
                         options={{
@@ -45,17 +49,17 @@ export default function Navigation() {
                           tabBarBadge : 2,
                           tabBarBadgeStyle : {backgroundColor : 'yellow'}, 
                             headerShown: false,
-                            tabBarIcon: ({color}) => <TabBarIcon name="heart" color={color}/>,
+                            tabBarIcon: ({color}) => <View style={styles.IconContainer}><TabBarIcon name="heart" color={color}/></View>,
                          }}/>
               <BottomTabNavigator.Screen name="Messages" component={Login}
                         options={{ 
                             headerShown: false,
-                            tabBarIcon: ({color}) => <TabBarIcon name="comment" color={color}/>,
+                            tabBarIcon: ({color}) => <View style={styles.IconContainer}><TabBarIcon name="comment" color={color}/></View>,
                          }}/>
               <BottomTabNavigator.Screen name="Setting" component={SettingNavigation}
                         options={{ 
                             headerShown: false,
-                            tabBarIcon: ({color}) => <TabBarIcon name="cog" color={color}/>,
+                            tabBarIcon: ({color}) => <View style={styles.IconContainer}><TabBarIcon name="cog" color={color}/></View>,
                          }}/>
           </BottomTabNavigator.Navigator>
       </NavigationContainer>
@@ -68,3 +72,17 @@ function TabBarIcon(props: {
 }) {
     return <FontAwesome size={30} {...props} />;
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    height: 60, 
+    position: 'absolute', 
+    bottom: normalize(50), 
+    borderRadius: 30, 
+    marginHorizontal: 25
+  },
+  IconContainer: {
+    position: 'absolute', 
+    top: 5, 
+  }
+})

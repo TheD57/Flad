@@ -1,6 +1,4 @@
-import { SharedElement } from "react-navigation-shared-element";
-import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { View,Image,StyleSheet, Dimensions, useWindowDimensions } from "react-native";
+import { View, useWindowDimensions } from "react-native";
 import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, withTiming } from "react-native-reanimated";
 
 interface SpotProps {

@@ -107,5 +107,5 @@ La composition pour le projet se voit réaliser par deux élèves de l'IUT d'Aub
 ⚙️ David D'ALMEIDA
 
 <div align = center>
-© PM2 (Projet inspirer par nos très chère developpeur de la Dafl Team (S.O les Dafl dev))
+© PM2 (Projet inspiré par nos très chers développeurs de la Dafl Team (S.O les Dafl dev))
 </div>

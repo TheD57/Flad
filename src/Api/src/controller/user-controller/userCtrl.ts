@@ -219,8 +219,9 @@ class UserController implements Controller {
                 console.log('Impossible de convertir la chaîne en nombre');
             }
             //}
+            const currentMusicId = req.body.currentMusicId;
             const userId = req.user.idFlad;            
-            const data = await this.locationService.getNearUser(userId,latitude,longitude);
+            const data = await this.locationService.getNearUser(userId,latitude,longitude, currentMusicId);
             console.log(data);
             res.status(201).send(data);
 

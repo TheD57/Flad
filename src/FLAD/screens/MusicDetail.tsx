@@ -1,4 +1,3 @@
-import { SharedElement } from "react-navigation-shared-element";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
 import { View,Text,Image,StyleSheet, Dimensions, useWindowDimensions, Button, TouchableOpacity } from "react-native";
 import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, useDerivedValue, useSharedValue, Value, withSpring, withTiming } from "react-native-reanimated";
@@ -13,18 +12,12 @@ import { RequestHandler } from "../services/spotify/spotifyRequestHandler/utils"
 import { FetchRequest } from "expo-auth-session/build/Fetch";
 import Music from "../Model/Music";
 import SpotifyService from "../services/spotify/spotify.service";
+import { SharedElement } from "react-navigation-shared-element";
 
-interface SpotProps {
-    spot: { name: string, sourceUrl: string, index : number };
-}
 const halfPi = Math.PI/2;
 
-// const {width : wWidht} = Dimensions.get("window");
 //@ts-ignore
-const MusicDetail = ({ route }) => {
-    const {width, height} = useWindowDimensions();
-    console.log(route);
-    
+const MusicDetail = ({ route }) => {    
     const music : Music = route.params.music;
     const [currentspot, setCurrentspot] = useState(music);
     const [sound, setSound] = useState(null);
@@ -56,7 +49,6 @@ const MusicDetail = ({ route }) => {
     // })
 
 
-    const trackPreviewUrl = 'https://p.scdn.co/mp3-preview/08ef3b9d6dbd6bab233f5e9ca564091902767f71?cid=774b29d4f13844c495f206cafdad9c86';
     const playTrackPreview = async () => {
     console.log("===============================================================================================================");
 
@@ -87,8 +79,10 @@ const MusicDetail = ({ route }) => {
         { shouldPlay: true }
       );
       setSound(newSound);
+      setIsPlaying(true);
       
     } else {
+        setIsPlaying(true);
         //@ts-ignore
       await sound.playAsync();
     }
@@ -96,11 +90,12 @@ const MusicDetail = ({ route }) => {
 
   const handleStopSound = async () => {
     if (sound !== null) {
+        setIsPlaying(false);
+
         //@ts-ignore
       await sound.stopAsync();
     }
     else{
-        setIsPlaying(true);
     }
   };
     useEffect(() => {
@@ -117,18 +112,17 @@ const MusicDetail = ({ route }) => {
     //     }
     // })
       
-    console.log(music);
     const sensor = useAnimatedSensor(SensorType.ROTATION);
     const styleAniamatedImage = useAnimatedStyle(() => {
         const {yaw, pitch, roll} = sensor.sensor.value;
         const verticalAxis =interpolate(
             pitch,
-            [-halfPi,halfPi],
+            [-halfPi*2,halfPi*2],
             [-45, 45]
         )
         const horizontalAxis =interpolate(
             roll,
-            [-halfPi,halfPi],
+            [-halfPi*2,halfPi*2],
             [-45, 45]
         )
         return {
@@ -218,14 +212,14 @@ const MusicDetail = ({ route }) => {
       const animationState = new Value(State.UNDETERMINED);
       const playMusic = async (id: string) => {
          try { 
-              const service = new SpotifyService("BQC4k_OPQXENwmm2S8qLm9whlJT9IjeKsuG6kJNyVCSd88b0L-zOY84VqwvQxFsc9G3GvtPyUMezwxi8BBBloitzbhWX5tmTKTaLsJosGTnb7xivwNhRv0-LnNYbZWB24ZGAg0xPmDLn0yYmYlo7M_SMK5cCZdYQcZNXAuMYaI18GVXKoICBaKfCn4GcqBiRRgXyCVQnNGU4") ;
+              const service = new SpotifyService("BQDWJTPvSloZPYDqLc1YWri2LEcognvqoM5bdoCWMuHR9In2FhaKq5tW3-VC5JET9dD9K-W4Rmm0IiyhtX-fSL3Tb8RTHMJUc5GKFq2jxWlH7QXxsiYZV8Fhw2qU1eCpSof1qkPsBd1R36GOgcBaXq2N6kLTP5UcfP-gzjz65x_fVRSxoP6znK2dkvL6saQ6WwzoEFopqpqo") ;
               console.log("=====================================================)))))))))))))))"+id+"================================")
               await service.playMusic(id);
             }catch(error){}
         }
     
     return (
-<View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
+    <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
         {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
         <View style={{borderWidth : 1, borderColor : 'red'}}>
 
@@ -250,6 +244,7 @@ const MusicDetail = ({ route }) => {
                     // promptAsync();
                   }}
                 />
+
                     </View>
                     {/* Button */}
 
@@ -262,7 +257,7 @@ const MusicDetail = ({ route }) => {
                                 paddingVertical: 12,
                                 paddingHorizontal: 24,
                                 borderRadius: 24,
-                            }}  onPressIn={handlePlaySound}
+                            }}  
                             onPressOut={handleStopSound}
                             onLongPress={handlePlaySound}
                             delayLongPress={1000}>
@@ -279,20 +274,6 @@ const MusicDetail = ({ route }) => {
                     {/* </TapGestureHandler> */}
                    
                 {/* Button */}
-
-
-        {/* <View style={detailRadicalStyle.container}>
-            <Text style={detailRadicalStyle.radicalText}>{props.character}</Text>
-            <SvgXml
-                xml={props.icon
-                    .replace(/fill="#[0-9a-f]{6}"/g, `fill=${detailRadicalStyle.svg.color}`)}
-                width="30"
-                height="30"
-                opacity={0.5}
-                style={detailRadicalStyle.radicalIcon}
-
-            />
-        </View> */}
         {/* </SharedElement> */}
         </View>
 

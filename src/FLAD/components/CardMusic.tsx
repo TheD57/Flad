@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View , Image } from 'react-native';
+import { SharedElement } from 'react-navigation-shared-element';
+import { useSelector } from 'react-redux';
 
 import normalize from '../components/Normalize';
 
@@ -7,18 +9,25 @@ type CustomCardMusic = { //Props
     image: string;
     title: string;
     description: string;
+    id : string;
 }
 
+
 export default function CardMusic(CBP: CustomCardMusic) {
+
+const currentMusic = useSelector(state => state.appReducer.currentMusic);
+
   const source = typeof CBP.image === 'string' ? { uri: CBP.image } : CBP.image;
   return (
+
     <View style={styles.container}>
         <View style={styles.imageContainer}>
             <Image source={source} style={styles.image}/>
         </View>
         <View style={styles.textContainer}>
-            <Text style={styles.title}>{CBP.title}</Text>
-            <Text style={styles.description}>{CBP.description}</Text>
+          {/*  currentMusic.id === CBP.id && styles.currentMusic */}
+            <Text style={[styles.title]}>{CBP.title}</Text>
+            <Text style={[styles.description]}>{CBP.description}</Text>
         </View>
     </View>
   );
@@ -59,5 +68,8 @@ const styles = StyleSheet.create({
   description: {
     color: 'white',
     fontSize: normalize(18)
+  },
+  currentMusic: {
+    color: 'red'
   }
 });

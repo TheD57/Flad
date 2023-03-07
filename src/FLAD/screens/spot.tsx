@@ -6,7 +6,7 @@ import Animated from 'react-native-reanimated';
 
 import Card from '../components/Card';
 
-import { cards as cardArray } from '../data/data'
+import { cards as cardArray, spotArray2 } from '../data/data'
 import FladButton from '../components/button/button';
 import axios from 'axios';
 
@@ -21,6 +21,9 @@ import Lotties from '../assets/lottie/Lottie';
 import FladLoading from '../components/FladLoadingScreen';
 import { SharedElement } from 'react-navigation-shared-element';
 import { useNavigation } from '@react-navigation/native';
+import Music from '../Model/Music';
+import { addFavoritesMusic } from '../redux/actions/appActions';
+import { useDispatch } from 'react-redux';
 interface SpotProps {
 
 }
@@ -90,17 +93,30 @@ async function getValueFor(key:string) :Promise<string | null> {
 }
 
 export default function Spot() {
-  const [cards, setCards] = useState(cardArray);
+  const [cards, setCards] = useState(spotArray2);
   const [currentCard, setcurrentCard] = useState(cards[cards.length - 1]);
-  const onSwipe = (index: number, direction: 'left' | 'right') => {
+  const onSwipe = (index: number, direction: 'left' | 'right' | 'down') => {
+
     if (direction === 'right') {
       // Swiped right
+      console.log("====2==="+currentCard.music.title+"======2=========");
+      addLike(currentCard.music);
+      console.log('Swiped right');
     } else if (direction === 'left') {
       // Swiped left
+      console.log('Swiped left');
     }
-    // update the state of the cards state when it remove thisy
-    setCards(cards.filter((_, i) => i !== index));
-    setcurrentCard(cards[index-1]);
+    else if (direction === 'down') {
+      // Swiped down
+      console.log('Swiped down');
+    }
+    // update the state of the cards state when it remove this
+    setTimeout(() => {
+      setCards(cards.filter((_, i) => i !== index));
+      setcurrentCard(cards[index - 1]);
+    }, 3);
+    // setCards(cards.filter((_, i) => i !== index));
+    // setcurrentCard(cards[index-1]);
   };
 
   const likeButtonref = useRef<LottieView>(null);
@@ -110,17 +126,21 @@ export default function Spot() {
   const onLike = useCallback( () => {
     likeButtonref.current?.reset();
     likeButtonref.current?.play(0,55);
+    likeButtonref.current?.play(55,0);
   }, [])
+  const dispatch = useDispatch();
 
+  function addLike(music: Music) {
+    onLike();
+    console.log("====3==="+currentCard.music.title+"======3=========");
 
-//   function addLike(props: Movie) {
-//     dispatch(addFavoriteMu(props));
-//     dispatch(removeMovieTrending(props));
-//     if (displayIndex == trendingMovies.length - 1) {
-//         setdisplayIndex(0);
-//         swiper.swipeLeft();
-//     }
-// }
+    dispatch(addFavoritesMusic(music))
+    // dispatch(addFavoriteMusic(props));
+    // if (displayIndex == trendingMovies.length - 1) {
+    //     setdisplayIndex(0);
+    //     swiper.swipeLeft();
+    // }
+}
 
 
    
@@ -199,7 +219,7 @@ export default function Spot() {
                                  opacity: 0.48
                              }}
                              source={{
-                                 uri:currentCard.sourceUrl ,
+                                 uri:currentCard.music.image ,
                              }}
       ></ImageBackground>
 
@@ -230,13 +250,13 @@ export default function Spot() {
       <View style={{flex : 1.83, justifyContent: 'center', alignItems: 'center' }}>
 
         {cards.map((card, index) => (
-          <View key={card.name} style = {{ position:'absolute'}} >
+          <View key={card.userSpotifyId} style = {{ position:'absolute'}} >
             
             <Pressable onLongPress={() => {hapti(card)}} >
             {/* <SharedElement id={card.name}> */}
               <Card
-                title={card.name}
-                image={card.sourceUrl}
+                title={card.music.title}
+                image={card.music.image}
                 onSwipe={(direction) => {onSwipe(index, direction)}}
               />
             {/* </SharedElement> */}
@@ -255,7 +275,7 @@ export default function Spot() {
                 <LottieView autoPlay={false} loop={false} ref={likeButtonref} source={Lotties.likeAnimation} style={styles.lottie}/>  
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={onLike}>
-                <LottieView autoPlay={false} loop={false} ref={likeButtonref} source={Lotties.likeAnimation} style={styles.lottie}/>  
+                <LottieView autoPlay={false} loop={false} ref={likeButtonref} speed={2} source={Lotties.likeAnimation} style={styles.lottie}/>  
             </TouchableOpacity>
             
         </Animated.View>

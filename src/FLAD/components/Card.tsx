@@ -14,7 +14,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 interface CardProps {
     title: string;
     image: any;
-    onSwipe: (direction: "left" | "right") => void;
+    onSwipe: (direction: "left" | "right" | "down") => void;
   }
   type ContextType = {
     translateX: number;
@@ -50,7 +50,12 @@ const Card = ({ title, image, onSwipe } : CardProps) => {
         } else if (translateX.value < -160) {
           runOnJS(onSwipe)("left");
           // onSwipe("left");
-        } else {
+        }else if (translateY.value > 250) {
+          runOnJS(onSwipe)("down");
+          // onSwipe("left");
+        }
+        
+        else {
           translateX.value = withSpring(0);
           translateY.value = withSpring(0);
         }

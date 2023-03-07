@@ -18,6 +18,9 @@ const locationSchema = new Schema(
             type: Number,
             required: true,
         },
+        currentMusicId : {
+            type: String,
+        }
         
         
     },

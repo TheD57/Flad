@@ -22,10 +22,10 @@ export default function SpotNavigation() {
           name="Spots" 
           component={Spot} 
         />
-        <Stack.Screen 
+        {/* <Stack.Screen 
           name="DetailsSpot" 
           component={SpotDetailsPage} 
-        />
+        /> */}
         {/* <Stack.Screen 
           name="DetailsSpot" 
           component={SpotDetailsPage} 

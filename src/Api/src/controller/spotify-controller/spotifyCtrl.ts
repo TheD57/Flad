@@ -22,7 +22,7 @@ class SpotifyController implements Controller {
         this.router.get(`${this.path}/exchange`,this.login);
         this.router.get(`${this.path}/callback`,this.getAccessToken);
         // this.router.post(`${this.path}/refresh`,this.getRefreshToken);
-        this.router.get(`${this.path}/play/:musicId`, this.getMusic);
+        // this.router.get(`${this.path}/play/:musicId`, this.getMusic);
         this.router.get(`${this.path}/spot`, this.getSpot);
         
     }
@@ -137,10 +137,6 @@ class SpotifyController implements Controller {
         
       }    
     
-    public getMusic(){
-
-      return null;
-    }
 
     public getSpot = async (
       req: Request,

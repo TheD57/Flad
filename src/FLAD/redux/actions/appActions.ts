@@ -9,3 +9,9 @@ export const getFavoritesMusic = (favoritesMusic: Music[]) => {
       playload: favoritesMusic,
     };
 }
+export const addFavoritesMusic = (favoritesMusic: Music) => {
+  return {
+    type: favoritesTypes.ADD_FAVORITE_MUSICS ,
+    playload: favoritesMusic,
+  };
+}

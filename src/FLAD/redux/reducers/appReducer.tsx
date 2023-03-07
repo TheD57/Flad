@@ -4,7 +4,7 @@ import { discoveriesTypes } from "../types/discoverieTypes";
 import { favoritesTypes } from "../types/favoritesTypes";
 import { spotifyTypes } from "../types/spotifyTypes";
 import { spotTypes } from "../types/spotTypes";
-const tmpMusic: Music[] = [
+let tmpMusic: Music[] = [
         // new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
         // new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
         new Music("6npyDB4mn8MO1A1h666FTk","Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
@@ -26,8 +26,8 @@ const initialState = {
       case favoritesTypes.GET_FAVORITE_MUSICS:
         return {...state, favoriteMusic: action.playload};
       case favoritesTypes.ADD_FAVORITE_MUSICS:
-        return {...state, favoriteMusic: state.favoriteMusic.push(action.payload)};
-      case favoritesTypes.REMOVE_FAVORITE_MUSICS:
+        return {...state, favoriteMusic: [action.playload, ...state.favoriteMusic]};
+        case favoritesTypes.REMOVE_FAVORITE_MUSICS:
         return {...state, favoriteMusic: state.favoriteMusic};
       case spotTypes.FETCH_SPOT:
         return {...state, spot: action.payload};

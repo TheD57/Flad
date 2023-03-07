@@ -6,6 +6,7 @@ import Music from '../Model/Music'
 import {useNavigation} from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavoritesMusic } from '../redux/actions/appActions';
+import { SharedElement } from 'react-navigation-shared-element';
 
 export default function favoritePage() {
     const navigation = useNavigation();
@@ -47,7 +48,10 @@ export default function favoritePage() {
                         data={favoritesMusic}
                         renderItem={({ item }) => (
                             <TouchableHighlight onPress={() => {navigueToDetail(item)}}>
-                                <CardMusic image={item.image} title={item.title} description={item.bio}/>
+                                <SharedElement id={item.id}>
+
+                                <CardMusic image={item.image} title={item.title} description={item.bio} id={item.id}/>
+                                </SharedElement>
                             </TouchableHighlight>
                         )}
                         keyExtractor={(item: Music) => item.title }

@@ -6,11 +6,11 @@ import LocationSchema from "../database/schema/LocationSchema";
 class LocationService {
     private locationCollection = LocationSchema;
     // private API_KEY : string = "AIzaSyBFCEAtmhZ8jvw84UTQvX3Aqpr66GVqB_A";
-    public async getNearUser(idFlad : string, latitude : number, longitude : number)
+    public async getNearUser(idFlad : string, latitude : number, longitude : number, currentMusicId: string)
     {
         await this.locationCollection.findOneAndUpdate(
             { idFlad },
-            { idFlad, latitude, longitude },
+            { idFlad, latitude, longitude, currentMusicId },
             { upsert: true }
         );
 
@@ -22,18 +22,18 @@ class LocationService {
 
         let dbUsersList:UserLocation[] = [];
         snapshot.forEach(doc => {
-            dbUsersList.push(new UserLocation(doc.idFlad,doc.latitude,doc.longitude));
+            dbUsersList.push(new UserLocation(doc.idFlad,doc.latitude,doc.longitude, doc.currentMusicId));
           console.log(doc.idFlad, '=>', doc);
         });
             // missing the curent music
-            let listUser: string[] = [];                                                             
+            let listUser: {userid: string, music : string}[] = [];                                                             
             dbUsersList.forEach(user => {
                 console.log(user);
                 const dist = this.distanceBetween(latitude , longitude , user.latitude, user.longitude);    
                 console.log(user.uuid,dist);
                 if (dist <= 100) {                                                  
     
-                    listUser.push(user.uuid);             
+                    listUser.push({userid : user.uuid, music : user.currentMusicId});             
     
                 }
             }); 

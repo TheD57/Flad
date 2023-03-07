@@ -93,7 +93,29 @@ export const getCurrentUserMusic = (resuestHandler : SpotifyService)=> {
     }
 }
 }
+export const searchMusic = async (resuestHandler : SpotifyService,search: string) => {
+  // 
+  return async (dispatch) => {
+      // const fetchAll = async () => {
+      //     const data = await fetch(`https://kanjialive-api.p.rapidapi.com/api/public/search/${search}`, options)
+      //         .then(response => response.json());
 
+      //     const fetchPromises = data.map(it =>
+      //         fetch(`https://kanjialive-api.p.rapidapi.com/api/public/kanji/${it.kanji.character}`, options)
+      //             .then(detail => detail.json())
+      //     );
+
+      //     const kanjis = await Promise.all(fetchPromises)
+      //         .then(details => details.map(detail_data => KanjiMapper.ApiJsonToKanji(detail_data)));
+
+      //     return kanjis;
+      // };
+
+      return resuestHandler.searchMusic(search).then(musics => dispatch((musics))).catch(err => console.log("something goes wrong while searching : " + err));
+
+
+  };
+} 
 // export const fetchFavoritesMusic = () => {
 //     //@ts-ignore
 //   return async dispatch => {

@@ -1,29 +1,28 @@
-import React, { useState} from 'react';
-import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useEffect, useState} from 'react';
+import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 import CardMusic from '../components/CardMusic';
 import normalize from '../components/Normalize';
 import Music from '../Model/Music'
 import {useNavigation} from "@react-navigation/native";
+import { useDispatch, useSelector } from 'react-redux';
+import { getFavoritesMusic } from '../redux/actions/appActions';
+import { SharedElement } from 'react-navigation-shared-element';
 
 export default function favoritePage() {
     const navigation = useNavigation();
-
-    const MUSIC_LIST : Music[] = [
-        new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
-        new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
-        new Music("Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png"),
-        new Music("Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png"),
-        new Music("Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg"),
-        new Music("Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png"),
-        new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
-        new Music("Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png"),
-      ] 
+    //@ts-ignore
+    const favoritesMusic = useSelector(state => state.appReducer.favoriteMusic);
+    const dispatch = useDispatch();
+    
+   const navigueToDetail = (music : any) => {
+    navigation.navigate("MusicDetail", {"music": music})
+    };
       // to do
    const [filteredDataSource, setFilteredDataSource] = useState<Music[]>([]);
    const [search, setSearch] = useState('');
       const searchMusic = (text: string) => {
         if (text) {
-            const newData = MUSIC_LIST.filter(function (item: Music) {
+            const newData = favoritesMusic.filter(function (item: Music) {
                 const search = item.title
                     ? item.title.toUpperCase() : ''.toUpperCase();
                 const textsearch = text.toUpperCase();
@@ -40,9 +39,24 @@ export default function favoritePage() {
     return (
         <View style={styles.body}>
             <SafeAreaView style={styles.mainSafeArea}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Favoris</Text>
-                    <Text style={styles.description}>Retrouvez ici vos musiques favorites</Text>
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>Favoris</Text>
+                <Text style={styles.description}>Retrouvez ici vos musiques favorites</Text>
+            </View>
+            <ScrollView>
+                <View>
+                    <FlatList style={{marginBottom: 80}}
+                        data={favoritesMusic}
+                        renderItem={({ item }) => (
+                            <TouchableHighlight onPress={() => {navigueToDetail(item)}}>
+                                <SharedElement id={item.id}>
+
+                                <CardMusic image={item.image} title={item.title} description={item.bio} id={item.id}/>
+                                </SharedElement>
+                            </TouchableHighlight>
+                        )}
+                        keyExtractor={(item: Music) => item.title }
+                    />
                 </View>
                 <ScrollView>
                     <View>

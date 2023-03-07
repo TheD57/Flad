@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import FavoritePage from '../screens/favoritePage';
+import FavoritePage from '../screens/favorite';
 import { createStackNavigator } from '@react-navigation/stack';
 import Spot from '../screens/spot'
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
@@ -22,10 +22,10 @@ export default function SpotNavigation() {
           name="Spots" 
           component={Spot} 
         />
-        <Stack.Screen 
+        {/* <Stack.Screen 
           name="DetailsSpot" 
           component={SpotDetailsPage} 
-        />
+        /> */}
         {/* <Stack.Screen 
           name="DetailsSpot" 
           component={SpotDetailsPage} 

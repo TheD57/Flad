@@ -32,10 +32,12 @@ export class UserLocation {
     uuid: string;
     latitude : number;
     longitude: number;
-    constructor(uuid: string, latitude: number, longitude: number){
+    currentMusicId : string;
+    constructor(uuid: string, latitude: number, longitude: number, currentMusicId : string) {
         this.uuid = uuid;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.currentMusicId = currentMusicId;
     }
 }
 

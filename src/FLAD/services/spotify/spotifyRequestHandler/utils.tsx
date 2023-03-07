@@ -20,6 +20,7 @@ export class RequestHandler{
     }
     
     public async spotifyFetch(url: string, options: FetchOptions = {}, token: string) {
+        console.log(options+ "sds=============");
         const resp = await axios({
             url: `https://api.spotify.com/${this.version}${url}`,
             method: options.method || 'GET',
@@ -31,7 +32,7 @@ export class RequestHandler{
             },
             data: options.body
         });
-        console.log()
+        console.log(resp);
         return resp;
         // if (
         //     // @ts-ignore

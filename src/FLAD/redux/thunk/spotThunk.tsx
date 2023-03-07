@@ -8,6 +8,8 @@ import { Spot } from "../../Model/Spot";
 import SpotifyService from "../../services/spotify/spotify.service";
 import * as Location from 'expo-location';
 import { setSpotList, setUserCurrentMusic } from "../actions/spotActions";
+import Music from "../../Model/Music";
+import { getFavoritesMusic } from "../actions/appActions";
 const key = 'userToken';
 
 export type CreateSpotReqBody = {
@@ -91,6 +93,46 @@ export const getCurrentUserMusic = (resuestHandler : SpotifyService)=> {
     }
 }
 }
+export const searchMusic = async (resuestHandler : SpotifyService,search: string) => {
+  // 
+  return async (dispatch) => {
+      // const fetchAll = async () => {
+      //     const data = await fetch(`https://kanjialive-api.p.rapidapi.com/api/public/search/${search}`, options)
+      //         .then(response => response.json());
+
+      //     const fetchPromises = data.map(it =>
+      //         fetch(`https://kanjialive-api.p.rapidapi.com/api/public/kanji/${it.kanji.character}`, options)
+      //             .then(detail => detail.json())
+      //     );
+
+      //     const kanjis = await Promise.all(fetchPromises)
+      //         .then(details => details.map(detail_data => KanjiMapper.ApiJsonToKanji(detail_data)));
+
+      //     return kanjis;
+      // };
+
+      return resuestHandler.searchMusic(search).then(musics => dispatch((musics))).catch(err => console.log("something goes wrong while searching : " + err));
+
+
+  };
+} 
+// export const fetchFavoritesMusic = () => {
+//     //@ts-ignore
+//   return async dispatch => {
+//     const MovieList: Music[] = [
+//       // new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
+//       // new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
+//       new Music("Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png"),
+//       new Music("Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png"),
+//       new Music("Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg"),
+//       new Music("Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png"),
+//       // new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
+//       new Music("Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png"),
+//     ] ;
+//     dispatch(getFavoritesMusic(MovieList));
+//   }
+// }
+
 // export const getSpotList = () => {
 //     return async dispatch => {
 //       try {

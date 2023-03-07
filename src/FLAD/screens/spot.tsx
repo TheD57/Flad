@@ -204,35 +204,32 @@ export default function Spot() {
                                  height: "100%",
                                  justifyContent: "center",
                                  alignItems: "center",
-                                 opacity: 0.48
                              }}
                              source={{
                                  uri:currentCard.sourceUrl ,
                              }}
       ></ImageBackground>
-
-      <View style={{flex : 1.65}}>
-      <LinearGradient colors={['rgba(2, 2, 2, 0.58) 0%','rgba(0, 0, 0, 0) 90.56%']}style={styles.gradient}>
-      <Text
-      style={{
-        fontStyle : 'normal',
-        left: wWidht/9 ,
-        top: 65,
-        color: "#FFFFFF",
-        fontSize: 20,
-        fontWeight: "800",
-      }}>LOST FOREST</Text>
-      <Text
-      style={{
-        fontStyle : 'normal',
-        left: wWidht/9 ,
-        top: 65,
-        color: "#FFFFFF",
-        fontSize: 18,
-        fontWeight: "800",
-      }}>Laylow</Text>
-      </LinearGradient>
-      </View>
+        <SafeAreaView style={styles.mainSafeArea}>
+            <LinearGradient colors={['rgba(2, 2, 2, 0.58) 0%','rgba(0, 0, 0, 0) 100.56%']}style={styles.gradient}>
+              <Text
+              style={{
+                fontStyle : 'normal',
+                left: wWidht/9 ,
+                top: 75,
+                color: "#FFFFFF",
+                fontSize: 30,
+                fontWeight: "800",
+              }}>{currentCard.musicName}</Text>
+              <Text
+              style={{
+                fontStyle : 'normal',
+                left: wWidht/9 ,
+                top: 75,
+                color: "#FFFFFF",
+                fontSize: 18,
+              }}>{currentCard.name}</Text>
+            </LinearGradient>
+        </SafeAreaView>
       <View style={{flex : 8.35}}>
       
       <View style={{flex : 1.83, justifyContent: 'center', alignItems: 'center' }}>
@@ -272,23 +269,22 @@ export default function Spot() {
       </View>
       </>
       )
-      : (<View style={{justifyContent : 'center', alignItems : 'center', flex : 1}}>
-        <View style={{flex:7}}>
-
-                        <FladLoading></FladLoading>
-        </View>
-        <View style={{flex : 3 , justifyContent: 'flex-start'}}>
-        <Text style={{color: "grey", fontWeight: "400", textAlign: "center"}}>Vous avez explorer toutes les spot autour de vous.
-                            {"\n"}Continuer dans discoverie pour découvrir de nouvelles music basées dur vos gouts musicaux.</Text>
-        </View>
-                                            
-      </View>)
+      : (<View style={{justifyContent : 'center', alignItems : 'center', flex : 1, backgroundColor: "#141414"}}>
+          <View style={{position: "absolute"}}>
+            <FladLoading/>
+          </View>               
+            <Text style={{color: "grey", fontWeight: "400", textAlign: "center", top: 100}}>Vous avez explorer toutes les spot autour de vous.
+                              {"\n"}Continuer dans discoverie pour découvrir de nouvelles music basées dur vos gouts musicaux.</Text>               
+        </View>)
     }
     </View>
       
   );
 };
   const styles = StyleSheet.create({
+    mainSafeArea: {
+      flex: 1,
+    },
     spot : {
       flex: 1,
       alignItems: 'center',
@@ -320,9 +316,5 @@ export default function Spot() {
       right : 0,
       height : 209,
     },
-
-      mainSafeArea: {
-        flex: 1,
-      }
   })
   

@@ -1,7 +1,6 @@
-import { View, StyleSheet, Dimensions, Image, Pressable, TouchableWithoutFeedback, TouchableOpacity, TouchableHighlight } from "react-native";
+import { View, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 import Animated, {
     Layout,
-    Transition,
     ZoomIn,
     ZoomOut,
   } from "react-native-reanimated";

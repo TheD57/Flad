@@ -1,6 +1,6 @@
 import { SharedElement } from "react-navigation-shared-element";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { View,Text,Image,StyleSheet, Dimensions, useWindowDimensions, Button, TouchableOpacity } from "react-native";
+import { View,Text,Image,StyleSheet, Dimensions, useWindowDimensions, Button, TouchableOpacity, SafeAreaView } from "react-native";
 import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, useDerivedValue, useSharedValue, Value, withSpring, withTiming } from "react-native-reanimated";
 import { BlurView } from 'expo-blur';
 import qs from "qs";
@@ -217,6 +217,7 @@ const SpotDetailsPage = ({ route }) => {
 
     
     return (
+      <SafeAreaView style={styles.mainSafeArea}>
 <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
         {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
         <View style={{borderWidth : 1, borderColor : 'red'}}>
@@ -287,8 +288,16 @@ const SpotDetailsPage = ({ route }) => {
         </View> */}
         {/* </SharedElement> */}
         </View>
+      </SafeAreaView>
 
     );
 };
 
 export default SpotDetailsPage;
+
+const styles = StyleSheet.create ({
+  mainSafeArea: {
+    flex: 1,
+    backgroundColor: "#141414",
+  }
+})

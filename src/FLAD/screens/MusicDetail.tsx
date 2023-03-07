@@ -13,6 +13,7 @@ import { FetchRequest } from "expo-auth-session/build/Fetch";
 import Music from "../Model/Music";
 import SpotifyService from "../services/spotify/spotify.service";
 import { SharedElement } from "react-navigation-shared-element";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const halfPi = Math.PI/2;
 
@@ -219,9 +220,11 @@ const MusicDetail = ({ route }) => {
         }
     
     return (
+    <SafeAreaView style={styles.mainSafeArea}>
+        
     <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
         {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
-        <View style={{borderWidth : 1, borderColor : 'red'}}>
+        <View>
 
             <Animated.Image
                     source={{
@@ -229,7 +232,7 @@ const MusicDetail = ({ route }) => {
                     }}
                     style={[
                         {
-                        
+                            
                         width: 370,
                         height: 370,
                         borderRadius : 24,
@@ -276,8 +279,16 @@ const MusicDetail = ({ route }) => {
                 {/* Button */}
         {/* </SharedElement> */}
         </View>
+    </SafeAreaView>
 
     );
 };
 
 export default MusicDetail;
+
+const styles = StyleSheet.create ({
+    mainSafeArea: {
+        flex: 1,
+        backgroundColor: "#141414",
+    }
+})

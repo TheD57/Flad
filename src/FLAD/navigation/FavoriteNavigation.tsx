@@ -18,7 +18,7 @@ export default function MusicNavigation() {
         />
         <Stack.Screen 
           name="MusicDetail" 
-          component={InfoScreen} 
+          component={MusicDetail} 
           sharedElements ={(route)=> {return [route.params.music.id]}}
         />
         <Stack.Screen 

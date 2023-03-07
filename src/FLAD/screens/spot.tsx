@@ -24,9 +24,8 @@ import { useNavigation } from '@react-navigation/native';
 import Music from '../Model/Music';
 import { addFavoritesMusic } from '../redux/actions/appActions';
 import { useDispatch } from 'react-redux';
-interface SpotProps {
+import { Spot } from '../Model/Spot';
 
-}
 type LocationData = {
   latitude: number;
   longitude: number;
@@ -92,7 +91,7 @@ async function getValueFor(key:string) :Promise<string | null> {
   return result;
 }
 
-export default function Spot() {
+export default function SpotPage() {
   const [cards, setCards] = useState(spotArray2);
   const [currentCard, setcurrentCard] = useState(cards[cards.length - 1]);
   const onSwipe = (index: number, direction: 'left' | 'right' | 'down') => {
@@ -198,9 +197,9 @@ export default function Spot() {
   const navigator = useNavigation();
 
   const {width : wWidht} = Dimensions.get("window");
-  const hapti = (card : any) => {
+  const hapti = (card : Spot) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-    navigator.navigate("DetailsSpot", {"spot": card})
+    navigator.navigate("DetailsSpot", {"music": card.music})
     // Haptics.NotificationFeedbackType.Success
       };
   return (
@@ -231,7 +230,7 @@ export default function Spot() {
                 color: "#FFFFFF",
                 fontSize: 30,
                 fontWeight: "800",
-              }}>{currentCard.musicName}</Text>
+              }}>{currentCard.music.title}</Text>
               <Text
               style={{
                 fontStyle : 'normal',
@@ -239,7 +238,7 @@ export default function Spot() {
                 top: 75,
                 color: "#FFFFFF",
                 fontSize: 18,
-              }}>{currentCard.name}</Text>
+              }}>{currentCard.music.bio}</Text>
             </LinearGradient>
         </SafeAreaView>
       <View style={{flex : 8.35}}>

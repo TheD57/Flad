@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, TouchableHighlight, SafeAreaView } from 'react-native';
 import CardMusic from '../components/CardMusic';
 import normalize from '../components/Normalize';
 import Music from '../Model/Music'
@@ -58,18 +58,6 @@ export default function favoritePage() {
                         keyExtractor={(item: Music) => item.title }
                     />
                 </View>
-                <ScrollView>
-                    <View>
-                        <FlatList style={{marginBottom: 80}}
-                            data={MUSIC_LIST}
-                            renderItem={({ item }) => (
-                                //<TouchableHighlight onPress={() => navigation.navigate("")}>
-                                <CardMusic image={item.image} title={item.title} description={item.bio}/>
-                                //</TouchableHighlight>
-                                )}
-                                keyExtractor={(item: Music) => item.title }
-                                />
-                    </View>
                     <TouchableOpacity style={[styles.button, styles.shadow]} 
                         // @ts-ignore
                         onPress={() => navigation.navigate('Genre')}>

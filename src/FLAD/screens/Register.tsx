@@ -99,7 +99,11 @@ const scopes = scopesArr.join(' ');
             '&redirect_uri=' +
             encodeURIComponent(redirectUrl),
         })
+        console.log("=================grant code ==============<");
+
         console.log(result);
+        console.log("=================grant code ==============<");
+
         return result.params.code;
       } catch (err) {
         console.error(err)

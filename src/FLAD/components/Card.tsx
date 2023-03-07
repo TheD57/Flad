@@ -5,6 +5,8 @@ import Animated,{ Extrapolate, interpolate, runOnJS, useAnimatedGestureHandler, 
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
+const SCREEN_HEIGHT = Dimensions.get('window').height
+
 // const width = wWidht *0.75;
 // const height = wWidht * (465/264);
 // const borderRadius = 24;
@@ -86,11 +88,23 @@ const Card = ({ title, image, onSwipe } : CardProps) => {
         ( translateX.value,
           [-SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 4],
           [0.35, 0, 0.35]);
+          
 
           return {
             opacity : opacityl,
           };
         });
+        const opacCStyle2 = useAnimatedStyle(() => {
+          const opacityl = interpolate
+          ( translateY.value,
+            [0,SCREEN_HEIGHT/4],
+            [0,0.35]);
+            
+  
+            return {
+              opacity : opacityl,
+            };
+          });
        
         const opacDStyle = useAnimatedStyle(() => {
           const opacityl = interpolate
@@ -99,7 +113,6 @@ const Card = ({ title, image, onSwipe } : CardProps) => {
             [ 0, 1]);
             
             return {
-              backgroundColor : 'red',
               opacity : opacityl,
             };
           });
@@ -161,8 +174,12 @@ const  horizontalThreshold = SCREEN_WIDTH * 0.65;
         
         <Animated.View style={[ styleCardsNew, styles.container]}>
         <Animated.View style={[  styles.image,{backgroundColor: 'black',elevation: 100,
-                    position: "absolute",borderWidth : 8, borderColor : '#DA1D1D',
+                    position: "absolute",borderWidth : 8, borderColor : '#FFF',
                     zIndex: 1000,}, opacCStyle]}>
+        </Animated.View>
+        <Animated.View style={[  styles.image,{backgroundColor: 'black',elevation: 100,
+                    position: "absolute",borderWidth : 8, borderColor : '#FFF',
+                    zIndex: 1000,}, opacCStyle2]}>
         </Animated.View>
         <Image source={{uri : image}} style={[styles.image]} />
         <>

@@ -1,6 +1,5 @@
 import React from 'react';
 
-// @ts-ignore
 export default function AdjustSize(Text: String) {
     const titleLength = Text.length;
     const minFontSize = 23;

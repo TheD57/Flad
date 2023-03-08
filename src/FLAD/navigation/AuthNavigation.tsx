@@ -1,5 +1,5 @@
 import Navigation from './Navigation';
-import { StyleSheet,SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import StartNavigation from './StartNavigation';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -12,10 +12,10 @@ import { getRefreshToken } from '../redux/thunk/authThunk';
 SplashScreen.preventAutoHideAsync();
 
 export default function AuthNavigation() {
-    //@ts-ignore
-  const appIsReady : boolean = useSelector(state => state.userReducer.loading);
   //@ts-ignore
-  const isLogin : boolean = useSelector(state => state.userReducer.isLogedIn);
+  const appIsReady: boolean = useSelector(state => state.userReducer.loading);
+  //@ts-ignore
+  const isLogin: boolean = useSelector(state => state.userReducer.isLogedIn);
   // const userToken : string = useSelector(state => state.userReducer.userFladToken);
 
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function AuthNavigation() {
     async function prepare() {
       console.log(appIsReady, "1 AuthNav")
 
-        //@ts-ignore
+      //@ts-ignore
       await dispatch(getRefreshToken())
       await SplashScreen.hideAsync();
     }
@@ -40,10 +40,14 @@ export default function AuthNavigation() {
   if (appIsReady == false) {
     return null;
   }
-    return (
-        <SafeAreaProvider>
+  return (
 
-            <Navigation/>
+    <SafeAreaProvider>
+      {isLogin ? (
+        <Navigation />
+      ) :
+        <StartNavigation/>
+      }
     </SafeAreaProvider>
-    )
-  }
+  )
+}

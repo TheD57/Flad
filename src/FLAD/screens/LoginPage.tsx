@@ -4,6 +4,7 @@ import {useNavigation} from "@react-navigation/native";
 import normalize from '../components/Normalize';
 import { userLogin } from '../redux/thunk/authThunk';
 import { useDispatch } from 'react-redux';
+import { Audio } from 'expo-av';
 import { Credentials } from '../redux/actions/userActions';
 
 // @ts-ignore
@@ -14,12 +15,22 @@ const DismissKeyboard = ({ children }) => (
 )
 
 export default function loginPage() {
+    const [sound, setSound] = useState<Audio.Sound>();
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    async function playSound() {
+        console.log('Loading Sound');
+        const { sound } = await Audio.Sound.createAsync(
+          require('../assets/sounds/Click.mp3')
+        );
+        setSound(sound);
+    
+        console.log('Playing Sound');
+        await sound.playAsync(); 
+      }
     const dispatch = useDispatch();
 
     const submitForm = () => {
@@ -27,8 +38,9 @@ export default function loginPage() {
             email: username,
             password: password
           };
-        //@ts-ignore
-        dispatch(userLogin(credentials))
+          //@ts-ignore
+          dispatch(userLogin(credentials))
+          playSound()
       }
 
     const toggleRememberMe = () => {

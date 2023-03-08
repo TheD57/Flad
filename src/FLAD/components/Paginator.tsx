@@ -7,7 +7,7 @@ export default function Paginator({ data, scrollX }) {
     const { width } = useWindowDimensions();
 
     return (
-        <View style={{flexDirection: 'row', height: 64, marginBottom: normalize(50)}}>
+        <View style={{ flexDirection: 'row', height: 64, marginBottom: normalize(50) }}>
             {data.map((_, i) => {
                 const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
 
@@ -23,14 +23,14 @@ export default function Paginator({ data, scrollX }) {
                     extrapolate: 'clamp'
                 })
 
-                return <Animated.View 
+                return <Animated.View
                     style={[
-                        styles.dot, 
-                        { 
+                        styles.dot,
+                        {
                             width: dotWidth,
                             opacity,
                         }
-                    ]} 
+                    ]}
                     key={i.toString()}
                 />
             })}

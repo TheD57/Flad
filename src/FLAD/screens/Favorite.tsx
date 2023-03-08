@@ -17,7 +17,8 @@ export default function favoritePage() {
     const images = [
         { id: 1, source: require('../assets/images/FLADYLove.png') },
         { id: 2, source: require('../assets/images/FLADYStar.png') },
-        { id: 3, source: require('../assets/images/FLADYStar.png') },
+        { id: 3, source: require('../assets/images/FLADYHate.png') },
+        { id: 4, source: require('../assets/images/FLADYCry.png') },
       ];      
    const navigueToDetail = (music : any) => {
     navigation.navigate("MusicDetail", {"music": music})

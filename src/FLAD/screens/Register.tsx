@@ -8,6 +8,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { registerUser } from '../redux/thunk/authThunk';
 import { useDispatch } from 'react-redux';
+import { Audio } from 'expo-av';
 import { CredentialsRegister } from '../redux/actions/userActions';
 import { Buffer } from 'buffer';
 
@@ -34,10 +35,21 @@ await SecureStore.setItemAsync(key, value);
 
 
 export default function InscriptionPage() {
+  const [sound, setSound] = useState<Audio.Sound>();
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
     const [spotifyToken, setSpotifyToken] = useState('');
     const [spotifyID, setSpotifyIds] = useState('')
+    async function playSound() {
+      console.log('Loading Sound');
+      const { sound } = await Audio.Sound.createAsync(
+        require('../assets/sounds/Click.mp3')
+      );
+      setSound(sound);
+  
+      console.log('Playing Sound');
+      await sound.playAsync(); 
+    }
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -82,6 +94,7 @@ export default function InscriptionPage() {
           };
         //@ts-ignore
         dispatch(registerUser(credentials))
+        playSound()
       }
       const scopesArr = ['user-read-private','user-read-email','user-read-playback-state','user-read-currently-playing','user-read-recently-played','playlist-modify-public','ugc-image-upload','user-modify-playback-state'];
 const scopes = scopesArr.join(' ');

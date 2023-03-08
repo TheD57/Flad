@@ -109,6 +109,40 @@ const scopes = scopesArr.join(' ');
         console.error(err)
       }
     }
+    const getAuthorizationCode2 = async () => {
+      try {
+        const result = await AuthSession.startAsync({
+          authUrl:'https://flad-api-production.up.railway.app/api/spotify/exchange'
+        })
+        console.log("=================grant code ==============<");
+
+        console.log(result);
+        console.log("=================grant code ==============<");
+
+        return result.params.code;
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    const getTokens2 = async () => {
+      try {
+        const authorizationCode = await getAuthorizationCode2() //we wrote this function above
+        console.log(authorizationCode, "shhhhhhhhhhhhhheeeeeeeeeeeeeeeetttttttttttt");
+        const response = await fetch('https://flad-api-production.up.railway.app/api/spotify/callback');
+        const responseJson = await response.json();
+        console.log(responseJson, "okkkkkkkkkkkkkkk") ;
+        // destructure the response and rename the properties to be in camelCase to satisfy my linter ;)
+        const {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_in: expiresIn,
+        } = responseJson;
+        await setSpotifyToken(accessToken);
+        console.log(spotifyToken);
+      } catch (err) {
+        console.error(err);
+      }
+    }
     const getTokens = async () => {
       try {
         const authorizationCode = await getAuthorizationCode() //we wrote this function above

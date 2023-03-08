@@ -138,7 +138,7 @@ export default class SpotifyService implements IspotifyService {
 		return ;
 	}
 
-	public async createPlayList(userId : string,name : string,description : string): Promise<void>{
+	public async createPlayList(userId : string,name? : string,description? : string): Promise<void>{
 		var requestData :string = '/users/' + encodeURIComponent(userId) + '/playlists';
 		
 		const fetchOptions: FetchOptions = {
@@ -146,7 +146,7 @@ export default class SpotifyService implements IspotifyService {
 			body: {
 				"public": false,
 				"name": name || "New Flad Playlist",
-				"description": description,
+				"description": description || "New Flad Playlist",
 			}
 		  };
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, fetchOptions,this.token);
@@ -154,7 +154,32 @@ export default class SpotifyService implements IspotifyService {
 		return ;
 	}
 
+	public async getSimilarTrack(musicId : string,limit? : number ,market? : string): Promise<Music[]>{
+		var requestData :string = '/recommendations';
+		
+		const fetchOptions: FetchOptions = {
+			method: 'GET',
+			body: {
+				seed_tracks: musicId,
+				// market: "FR",
+				// limit:  5,
+			}
+		  };
+		console.log('222222222221baaaaaaaaaaaaahhhhhhhhhhhh LAaa chp gros');
 
+		const respSimilarMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, fetchOptions,this.token);
+		console.log(respSimilarMusic.status+'baaaaaaaaaaaaahhhhhhhhhhhh LAaa chp gros');
+		/// if respSimilarMusic == null || respSimilarMusic.data.count == 0 =>
+		const similars = respSimilarMusic.data.tracks.map((trackData: any) => {
+			// const { id, name, artists, album } = trackData;
+			console.log(trackData.id);
+			// return MusicFactory.mapFromSpotifyTrack(trackData)
+			// const artistNames = artists.map((artist: any) => artist.name).join(', ');
+			// const linkCover = album?.images[0]?.url || '';
+			// return new Music(id, name, artistNames, linkCover);
+		  });
+		return [] as Music[];
+	}
 
 	async getSpotifyCredentials() {
 		const res = await axios.get(this.API_URL)

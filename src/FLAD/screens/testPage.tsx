@@ -20,7 +20,7 @@ import { FetchRequest } from "expo-auth-session/build/Fetch";
 import SpotifyService from "../services/spotify/spotify.service";
 import Music from '../Model/Music';
 import { HorizontalFlatList } from '../components/HorizontalFlatList';
-import littleCard from '../components/littleCard';
+import { LittleCard } from '../components/littleCard';
 const halfPi = Math.PI/2;
 // InfoScreen.sharedElement = (navigation : ReturnType<typeof useNavigation>)=>{
 //     const music = navigation.getParam('music');
@@ -377,6 +377,16 @@ const styleAniamatedImage = useAnimatedStyle(() => {
           await service.playMusic(id);
         }catch(error){}
     }
+    const tmpMusic2: Music[] = [
+        // new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
+        // new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
+        new Music("6npyDB4mn8MO1A1h666FTk","Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
+        // new Music("0qwxx9ouUc5kGmMWHglDpq","Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png",""),
+        new Music("03o8WSqd2K5rkGvn9IsLy2","Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg","https://p.scdn.co/mp3-preview/c55f95de81b8c3d0df04148da1b03bd38db56e8f?cid=774b29d4f13844c495f206cafdad9c86"),
+        new Music("6DPrYPPGYK218iVIZDix3i","Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png","https://p.scdn.co/mp3-preview/a9f9cb19ac1fe6db0d06b67decf8edbb25895a33?cid=774b29d4f13844c495f206cafdad9c86"),
+        // new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
+        new Music("5GFHFEASZeJF0gyWuDDjGE","Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/9e854f4905c1228482e390169eb76d8520076b8f?cid=774b29d4f13844c495f206cafdad9c86"),
+      ] ; 
     return (
         <View style={styles.body}>
             <View style={styles.backgroundSection}>
@@ -463,12 +473,16 @@ const styleAniamatedImage = useAnimatedStyle(() => {
                     </View>
 
                     {similarMusics.length !== 0 && (
-                    <HorizontalFlatList renderCell={littleCard} title={'Simillar Music'} data={similarMusics}>
+                    // <HorizontalFlatList renderCell={littleCard} title={'Simillar Music'} data={similarMusics}>
                         
-                    </HorizontalFlatList>
-
+                    // </HorizontalFlatList>
+                    
+                        <HorizontalFlatList  title={'Simillar Music'} data={tmpMusic2}>
+                            {(props) => (
+                                <LittleCard image={props.image} title ={props.title}/>              
+                            )}
+                        </HorizontalFlatList>
                     )}
-
                     
 
 

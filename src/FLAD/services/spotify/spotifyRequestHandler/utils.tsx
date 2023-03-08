@@ -32,7 +32,7 @@ export class RequestHandler{
             },
             data: options.body
         });
-        console.log(resp);
+        console.log(resp, "frfrfrfr");
         return resp;
         // if (
         //     // @ts-ignore

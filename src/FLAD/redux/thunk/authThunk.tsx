@@ -4,7 +4,7 @@ import axios from "axios";
 import { json } from "express";
 import { useEffect } from "react";
 import { API_URL } from "../../fladConfig";
-import { Credentials, CredentialsRegister, restoreToken, setLoginState } from "../actions/userActions";
+import { Credentials, CredentialsRegister, restoreToken, setLoginState, userSignUp } from "../actions/userActions";
 import * as SecureStore from 'expo-secure-store';
 import { User } from "../../Model/User";
 import { UserFactory } from "../../Model/factory/UserFactory";
@@ -38,7 +38,7 @@ export const registerUser = ( resgisterCredential : CredentialsRegister) => {
             "https://flad-api-production.up.railway.app/api/users",
             {headers}
               )
-          dispatch(setLoginState( UserFactory.JsonToModel(user.data) )); // our action is called here
+          dispatch(userSignUp( UserFactory.JsonToModel(user.data) )); // our action is called here
             // console.log(user.data);
           // dispatch(setLoginState(user.data) ); // our action is called here
           } else {
@@ -109,9 +109,6 @@ export const getRefreshToken = () => {
     return async dispatch => {
         try {
           let userToken : string | null = await SecureStore.getItemAsync(key);
-          console.log("==========key ==================");
-          console.log(userToken);
-          console.log("==========key ==================");
 
           if (userToken) {
           console.log("==========key2 ==================");

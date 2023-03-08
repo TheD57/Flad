@@ -1,5 +1,5 @@
-import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { View,Text,Image,StyleSheet, Dimensions, useWindowDimensions, Button, TouchableOpacity } from "react-native";
+import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native";
+import { View,Text,Image,StyleSheet, Dimensions, useWindowDimensions, Button, TouchableOpacity, ScrollView, Pressable } from "react-native";
 import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, useDerivedValue, useSharedValue, Value, withSpring, withTiming } from "react-native-reanimated";
 import { BlurView } from 'expo-blur';
 import qs from "qs";
@@ -14,6 +14,15 @@ import Music from "../Model/Music";
 import SpotifyService from "../services/spotify/spotify.service";
 import { SharedElement } from "react-navigation-shared-element";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
+import Icons from "../assets/icons/icons/icon";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Feather as Icon } from "@expo/vector-icons";
+import { HorizontalFlatList } from "../components/HorizontalFlatList";
+import { LittleCard } from "../components/littleCard";
+import normalize from "../components/Normalize";
+import { Circle } from "react-native-svg";
+import { AntDesign } from '@expo/vector-icons';
 
 const halfPi = Math.PI/2;
 
@@ -22,7 +31,7 @@ const MusicDetail = ({ route }) => {
     const music : Music = route.params.music;
     const [currentspot, setCurrentspot] = useState(music);
     const [sound, setSound] = useState(null);
-
+    const [simularMusic, setSimularMusic] = useState([] as Music []);
     const [isPlaying, setIsPlaying] = useState(false);
     const loader = useSharedValue(0);
     useEffect(() => {
@@ -218,11 +227,55 @@ const MusicDetail = ({ route }) => {
               await service.playMusic(id);
             }catch(error){}
         }
-    
+
+        const tmpMusic2: Music[] = [
+            // new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
+            // new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
+            new Music("6npyDB4mn8MO1A1h666FTk","Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
+            // new Music("0qwxx9ouUc5kGmMWHglDpq","Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png",""),
+            new Music("03o8WSqd2K5rkGvn9IsLy2","Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg","https://p.scdn.co/mp3-preview/c55f95de81b8c3d0df04148da1b03bd38db56e8f?cid=774b29d4f13844c495f206cafdad9c86"),
+            new Music("6DPrYPPGYK218iVIZDix3i","Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png","https://p.scdn.co/mp3-preview/a9f9cb19ac1fe6db0d06b67decf8edbb25895a33?cid=774b29d4f13844c495f206cafdad9c86"),
+            // new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
+            new Music("5GFHFEASZeJF0gyWuDDjGE","Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/9e854f4905c1228482e390169eb76d8520076b8f?cid=774b29d4f13844c495f206cafdad9c86"),
+          ] ; 
+    const getSimilarTrack = async () => {
+        const service =new SpotifyService("BQC0Ne1eU2bR28A65uO-M9QPLCmGveUG5E7tQ5dD8nmzQvcz2OqUWNMYEM7zx0sEIvOPoV3S9XKSlFbFx5C3si97YAXU-4AzRiqoshfmLTFlGoPMkmGhYip9MDzshhbZM76eEWJ6x43YoXiM-TQBhI0HKh78W6a3A34TXIrn0QzU3rvZM2-ftnTfKD2e2bAN3FgDc38C");
+        var simularMusic = await service.getSimilarTrack(currentspot.id,5,'FR');
+        setSimularMusic(simularMusic);
+    }
+    useEffect(() => {
+        getSimilarTrack();
+    }, []);
+    const navigator = useNavigation();
+          
     return (
     <SafeAreaView style={styles.mainSafeArea}>
-        
-    <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
+        <View style={styles.body}>
+        <View style={styles.backgroundSection}>
+                <Image
+                    blurRadius={133}
+                    style={styles.back_drop}
+                    source={{
+                        uri: currentspot.image,
+                    }}
+                ></Image>
+
+                {/* <LinearGradient
+                    // Background Linear Gradient
+                    colors={['rgba(0,0,0,0.8)', 'transparent']}
+                /> */}
+                <LinearGradient style={styles.gradientFade}
+                    // Button Linear Gradient
+                                colors={['rgba(56,56,56,0)', 'rgba(14,14,14,1)']}>
+                </LinearGradient>
+            </View>
+            <View style={styles.background1}>
+            <ScrollView style={styles.list} showsVerticalScrollIndicator={false} scrollEventThrottle={4}>
+                
+           
+                
+                    <View style={styles.section1}>  
+    <View style={{ flex: 1,justifyContent : 'flex-start', alignItems : 'center' }}>
         {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
         <View>
 
@@ -233,51 +286,63 @@ const MusicDetail = ({ route }) => {
                     style={[
                         {
                             
-                        width: 370,
-                        height: 370,
+                        // width: 370,
+                        // width: 400,
+                        width: 392,
+                        height: 392,
                         borderRadius : 24,
                         resizeMode: 'stretch',
                         },styleAniamatedImage
                         
                     ]}
                     />
-                    <Button title="Play Track On Device"
-                  onPress={() => {
-                    playMusic(currentspot.id)
-                    // promptAsync();
-                  }}
-                />
+        </View>
+        <View style={{marginTop : 45,flex: 1, flexDirection : 'row', }}>
+            <View>
 
-                    </View>
-                    {/* Button */}
+            </View>
+            <TouchableOpacity activeOpacity={0.5} style={{
+                    backgroundColor: '#F80404',
+                    borderRadius: 100,
+                    padding: normalize(23)
+                    
+                }}>
+               <View style={{flex: 1, justifyContent : 'center', alignContent : 'center'}}>
+                    <FontAwesome name="play" size={32} color="#FFFF"  ></FontAwesome>
+               </View>  
+            </TouchableOpacity>
+            </View>
+        </View>
+        
+            </View>
 
+                        <View style ={{flex: 1, flexDirection : 'row', justifyContent :'space-evenly', width : '100%' }}>
 
-
-                    {/* <TapGestureHandler {...gestureHandler}> */}
-                        <Animated.View>
-                            <TouchableOpacity style={{
-                                backgroundColor: '#1DB954',
-                                paddingVertical: 12,
-                                paddingHorizontal: 24,
-                                borderRadius: 24,
-                            }}  
-                            onPressOut={handleStopSound}
-                            onLongPress={handlePlaySound}
-                            delayLongPress={1000}>
-
-                                <Text style={ {
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: 'bold',}}>
-                                        {isPlaying ? 'Playing...' : 'Play'}
-                                </Text>
-                            </TouchableOpacity>
-                        </Animated.View>
-                        
-                    {/* </TapGestureHandler> */}
-                   
-                {/* Button */}
-        {/* </SharedElement> */}
+                        <TouchableOpacity activeOpacity={0.6} style={{ flexDirection : 'row', justifyContent : 'space-evenly',alignItems: 'center', width: 180,
+        height: 64, borderRadius: 8, opacity: 0.86 ,backgroundColor: '#0B0606', }}>
+            <FontAwesome name="bookmark" size={24} color="#FFFF"  ></FontAwesome>
+            <Text style={{ fontSize: normalize(16), fontWeight:"700", color : '#FFFFFF' }}>Dans ma collection</Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.6} style={{ flexDirection : 'row', justifyContent : 'space-evenly',alignItems: 'center', width: 180,
+        height: 64, borderRadius: 8, opacity: 0.86 ,backgroundColor: '#0B0606', }}>
+            <Icon name="share" size={24} color="#FFFF"></Icon>
+            {/* <FontAwesome name="bookmark" size={24} color="#FF0000"  ></FontAwesome> */}
+            <Text style={{ fontSize: normalize(16), fontWeight:"700", color : '#FFFFFF' }}>Partager cette music</Text>
+        </TouchableOpacity>
+        {/* <Pressable style={{flexDirection : 'row', justifyContent : 'space-between', alignItems: 'center', height: "10%" , borderRadius: 8, opacity: 84 ,backgroundColor: 'rgba(29, 16, 16, 0.84)' }}>
+            <FontAwesome name="bookmark" size={16} color="#FF0000"  ></FontAwesome>
+            <Text style={{ fontSize: 16, fontWeight:"700",lineHeight:12, color : '#FFFFFF' }}>Dans ma collection 2</Text>
+        </Pressable> */}
+                        </View>
+        <HorizontalFlatList  title={'Similar'} data={tmpMusic2}>
+            {(props) => (
+            <Pressable onLongPress={() => {    navigator.navigate("MusicDetail", {"music": props})        }} >
+                <LittleCard image={props.image} title ={props.title}/>              
+            </Pressable>
+            )}
+        </HorizontalFlatList>
+            </ScrollView>
+        </View>
         </View>
     </SafeAreaView>
 
@@ -290,5 +355,31 @@ const styles = StyleSheet.create ({
     mainSafeArea: {
         flex: 1,
         backgroundColor: "#141414",
+    },
+    body: {
+        backgroundColor: "#0E0E0E"
+    },
+    backgroundSection: {
+        height: "100%",
+        width: "100%",
+        position: "absolute"
+    },
+    back_drop: {
+        height: "160%",
+        width: '430%',
+        position: "absolute",
+    },
+    gradientFade: {
+        height: "100%",
+    },
+    background1: {
+        height: '100%',
+        width: '100%',
+    },
+    list: {
+        height: "100%"
+    },
+    section1: {
+        paddingHorizontal: 25
     }
 })

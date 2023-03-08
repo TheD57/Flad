@@ -82,5 +82,24 @@ export const spotArray2: Spot[] = [
     "Harry Styles",
     "https://i.scdn.co/image/ab67616d0000b2738900d48677696015bf325b8b",
     "https://p.scdn.co/mp3-preview/4fff3f8d76a422f42cea39f001836a3d54937fc4?cid=774b29d4f13844c495f206cafdad9c86")
+  ),
+  new Spot("6", new Music("30d0q6kt1BIfwAQUCAfxVQ",
+    "Calme toi",
+    "Kerchack",
+    "https://i.scdn.co/image/ab67616d0000b273b4f73fb5c5ea299c7ebfbf60",
+    "https://p.scdn.co/mp3-preview/5de1103b9528c1e47e03d32b0aa5dbfe797191a2?cid=774b29d4f13844c495f206cafdad9c86")
+  ),
+  new Spot("7", new Music("7IXQrRgmHxWYWitSlyFY7z",
+    "Peur (feat. Ziak)",
+    "Ziak",
+    "https://i.scdn.co/image/ab67616d0000b273b533a3a5625bc6ce1be56a2e",
+    "https://p.scdn.co/mp3-preview/2c613f31b11375980aba80a5b535bf87ddb6211b?cid=774b29d4f13844c495f206cafdad9c86")
+  ),
+  new Spot("8", new Music("7wBoSW48q4ZFe8qSdozqqi",
+    "Blue",
+    "Kerchack",
+    "https://i.scdn.co/image/ab67616d0000b273cc4e66af40292c9d92146909",
+    "https://p.scdn.co/mp3-preview/401b51374dd3f2a15466a0b415a9ac7d2114a54b?cid=774b29d4f13844c495f206cafdad9c86")
   )
+
 ];

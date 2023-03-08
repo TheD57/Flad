@@ -13,7 +13,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { MY_SECURE_AUTH_STATE_KEY } from './login';
 import * as AuthSession from 'expo-auth-session';
-
+import normalize from '../components/Normalize';
 import * as Location from 'expo-location';
 import Icons from '../assets/icons/icons/icon';
 import LottieView from 'lottie-react-native'
@@ -226,18 +226,18 @@ export default function SpotPage() {
               style={{
                 fontStyle : 'normal',
                 left: wWidht/9 ,
-                top: 75,
+                top: normalize(87),
                 color: "#FFFFFF",
-                fontSize: 30,
+                fontSize: normalize(35),
                 fontWeight: "800",
               }}>{currentCard.music.title}</Text>
               <Text
               style={{
                 fontStyle : 'normal',
                 left: wWidht/9 ,
-                top: 75,
+                top: normalize(87),
                 color: "#FFFFFF",
-                fontSize: 18,
+                fontSize: normalize(20),
               }}>{currentCard.music.bio}</Text>
             </LinearGradient>
         </SafeAreaView>

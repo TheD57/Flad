@@ -38,24 +38,16 @@ export default function AuthNavigation() {
   }, [appIsReady]);
 
   if (appIsReady == false) {
-    console.log(appIsReady, "T9 AuthNav")
     return null;
   }
-  console.log(appIsReady, "k9 AuthNav")
-  // console.log(userToken, "k9 AuthNav")
     return (
-        <>
+        <SafeAreaProvider>
                  {isLogin ? (
          /* {userToken != null ? ( */
-        <SafeAreaProvider>
             <Navigation/>
-        </SafeAreaProvider>
-    
         ) : 
-        <SafeAreaProvider >
             <StartNavigation/>
-        </SafeAreaProvider>
         }
-    </>
+    </SafeAreaProvider>
     )
   }

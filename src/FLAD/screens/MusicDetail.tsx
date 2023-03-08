@@ -7,6 +7,7 @@ import axios from "axios";
 import { Buffer } from 'buffer';
 import { Audio } from 'expo-av';
 import { useEffect, useState } from "react";
+import normalize from '../components/Normalize';
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { RequestHandler } from "../services/spotify/spotifyRequestHandler/utils";
 import { FetchRequest } from "expo-auth-session/build/Fetch";
@@ -233,8 +234,8 @@ const MusicDetail = ({ route }) => {
                     style={[
                         {
                             
-                        width: 370,
-                        height: 370,
+                        width: normalize(429),
+                        height: normalize(429),
                         borderRadius : 24,
                         resizeMode: 'stretch',
                         },styleAniamatedImage
@@ -242,11 +243,10 @@ const MusicDetail = ({ route }) => {
                     ]}
                     />
                     <Button title="Play Track On Device"
-                  onPress={() => {
-                    playMusic(currentspot.id)
-                    // promptAsync();
-                  }}
-                />
+                    onPress={() => {
+                        playMusic(currentspot.id)
+                        // promptAsync();
+                    }}/>
 
                     </View>
                     {/* Button */}
@@ -263,11 +263,11 @@ const MusicDetail = ({ route }) => {
                             }}  
                             onPressOut={handleStopSound}
                             onLongPress={handlePlaySound}
-                            delayLongPress={1000}>
+                            delayLongPress={500}>
 
                                 <Text style={ {
                                     color: '#fff',
-                                    fontSize: 16,
+                                    fontSize: normalize(18),
                                     fontWeight: 'bold',}}>
                                         {isPlaying ? 'Playing...' : 'Play'}
                                 </Text>

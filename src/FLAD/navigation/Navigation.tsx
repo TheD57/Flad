@@ -41,7 +41,6 @@ export default function Navigation() {
           <BottomTabNavigator.Navigator 
             initialRouteName="Spots" 
             screenOptions={{
-              //tabBarShowLabel: false, //to remove the titles under the icons
               tabBarStyle: styles.tabBar,
               ...(Platform.OS === 'android' 
               ? { tabBarLabelStyle: { bottom: normalize(10) } }
@@ -56,8 +55,6 @@ export default function Navigation() {
                          }}/>
               <BottomTabNavigator.Screen name="Favorites" component={FavoriteNavigation}
                         options={{
-                          // use Selector state redux badgeCount ? badgeCount : undefined
-
                           tabBarBadge : favoritesMusicLength,
                           tabBarBadgeStyle : {backgroundColor : 'yellow'}, 
                             headerShown: false,

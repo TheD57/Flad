@@ -1,7 +1,7 @@
 import { View, Image , Dimensions, StyleSheet } from 'react-native'
 import React from 'react'
 import Animated,{ Extrapolate, interpolate, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-
+import normalize from '../components/Normalize';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
   image : {
     borderRadius : 24,
     resizeMode: 'stretch',
-    height: 362,
-    width: 362,
+    height: normalize(420),
+    width: normalize(420),
 },
 container: {
   flex: 1,

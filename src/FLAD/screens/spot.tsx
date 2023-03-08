@@ -9,7 +9,7 @@ import Card from '../components/Card';
 import { cards as cardArray, spotArray2 } from '../data/data'
 import FladButton from '../components/button/button';
 import axios from 'axios';
-
+import AdjustSize from '../components/AdjustSize';
 import * as SecureStore from 'expo-secure-store';
 import { MY_SECURE_AUTH_STATE_KEY } from './login';
 import * as AuthSession from 'expo-auth-session';
@@ -228,7 +228,7 @@ export default function SpotPage() {
                 left: wWidht/9 ,
                 top: normalize(87),
                 color: "#FFFFFF",
-                fontSize: normalize(35),
+                fontSize: normalize(AdjustSize(currentCard.music.title)),
                 fontWeight: "800",
               }}>{currentCard.music.title}</Text>
               <Text

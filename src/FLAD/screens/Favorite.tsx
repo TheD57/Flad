@@ -3,6 +3,7 @@ import { Image,StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, T
 import CardMusic from '../components/CardMusic';
 import normalize from '../components/Normalize';
 import Music from '../Model/Music'
+import FladyComponent from '../components/FladyComponent';
 import {useNavigation} from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavoritesMusic } from '../redux/actions/appActions';
@@ -13,7 +14,11 @@ export default function favoritePage() {
     //@ts-ignore
     const favoritesMusic = useSelector(state => state.appReducer.favoriteMusic);
     const dispatch = useDispatch();
-    
+    const images = [
+        { id: 1, source: require('../assets/images/FLADYLove.png') },
+        { id: 2, source: require('../assets/images/FLADYStar.png') },
+        { id: 3, source: require('../assets/images/FLADYStar.png') },
+      ];      
    const navigueToDetail = (music : any) => {
     navigation.navigate("MusicDetail", {"music": music})
     };
@@ -45,7 +50,7 @@ export default function favoritePage() {
             </View>
             <ScrollView>
                 <View>
-                    <FlatList style={{marginBottom: 80}}
+                    <FlatList style={{marginBottom: 30}}
                         data={favoritesMusic}
                         renderItem={({ item }) => (
                             <TouchableHighlight onPress={() => {navigueToDetail(item)}}>
@@ -58,11 +63,22 @@ export default function favoritePage() {
                         keyExtractor={(item: Music) => item.title }
                     />
                 </View>
+                <Text style={[styles.title,{marginLeft: 20}]}>What's your mood?</Text>
+                <FlatList
+                    style={{marginTop: 10}}
+                    data={images}
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => (
+                        <FladyComponent image={item.source} />
+                    )}
+                />
                     <TouchableOpacity style={[styles.button, styles.shadow]} 
-                        // @ts-ignore
+                    // @ts-ignore
                         onPress={() => navigation.navigate('Genre')}>
-                            <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
-                        </TouchableOpacity>
+                        <Image source={require("../assets/icons/icons/next.png")} style={styles.buttonImage}/>
+                    </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
         </View>

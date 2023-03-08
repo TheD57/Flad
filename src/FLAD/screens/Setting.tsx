@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 30,
         marginHorizontal: normalize(25),
+        paddingBottom: normalize(400),
         flex: 1,
         backgroundColor: '#141414',
     },

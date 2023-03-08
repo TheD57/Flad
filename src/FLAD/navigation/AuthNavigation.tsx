@@ -42,12 +42,8 @@ export default function AuthNavigation() {
   }
     return (
         <SafeAreaProvider>
-                 {isLogin ? (
-         /* {userToken != null ? ( */
+
             <Navigation/>
-        ) : 
-            <StartNavigation/>
-        }
     </SafeAreaProvider>
     )
   }

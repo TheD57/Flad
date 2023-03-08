@@ -10,6 +10,7 @@ import { registerUser } from '../redux/thunk/authThunk';
 import { useDispatch } from 'react-redux';
 import { CredentialsRegister } from '../redux/actions/userActions';
 import { Buffer } from 'buffer';
+import SpotifyService from '../services/spotify/spotify.service';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -137,7 +138,9 @@ const scopes = scopesArr.join(' ');
           refresh_token: refreshToken,
           expires_in: expiresIn,
         } = responseJson;
+        
         await setSpotifyToken(accessToken);
+
         console.log(spotifyToken);
       } catch (err) {
         console.error(err);
@@ -164,11 +167,45 @@ const scopes = scopesArr.join(' ');
           expires_in: expiresIn,
         } = responseJson;
         await setSpotifyToken(accessToken);
+        save(MY_SECURE_AUTH_STATE_KEY, accessToken);
+        testService(accessToken);
         console.log(spotifyToken);
       } catch (err) {
         console.error(err);
       }
     }
+
+    const testService = async (token : string) =>{
+        try {
+          const serviceTest = new SpotifyService(token);
+            console.log("==============Test Service 1 ============");
+            const respSearch = await serviceTest.searchMusic("Parapluie Tiakola");
+            console.log("===================repoonce=========================");
+            console.log(respSearch);
+          console.log("============================================");
+            console.log("==============Test Service 2 ============");
+            const respFull = await serviceTest.getMusicById(respSearch[0].id);
+            console.log("===================repoonce=========================");
+            console.log(respFull);
+          console.log("============================================");
+            console.log("==============Test Service 3 ============");
+            const respSimilar = await serviceTest.getSimilarTrack(respSearch[0].id);
+            console.log("===================repoonce=========================");
+            console.log(respSimilar);
+          console.log("============================================");
+          console.log("============================================");
+
+        } catch (error) {
+          console.log("==============Test Service Error============");
+          console.error(error);
+          console.log("============================================");
+
+        }
+
+    }
+    
+
+
 
     return (
         <DismissKeyboard>

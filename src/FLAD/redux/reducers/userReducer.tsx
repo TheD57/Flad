@@ -41,12 +41,15 @@ const initialState = {
         user :action.playload,
         isLogedIn: true 
       };
-      // case USER_SIGNUP:
-      //   return {...state, nounours: action.payload};
       case userTypes.USER_LOGOUT:
         return {...state,
           user :null,
           isLogedIn: false  }
+      case userTypes.SAVE_SPOTIFY:
+        return {
+          ...state,
+          userSpotifyToken : action.playload,
+        };
       default:
         return state;
     }

@@ -23,25 +23,27 @@ export default function AuthNavigation() {
   useEffect(() => {
     async function prepare() {
       console.log(appIsReady, "1 AuthNav")
-
+            
         //@ts-ignore
       await dispatch(getRefreshToken())
-      await SplashScreen.hideAsync();
+      if (appIsReady) {
+        console.log("++++++++++++++++++++++++++++++++++++++jsiuis con +++++++++++++++++++++++++++++3");  
+        await SplashScreen.hideAsync();
+      }      // await SplashScreen.hideAsync();
     }
     prepare();
-  }, [dispatch]);
-
-  const onStackRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
-    }
   }, [appIsReady]);
+
+  // const onStackRootView = useCallback(async () => {
+   
+  // }, [appIsReady]);
 
   if (appIsReady == false) {
     console.log(appIsReady, "T9 AuthNav")
     return null;
   }
   console.log(appIsReady, "k9 AuthNav")
+
   // console.log(userToken, "k9 AuthNav")
     return (
         <>

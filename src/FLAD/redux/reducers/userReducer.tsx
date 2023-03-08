@@ -3,7 +3,7 @@ import { userTypes } from "../types/userTypes";
 const initialState = {
   loading: false,
   user: User, // for user object
-  userFladToken: null, // for storing the JWT
+  userFladToken: "", // for storing the JWT
   userSpotifyToken : null,
   error: null,
   isLogedIn: false,
@@ -14,11 +14,13 @@ const initialState = {
       // just for the navigation and speciafly use 
       // and 
       case userTypes.RESTORE_TOKEN:
+            const resp = (action.playload ==  "" ? false : true)
+            console.log(resp, "si il ya le tokennen ou passssssssssss")
           return {
             ...state,
             userFladToken : action.playload,
             loading: true,
-            // isLogedIn: true,
+            isLogedIn: resp,
           };
       case userTypes.LOGIN:
         console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");  

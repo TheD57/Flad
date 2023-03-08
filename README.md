@@ -97,7 +97,8 @@ Notre environnement de travail se base sur plusieurs outils et langages :👇
 
 ---
 
-&nbsp; ![React Native](https://img.shields.io/badge/React%20Native-000?style=for-the-badge&logo=react&logoColor=white&color=lightblue&textColor=white)
+&nbsp; ![Docker](https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white)
+&nbsp; ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 &nbsp; ![TypeScript](https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=typescript&logoColor=white&color=blue)
 &nbsp; ![JavaScript](https://img.shields.io/badge/JavaScript-000?style=for-the-badge&logo=javascript&logoColor=white&color=yellow)
 

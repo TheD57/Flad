@@ -108,7 +108,7 @@ export const getRefreshToken = () => {
     //@ts-ignore
     return async dispatch => {
         try {
-          let userToken : string | null = await SecureStore.getItemAsync(key);
+          let userToken : string | null = await SecureStore.getItemAsync('key');
 
           if (userToken) {
           console.log("==========key2 ==================");

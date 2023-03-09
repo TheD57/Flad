@@ -31,7 +31,7 @@ const halfPi = Math.PI/2;
 //@ts-ignore
 const MusicDetail = ({ route }) => {    
     const music : Music = route.params.music;
-    const [currentspot] = useState(music);
+    const [currentspot, setCurrentSpot] = useState(music);
     const [simularMusic, setSimularMusic] = useState<Music[]>([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [sound, setSound] = useState(null);
@@ -41,26 +41,34 @@ const MusicDetail = ({ route }) => {
     const [testtoken, setTesttoken] = useState('')
 
     const sheet = async () => {
-        const data = await SecureStore.getItemAsync('MySecureAuthStateKey');
-        setTesttoken(data)
+        SecureStore.getItemAsync('MySecureAuthStateKey').then(result => { setTesttoken(result)});
+       
     }
-    sheet();
 
-    const getSimilarTrack = async () => {
-        const service = new SpotifyService(testtoken);
-        var simularMusic = await service.getSimilarTrack(currentspot.id, 5, 'FR');
-        try {
-            Promise.all(simularMusic).then((resolvedMusic) => {
-                setSimularMusic(resolvedMusic);
-              });
-        } catch (error) {
-            console.log(error.message);
-        }
-      }
     
-    useEffect(() => {        
+    useEffect(() => {    
+        sheet();    
         getSimilarTrack();
-    }, []);
+    }, [testtoken]);
+
+    // const getSimilarTrack = async () =>  {
+    //     const service = new SpotifyService(testtoken);            
+    //         const simularMusic = await service.getSimilarTrack(currentspot.id, 5, 'FR');
+    //             console.log("suggesstd", simularMusic)     
+    //                 setSimularMusic(simularMusic);     
+        
+    //   }
+      const getSimilarTrack = async () =>  {
+        try {
+            const service = new SpotifyService(testtoken);            
+            const simularMusic = await service.getSimilarTrack(currentspot.id, 5, 'FR');
+            console.log("suggesstd", simularMusic);     
+            setSimularMusic(simularMusic);     
+        } catch (error) {
+            console.error('Error ================ in getSimilarTrack', error);
+            // Handle the error here.
+        }
+    }
 
     const handlePlaySound = async () => {
         if (sound === null) {
@@ -194,14 +202,13 @@ const MusicDetail = ({ route }) => {
         height: 64, borderRadius: 8, opacity: 0.86 ,backgroundColor: '#0B0606', }}>
             <Icon name="share" size={24} color="#FFFF"></Icon>
             {/* <FontAwesome name="bookmark" size={24} color="#FF0000"  ></FontAwesome> */}
-            <Text style={{ fontSize: normalize(16), fontWeight:"700", color : '#FFFFFF' }}>Partager cette music</Text>
+            <Text style={{ fontSize: normalize(16), fontWeight:"700", color : '#FFFFFF' }}>Partagedr cette music</Text>
         </TouchableOpacity>
         {/* <Pressable style={{flexDirection : 'row', justifyContent : 'space-between', alignItems: 'center', height: "10%" , borderRadius: 8, opacity: 84 ,backgroundColor: 'rgba(29, 16, 16, 0.84)' }}>
             <FontAwesome name="bookmark" size={16} color="#FF0000"  ></FontAwesome>
             <Text style={{ fontSize: 16, fontWeight:"700",lineHeight:12, color : '#FFFFFF' }}>Dans ma collection 2</Text>
         </Pressable> */}
                         </View>
-                        <Text>{testtoken}</Text> 
         {simularMusic.length !== 0 && (
         <HorizontalFlatList  title={'Similar'} data={simularMusic}>
             {(props) => (

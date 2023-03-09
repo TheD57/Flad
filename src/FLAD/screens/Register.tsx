@@ -193,6 +193,15 @@ const scopes = scopesArr.join(' ');
             console.log("===================repoonce=========================");
             console.log(respSimilar);
           console.log("============================================");
+          console.log("==============Test Service 4 ============");
+            const respCurrent= await serviceTest.getUserCurrentMusic();
+            console.log("===================repoonce=========================");
+            console.log(respCurrent);
+          console.log("============================================");
+          console.log("==============Test Service 5 ============");
+          const respRecently= await serviceTest.getUserRecentlyPlayedMusic();
+          console.log("===================repoonce=========================");
+          console.log(respRecently);
           console.log("============================================");
 
         } catch (error) {

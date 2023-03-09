@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 export type Methods = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
 
@@ -19,7 +19,7 @@ export class RequestHandler{
         return this._version;
     }
     
-    public async spotifyFetch(url: string, options: FetchOptions = {}, token: string) {
+    public async spotifyFetch(url: string, options: FetchOptions = {}, token: string) : Promise<AxiosResponse<any,any>> {
         console.log(options+ "sds=============");
         const resp = await axios({
             url: `https://api.spotify.com/${this.version}${url}`,
@@ -32,6 +32,7 @@ export class RequestHandler{
             },
             data: options.body
         });
+        console.log(")))))))))))))))))))",resp.request, "((((((((((((((((((((");
         // console.log(resp, "frfrfrfr");
         return resp;
         // if (

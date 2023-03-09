@@ -204,31 +204,36 @@ export default class SpotifyService implements IspotifyService {
 	// 	return similars;
 	// }
 	public async getSimilarTrack(musicId: string, limit: number = 1, market?: string): Promise<Music[]> {
-		const requestData: string = '/recommendations' +
-		  '?limit=' + limit +
-		  '&market=FR' +
-		  '&seed_tracks=' + musicId;
-		  console.log(musicId, "=============ouioui=================")
-
-		const respSimilarMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
-		
-		if (!respSimilarMusic || !respSimilarMusic.data.tracks) {
-		  return [];
+		const requestData: string = '/recommendations/' +
+		'?limit=' + limit +
+		'&market=FR' +
+		'&seed_tracks=' + musicId;
+		console.log(musicId, "=============ouioui=================")
+		var respSimilarMusic;
+		try {
+			console.log( "=======================1=========",requestData,this.token )
+			respSimilarMusic=  await this.spotifyRequestHandler.spotifyFetch(requestData, {}, this.token);
+		} catch (error) {
+			console.log(error, "===================================spot Service");
 		}
-		
-		const similars: Music[] = await Promise.all(
-		  respSimilarMusic.data.tracks.map(async (trackData: any) => {
-			
-			if (trackData.id) {
-				console.log(trackData.id, "=============ouioui=================")
-			  const data = await this.getMusicById(trackData.id);
-			//   console.log(data, "=============nonon=================");
-			  return data;
-			}
-		  })
-		);
+	if (!respSimilarMusic || !respSimilarMusic.data.tracks) {
+		return [];
+	}
+			const similars: Music[] = await Promise.all(
+			  respSimilarMusic.data.tracks.map(async (trackData: any) => {
+				if (trackData.id !=undefined) {
+						const data = await this.getMusicById(trackData.id);
+						return data;	
+				}
+				
+			  })
+	
+			  )
+			  return  similars.filter((music: Music | undefined) => !!music) as Music[];
 
-		return similars.filter((music: Music | undefined) => !!music) as Music[];
+
+		// return similars;
+
 	  }
 	  
 

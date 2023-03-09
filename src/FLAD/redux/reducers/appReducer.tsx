@@ -34,7 +34,7 @@ const initialState = {
       case discoveriesTypes.FETCH_DISCOVERIES:  
         return;
       case spotifyTypes.GET_USER_CURRENT_MUSIC:
-        return {...state, userCurrentMusic: action.payload}; 
+        return {...state, userCurrentMusic: action.playload}; 
       default:
         return state; 
     }

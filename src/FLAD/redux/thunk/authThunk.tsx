@@ -4,7 +4,7 @@ import axios from "axios";
 import { json } from "express";
 import { useEffect } from "react";
 import { API_URL } from "../../fladConfig";
-import { Credentials, CredentialsRegister, restoreToken, setLoginState, UserLogout } from "../actions/userActions";
+import { Credentials, CredentialsRegister, restoreToken, setLoginState, UserLogout, userChangeMode } from "../actions/userActions";
 import * as SecureStore from 'expo-secure-store';
 import { User } from "../../Model/User";
 import { UserFactory } from "../../Model/factory/UserFactory";
@@ -144,6 +144,14 @@ export const DeleteToken = () => {
     } catch (e) {
       console.log('Error deleting token', e);
     }
+  }
+}
+
+export const ChangeMode = () => {
+  //@ts-ignore
+  return async dispatch => {
+    dispatch(userChangeMode());
+    await SecureStore.deleteItemAsync(key);
   }
 }
 

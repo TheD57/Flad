@@ -44,3 +44,8 @@ export const restoreToken = (token : string) => {
     };
   }
  
+  export const userChangeMode = () => {
+    return {
+      type: userTypes.CHANGE_MODE, 
+    };
+  }

@@ -32,6 +32,7 @@ export default class SpotifyService implements IspotifyService {
 		if (respMusic.status != 200) {
 			return null;
 		}
+		console.log(respMusic.data.items.track.id)
 		return respMusic.data.items.track.id;
 	}
 
@@ -56,7 +57,6 @@ export default class SpotifyService implements IspotifyService {
 			}
 		  };
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, fetchOptions,this.token);
-		console.log(respMusic.data);
 		// need to handle when 
 		// if (respMusic.status != 200) {
 		// 	if (respMusic.status == 400 && respMusic.data.message =='need to use Spotify premium'){

@@ -36,27 +36,27 @@ await SecureStore.setItemAsync(key, value);
 
 export default function InscriptionPage() {
   const [sound, setSound] = useState<Audio.Sound>();
-    const [rememberMe, setRememberMe] = useState(false);
-    const navigation = useNavigation();
-    const [spotifyToken, setSpotifyToken] = useState('');
-    const [spotifyID, setSpotifyIds] = useState('')
-    async function playSound() {
-      console.log('Loading Sound');
-      const { sound } = await Audio.Sound.createAsync(
-        require('../assets/sounds/Click.mp3')
-      );
-      setSound(sound);
-  
-      console.log('Playing Sound');
-      await sound.playAsync(); 
-    }
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigation = useNavigation();
+  const [spotifyToken, setSpotifyToken] = useState('');
+  const [spotifyID, setSpotifyIds] = useState('')
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      require('../assets/sounds/Click.mp3')
+    );
+    setSound(sound);
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const toggleRememberMe = () => {
-        setRememberMe(!rememberMe);
-    }
+    console.log('Playing Sound');
+    await sound.playAsync(); 
+  }
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const toggleRememberMe = () => {
+      setRememberMe(!rememberMe);
+  }
    
 //spotify auth
     const [request, response, promptAsync] = useAuthRequest(

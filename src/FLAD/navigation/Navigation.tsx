@@ -13,28 +13,43 @@ import Login from '../screens/login';
 import FladLoading from '../components/FladLoadingScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFavoritesMusic } from '../redux/actions/appActions';
+import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
+import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
+import { getCurrentUserMusic } from '../redux/thunk/spotThunk';
+import SpotifyService from '../services/spotify/spotify.service';
 // import { fetchFavoritesMusic } from '../redux/thunk/spotThunk';
 
 export default function Navigation() {
+  const isDark = useSelector(state => state.userReducer.dark);
+  const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
   const BottomTabNavigator = createBottomTabNavigator();
   const MyTheme = {
     dark: false,
     colors: {
       primary: 'rgb(255, 45, 85)',
-      card: 'rgb(35, 33, 35)',
-      border: 'rgb(35, 33, 35)',
+      card: style.Card,
+      border: style.Card,
       text: 'rgb(138, 138, 138)',
     }
   };
   //@ts-ignore
   const favoritesMusicLength : number = useSelector(state => state.appReducer.favoriteMusic.length);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // useEffect(() => {
   //       const loadFavoritesMusics = async () => {
   //           await dispatch(fetchFavoritesMusic());
   //       };
   //       loadFavoritesMusics();
   //   }, [dispatch]);
+  const token = "BQBNdaYRkD3GAOFASk8uc-l72zVwQeQ0sFB4GJnkBGudsJHnuAXd4eIWb78gbFLKZeBoHrWpHxMeSmqvHk75Utg9fsOJp7XyJfm-tAlgGhUQ-xiUM8rXTpa9k3M40BMSnujPDrap_O1ChCyGhBWYVHDd2t67qY0NVDvCJ4Qz7LucJJdgu1BN838qXTScQV90zriO8lp6Rjx6SsWov_fMZTyadzxebYIiQ-VDQDs63gUordThas-jFlAHLgJlqPhVOHJ1WaZt-_oLhgY3fk4bhORkyeAFZVRTnjw38A70b0eZU3ziQkOYW6w7kN__tzgP5gis0Y8mEIiUyTnyuQ"
+  const sheet = async () => {
+      const service = new SpotifyService(token)
+      dispatch(getCurrentUserMusic(service))
+  }
+
+  useEffect(() => {
+      sheet()
+    }, []);
   return (
       // @ts-ignore
       <NavigationContainer theme={MyTheme}>

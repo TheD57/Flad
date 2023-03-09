@@ -4,10 +4,13 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Svg, Path } from 'react-native-svg';
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from 'react-redux';
 
 import normalize from '../components/Normalize';
 import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
+import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -18,6 +21,10 @@ const DismissKeyboard = ({ children }) => (
 
 
 export default function SettingProfil() {
+    //Dark Mode
+    const isDark = useSelector(state => state.userReducer.dark);
+    const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
+
     const [image, setImage] = useState(null);
     const navigation = useNavigation();
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,6 +51,218 @@ export default function SettingProfil() {
             setImage(result.assets[0].uri);
         }
     };
+
+    const styles = StyleSheet.create({
+        mainSafeArea: {
+            flex: 1,
+            backgroundColor: style.body,
+        },
+        container: {
+            marginTop: 20,
+            marginHorizontal: normalize(25),
+            flex: 1,
+            backgroundColor: style.body,
+        },
+        buttonSetting: {
+            width: normalize(17),
+            height: normalize(17),
+            marginRight: 5
+        },
+        modalContent: {
+            position: 'absolute',
+            top: '5%',
+            left: '-5%',
+            right: '-5%',
+            height: '100%',
+            backgroundColor: style.body,
+            borderRadius: 12
+        },
+        modalView: {
+            flexDirection: 'row',
+            marginTop: 20,
+            marginLeft: 30,
+            marginBottom: normalize(45)
+        },
+        exit: {
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center'
+        },
+        textExit: {
+            fontSize: normalize(20),
+            color: '#454545',
+            fontWeight: 'bold'
+        },
+        profilHead: {
+            alignItems: 'center',
+        },
+        title: {
+            fontSize: normalize(30),
+            fontWeight: 'bold',
+            color: style.Text,
+        },
+        imageWrapper: {
+            width: 126,
+            height: 126,
+            borderRadius: 63,
+            borderWidth: 3,
+            borderColor: style.Text,
+            overflow: 'hidden',
+            marginVertical: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        imageProfil: {
+            width: 120,
+            height: 120,
+        },
+        editButton: {
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            backgroundColor: '#7C7C7C',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        body: {
+            paddingVertical: 9,
+            paddingLeft: normalize(10),
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            alignItems: 'flex-start',
+            marginBottom: normalize(45)
+        },
+        textOption: {
+            fontSize: normalize(18),
+            color: style.Text,
+            fontWeight: 'bold',
+            marginLeft: 12
+        },
+        deleteOption: {
+            paddingVertical: 9,
+            paddingLeft: 5,
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        textOptionPassword: {
+            fontSize: normalize(18),
+            color: '#1c77fb',
+            marginLeft: 12
+        },
+        buttonDeleteOption: {
+            backgroundColor: '#DF0404',
+            padding: 5,
+            borderRadius: 10,
+            marginLeft: 15
+        },
+        textDeleteOption: {
+            fontSize: normalize(18),
+            color: '#F80404',
+            marginLeft: 12
+        },
+        optionId: {
+            flexDirection: 'row',
+            marginBottom: 20,
+        },
+        optionMail: {
+            flexDirection: 'row',
+        },
+        textInputId: {
+            marginLeft: 50,
+            width: '57%',
+            color: 'white',
+            fontSize: normalize(18),
+        },
+        textInputMail: {
+            marginLeft: 100,
+            color: 'white',
+            width: '57%',
+            fontSize: normalize(18)
+        },
+        passwordOption: {
+            paddingVertical: 9,
+            paddingLeft: normalize(10),
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            alignItems: 'flex-start',
+            marginBottom: normalize(45)
+        },
+        passwordIcon: {
+            backgroundColor: '#8e8d92',
+            padding: 5,
+            paddingHorizontal: 8,
+            borderRadius: 10,
+            marginLeft: 10
+        },
+        optionView: {
+            flexDirection: 'row',
+            marginTop: 5
+        },
+        cancelText: {
+            fontSize: normalize(20),
+            color: '#1c77fb'
+        },
+        updateText: {
+            marginLeft: 60,
+            fontSize: normalize(20),
+            color: '#404040'
+        },
+        titlePassword: {
+            fontSize: normalize(22),
+            color: style.Text,
+            marginLeft: 50
+        },
+        warning: {
+            color: '#98989f',
+            fontSize: normalize(15)
+        },
+        warningView: {
+            marginTop: 10,
+            paddingHorizontal: 40
+        },
+        bodyModal: {
+            paddingVertical: 12,
+            paddingLeft: 30,
+            marginHorizontal: normalize(25),
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            alignItems: 'flex-start'
+        },
+        optionModalWithUnderline: {
+            flexDirection: 'row',
+            borderBottomWidth: 1,
+            borderColor: style.Line,
+            paddingBottom: 10,
+            marginBottom: 10
+        },
+        optionModal: {
+            flexDirection: 'row'
+        },
+        textOptionModal: {
+            fontSize: normalize(18),
+            color: style.Text,
+            fontWeight: 'bold',
+        },
+        textInputNewModal: {
+            marginLeft: 40,
+            color: style.Text,
+            width: '67.5%',
+            fontSize: normalize(18)
+        },
+        textInputConfirmModal: {
+            marginLeft: 30,
+            color: style.Text,
+            fontSize: normalize(18)
+        },
+        textInputOldModal: {
+            marginLeft: 55,
+            color: style.Text,
+            width: '67.5%',
+            fontSize: normalize(18)
+        }
+    })
 
     return (
         <DismissKeyboard>
@@ -148,215 +367,3 @@ export default function SettingProfil() {
         </DismissKeyboard>
     );
 };
-
-const styles = StyleSheet.create({
-    mainSafeArea: {
-        flex: 1,
-        backgroundColor: "#141414",
-    },
-    container: {
-        marginTop: 20,
-        marginHorizontal: normalize(25),
-        flex: 1,
-        backgroundColor: '#141414',
-    },
-    buttonSetting: {
-        width: normalize(17),
-        height: normalize(17),
-        marginRight: 5
-    },
-    modalContent: {
-        position: 'absolute',
-        top: '5%',
-        left: '-5%',
-        right: '-5%',
-        height: '100%',
-        backgroundColor: '#141414',
-        borderRadius: 12
-    },
-    modalView: {
-        flexDirection: 'row',
-        marginTop: 20,
-        marginLeft: 30,
-        marginBottom: normalize(45)
-    },
-    exit: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
-    textExit: {
-        fontSize: normalize(20),
-        color: '#454545',
-        fontWeight: 'bold'
-    },
-    profilHead: {
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: normalize(30),
-        fontWeight: 'bold',
-        color: 'white',
-    },
-    imageWrapper: {
-        width: 126,
-        height: 126,
-        borderRadius: 63,
-        borderWidth: 3,
-        borderColor: 'white',
-        overflow: 'hidden',
-        marginVertical: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    imageProfil: {
-        width: 120,
-        height: 120,
-    },
-    editButton: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#7C7C7C',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    body: {
-        paddingVertical: 9,
-        paddingLeft: normalize(10),
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        alignItems: 'flex-start',
-        marginBottom: normalize(45)
-    },
-    textOption: {
-        fontSize: normalize(18),
-        color: 'white',
-        fontWeight: 'bold',
-        marginLeft: 12
-    },
-    deleteOption: {
-        paddingVertical: 9,
-        paddingLeft: 5,
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    textOptionPassword: {
-        fontSize: normalize(18),
-        color: '#1c77fb',
-        marginLeft: 12
-    },
-    buttonDeleteOption: {
-        backgroundColor: '#DF0404',
-        padding: 5,
-        borderRadius: 10,
-        marginLeft: 15
-    },
-    textDeleteOption: {
-        fontSize: normalize(18),
-        color: '#F80404',
-        marginLeft: 12
-    },
-    optionId: {
-        flexDirection: 'row',
-        marginBottom: 20,
-    },
-    optionMail: {
-        flexDirection: 'row',
-    },
-    textInputId: {
-        marginLeft: 50,
-        width: '57%',
-        color: 'white',
-        fontSize: normalize(18),
-    },
-    textInputMail: {
-        marginLeft: 100,
-        color: 'white',
-        width: '57%',
-        fontSize: normalize(18)
-    },
-    passwordOption: {
-        paddingVertical: 9,
-        paddingLeft: normalize(10),
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        alignItems: 'flex-start',
-        marginBottom: normalize(45)
-    },
-    passwordIcon: {
-        backgroundColor: '#8e8d92',
-        padding: 5,
-        paddingHorizontal: 8,
-        borderRadius: 10,
-        marginLeft: 10
-    },
-    optionView: {
-        flexDirection: 'row',
-        marginTop: 5
-    },
-    cancelText: {
-        fontSize: normalize(20),
-        color: '#1c77fb'
-    },
-    updateText: {
-        marginLeft: 60,
-        fontSize: normalize(20),
-        color: '#404040'
-    },
-    titlePassword: {
-        fontSize: normalize(22),
-        color: 'white',
-        marginLeft: 50
-    },
-    warning: {
-        color: '#98989f',
-        fontSize: normalize(15)
-    },
-    warningView: {
-        marginTop: 10,
-        paddingHorizontal: 40
-    },
-    bodyModal: {
-        paddingVertical: 12,
-        paddingLeft: 30,
-        marginHorizontal: normalize(25),
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        alignItems: 'flex-start'
-    },
-    optionModalWithUnderline: {
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderColor: '#403F3F',
-        paddingBottom: 10,
-        marginBottom: 10
-    },
-    optionModal: {
-        flexDirection: 'row'
-    },
-    textOptionModal: {
-        fontSize: normalize(18),
-        color: 'white',
-        fontWeight: 'bold',
-    },
-    textInputNewModal: {
-        marginLeft: 40,
-        color: 'white',
-        width: '67.5%',
-        fontSize: normalize(18)
-    },
-    textInputConfirmModal: {
-        marginLeft: 30,
-        color: 'white',
-        fontSize: normalize(18)
-    },
-    textInputOldModal: {
-        marginLeft: 55,
-        color: 'white',
-        width: '67.5%',
-        fontSize: normalize(18)
-    }
-})

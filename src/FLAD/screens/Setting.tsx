@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Text, Image, TouchableWithoutFeedback, Keyboard, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useNavigation } from "@react-navigation/native";
@@ -6,7 +6,12 @@ import { useDispatch } from 'react-redux';
 import normalize from '../components/Normalize';
 import { ScrollView, Switch, TextInput } from 'react-native-gesture-handler';
 import CardMusic from '../components/CardMusic';
-import { DeleteToken } from '../redux/thunk/authThunk';
+import { ChangeMode, DeleteToken } from '../redux/thunk/authThunk';
+import { useSelector } from 'react-redux';
+import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
+import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
+import SpotifyService from '../services/spotify/spotify.service';
+import { getCurrentUserMusic } from '../redux/thunk/spotThunk';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -24,12 +29,15 @@ export default function Setting() {
         textInputRef.current?.focus();
     };
 
+    const currentMusic = useSelector(state => state.appReducer.userCurrentMusic);
+
     //Dark Mode
-    const [isCheckedDarkMode, setIsCheckedDarkMode] = useState(false);
+    const isDark = useSelector(state => state.userReducer.dark);
+    const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
 
-    const toggleDarkMode =
-        () => setIsCheckedDarkMode(value => !value);
-
+    const ChangeDarkMode = () => {
+        dispatch(ChangeMode())
+    }
 
     //Notification
     const [isCheckedNotif, setIsCheckedNotif] = useState(false);
@@ -39,6 +47,7 @@ export default function Setting() {
 
     //Deconnection
     const Deconnection = () => {
+        //@ts-ignore
         dispatch(DeleteToken())
     }
     //Localisation
@@ -46,6 +55,189 @@ export default function Setting() {
 
     const toggleLocalisation =
         () => setIsCheckedLocalisation(value => !value);
+
+    //Style
+
+
+    const styles = StyleSheet.create({
+        mainSafeArea: {
+            flex: 1,
+            backgroundColor: style.body,
+        },
+        container: {
+            marginTop: 30,
+            marginHorizontal: normalize(25),
+            paddingBottom: normalize(400),
+            flex: 1,
+            backgroundColor: style.body,
+        },
+        title: {
+            fontSize: normalize(30),
+            fontWeight: 'bold',
+            color: style.Text,
+            alignItems: 'center',
+        },
+        search: {
+            paddingVertical: 9,
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            flexDirection: 'row',
+            marginTop: 9,
+            marginBottom: 22
+        },
+        inputSearch: {
+            placeholderTextColor: 'red',
+            color: 'white',
+            width: normalize(350),
+        },
+        profil: {
+            paddingVertical: 9,
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: normalize(45)
+        },
+        imageProfil: {
+            marginLeft: 15,
+            marginRight: 7,
+            width: 50,
+            height: 50
+        },
+        NameProfil: {
+            fontWeight: 'bold',
+            color: style.Text,
+            fontSize: normalize(22)
+        },
+        description: {
+            color: style.Text,
+            fontSize: normalize(15)
+        },
+        profilContainer: {
+            flex: 1,
+            marginLeft: 9,
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+        },
+        buttonSetting: {
+            width: normalize(17),
+            height: normalize(17),
+            marginRight: 22
+        },
+        body: {
+            paddingTop: normalize(10),
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            alignItems: 'flex-start',
+            marginBottom: normalize(45),
+            paddingLeft: normalize(10),
+        },
+        view: {
+            backgroundColor: '#fe9500',
+            padding: 5,
+            borderRadius: 10,
+            marginLeft: 15,
+            marginBottom: normalize(11)
+        },
+        Option: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        secondOption: {
+            marginTop: normalize(11),
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        textOption: {
+            fontSize: normalize(18),
+            color: style.Text,
+            fontWeight: 'bold',
+            marginBottom: normalize(8)
+        },
+        firstOptionView: {
+            flex: 1,
+            marginLeft: 15,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderColor: style.Line
+        },
+        deconnectedOption: {
+            paddingVertical: 9,
+            paddingLeft: 5,
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        buttonDeconectedOption: {
+            backgroundColor: '#DF0404',
+            padding: 5,
+            borderRadius: 10,
+            marginLeft: 15
+        },
+        textDeconnectionOption: {
+            fontSize: normalize(18),
+            color: '#F80404',
+            fontWeight: 'bold',
+            marginLeft: 12
+        },
+        notification: {
+            backgroundColor: '#fe3c30',
+            padding: 5,
+            borderRadius: 10,
+            marginLeft: 15,
+            marginBottom: normalize(11)
+        },
+        secondOptionView: {
+            flex: 1,
+            marginLeft: 15,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderColor: style.Line
+        },
+        lastOptionView: {
+            flex: 1,
+            marginLeft: 15,
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
+        localisation: {
+            backgroundColor: '#0835A7',
+            padding: 5,
+            borderRadius: 10,
+            marginLeft: 15,
+            marginBottom: normalize(11)
+        },
+        lastOption: {
+            marginTop: normalize(11),
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        musicActually: {
+            paddingTop: normalize(17),
+            backgroundColor: style.Card,
+            borderRadius: 13,
+            alignItems: 'flex-start',
+            marginBottom: normalize(45)
+        },
+        titleMusic: {
+            flexDirection: 'row',
+            marginBottom: 5
+        },
+        mascot: {
+            width: normalize(90),
+            height: normalize(90),
+            position: 'absolute',
+            right: normalize(0),
+            top: normalize(10)
+        }
+
+    })
     return (
         <DismissKeyboard>
             <SafeAreaView style={styles.mainSafeArea}>
@@ -86,7 +278,7 @@ export default function Setting() {
                                 </View>
                                 <View style={styles.firstOptionView}>
                                     <Text style={styles.textOption}>Dark Mode</Text>
-                                    <Switch style={{ marginBottom: normalize(10), marginRight: 20 }} value={isCheckedDarkMode} onValueChange={toggleDarkMode} />
+                                    <Switch style={{ marginBottom: normalize(10), marginRight: 20 }} value={isDark} onValueChange={ChangeDarkMode} />
                                 </View>
                             </View>
                             <View style={styles.secondOption}>
@@ -117,18 +309,18 @@ export default function Setting() {
                         </View>
                         <View style={styles.titleMusic}>
                             <Svg width="32" height="23" viewBox="0 0 28 21">
-                                <Path d="M5.84463 0.36924C5.37582 -0.0995746 4.59968 -0.13966 4.10723 0.35111C1.57056 2.8792 0 6.37809 0 10.243C0 14.2583 1.69511 17.8783 4.40753 20.4254C4.90303 20.8906 5.65829 20.8413 6.11707 20.3826C6.65205 19.8476 6.58697 18.9969 6.07118 18.5038C3.89425 16.4228 2.53916 13.4914 2.53916 10.243C2.53916 7.11727 3.79368 4.28541 5.82764 2.22202C6.3189 1.72366 6.36867 0.893273 5.84463 0.36924Z" fill="white" />
-                                <Path d="M8.82679 3.35124C8.37113 2.89557 7.6097 2.83865 7.11937 3.32383C5.33696 5.08757 4.23193 7.53654 4.23193 10.2428C4.23193 13.1062 5.46885 15.6811 7.43617 17.4616C7.92997 17.9085 8.65988 17.8396 9.10066 17.3988C9.65615 16.8434 9.55157 15.969 9.03099 15.4783C7.63907 14.1659 6.7711 12.306 6.7711 10.2428C6.7711 8.29502 7.5446 6.52876 8.80209 5.23299C9.28672 4.73363 9.3654 3.88984 8.82679 3.35124Z" fill="white" />
-                                <Path d="M18.2575 3.35124C18.7132 2.89557 19.4746 2.83865 19.965 3.32383C21.7473 5.08757 22.8524 7.53654 22.8524 10.2428C22.8524 13.1062 21.6154 15.6811 19.6481 17.4616C19.1543 17.9085 18.4244 17.8396 17.9836 17.3988C17.4282 16.8434 17.5326 15.969 18.0533 15.4783C19.4453 14.1659 20.3132 12.306 20.3132 10.2428C20.3132 8.29502 19.5398 6.52876 18.2822 5.23299C17.7976 4.73363 17.7188 3.88984 18.2575 3.35124Z" fill="white" />
-                                <Path d="M21.2398 0.36924C21.7087 -0.0995746 22.4849 -0.13966 22.9773 0.35111C25.5139 2.8792 27.0845 6.37809 27.0845 10.243C27.0845 14.2583 25.3893 17.8783 22.677 20.4254C22.1815 20.8906 21.4262 20.8413 20.9675 20.3826C20.4324 19.8476 20.4975 18.9969 21.0133 18.5038C23.1902 16.4228 24.5453 13.4914 24.5453 10.243C24.5453 7.11727 23.2908 4.28541 21.2567 2.22202C20.7655 1.72366 20.7157 0.893273 21.2398 0.36924Z" fill="white" />
-                                <Path d="M13.5422 7.70361C12.1399 7.70361 11.0031 8.84043 11.0031 10.2428C11.0031 11.6451 12.1399 12.7819 13.5422 12.7819C14.9445 12.7819 16.0814 11.6451 16.0814 10.2428C16.0814 8.84043 14.9445 7.70361 13.5422 7.70361Z" fill="white" />
+                                <Path d="M5.84463 0.36924C5.37582 -0.0995746 4.59968 -0.13966 4.10723 0.35111C1.57056 2.8792 0 6.37809 0 10.243C0 14.2583 1.69511 17.8783 4.40753 20.4254C4.90303 20.8906 5.65829 20.8413 6.11707 20.3826C6.65205 19.8476 6.58697 18.9969 6.07118 18.5038C3.89425 16.4228 2.53916 13.4914 2.53916 10.243C2.53916 7.11727 3.79368 4.28541 5.82764 2.22202C6.3189 1.72366 6.36867 0.893273 5.84463 0.36924Z" fill={style.Text} />
+                                <Path d="M8.82679 3.35124C8.37113 2.89557 7.6097 2.83865 7.11937 3.32383C5.33696 5.08757 4.23193 7.53654 4.23193 10.2428C4.23193 13.1062 5.46885 15.6811 7.43617 17.4616C7.92997 17.9085 8.65988 17.8396 9.10066 17.3988C9.65615 16.8434 9.55157 15.969 9.03099 15.4783C7.63907 14.1659 6.7711 12.306 6.7711 10.2428C6.7711 8.29502 7.5446 6.52876 8.80209 5.23299C9.28672 4.73363 9.3654 3.88984 8.82679 3.35124Z" fill={style.Text} />
+                                <Path d="M18.2575 3.35124C18.7132 2.89557 19.4746 2.83865 19.965 3.32383C21.7473 5.08757 22.8524 7.53654 22.8524 10.2428C22.8524 13.1062 21.6154 15.6811 19.6481 17.4616C19.1543 17.9085 18.4244 17.8396 17.9836 17.3988C17.4282 16.8434 17.5326 15.969 18.0533 15.4783C19.4453 14.1659 20.3132 12.306 20.3132 10.2428C20.3132 8.29502 19.5398 6.52876 18.2822 5.23299C17.7976 4.73363 17.7188 3.88984 18.2575 3.35124Z" fill={style.Text} />
+                                <Path d="M21.2398 0.36924C21.7087 -0.0995746 22.4849 -0.13966 22.9773 0.35111C25.5139 2.8792 27.0845 6.37809 27.0845 10.243C27.0845 14.2583 25.3893 17.8783 22.677 20.4254C22.1815 20.8906 21.4262 20.8413 20.9675 20.3826C20.4324 19.8476 20.4975 18.9969 21.0133 18.5038C23.1902 16.4228 24.5453 13.4914 24.5453 10.243C24.5453 7.11727 23.2908 4.28541 21.2567 2.22202C20.7655 1.72366 20.7157 0.893273 21.2398 0.36924Z" fill={style.Text} />
+                                <Path d="M13.5422 7.70361C12.1399 7.70361 11.0031 8.84043 11.0031 10.2428C11.0031 11.6451 12.1399 12.7819 13.5422 12.7819C14.9445 12.7819 16.0814 11.6451 16.0814 10.2428C16.0814 8.84043 14.9445 7.70361 13.5422 7.70361Z" fill={style.Text} />
                             </Svg>
                             <Text style={[styles.textOption, { marginLeft: 10 }]}>En cours d’écoute...</Text>
                         </View>
 
                         <View style={styles.musicActually}>
-                            <CardMusic image="https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png" title='Bambina' description="PNL" />
-                            <Image source={require("../assets/images/FladyShadow.png")} style={styles.mascot} />
+                            <CardMusic image={currentMusic.image} title={currentMusic.title} description="PNL"/>
+                            <Image source={require("../assets/images/FladyShadow.png")} style={styles.mascot}/>
                         </View>
 
                         <View style={styles.deconnectedOption}>
@@ -148,183 +340,3 @@ export default function Setting() {
         </DismissKeyboard>
     );
 };
-
-const styles = StyleSheet.create({
-    mainSafeArea: {
-        flex: 1,
-        backgroundColor: "#141414",
-    },
-    container: {
-        marginTop: 30,
-        marginHorizontal: normalize(25),
-        paddingBottom: normalize(400),
-        flex: 1,
-        backgroundColor: '#141414',
-    },
-    title: {
-        fontSize: normalize(30),
-        fontWeight: 'bold',
-        color: 'white',
-        alignItems: 'center',
-    },
-    search: {
-        paddingVertical: 9,
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        flexDirection: 'row',
-        marginTop: 9,
-        marginBottom: 22
-    },
-    inputSearch: {
-        placeholderTextColor: 'red',
-        color: 'white',
-        width: normalize(350),
-    },
-    profil: {
-        paddingVertical: 9,
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: normalize(45)
-    },
-    imageProfil: {
-        marginLeft: 15,
-        marginRight: 7,
-        width: 50,
-        height: 50
-    },
-    NameProfil: {
-        fontWeight: 'bold',
-        color: 'white',
-        fontSize: normalize(22)
-    },
-    description: {
-        color: 'white',
-        fontSize: normalize(15)
-    },
-    profilContainer: {
-        flex: 1,
-        marginLeft: 9,
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-    },
-    buttonSetting: {
-        width: normalize(17),
-        height: normalize(17),
-        marginRight: 22
-    },
-    body: {
-        paddingTop: normalize(10),
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        alignItems: 'flex-start',
-        marginBottom: normalize(45),
-        paddingLeft: normalize(10),
-    },
-    view: {
-        backgroundColor: '#fe9500',
-        padding: 5,
-        borderRadius: 10,
-        marginLeft: 15,
-        marginBottom: normalize(11)
-    },
-    Option: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    secondOption: {
-        marginTop: normalize(11),
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    textOption: {
-        fontSize: normalize(18),
-        color: 'white',
-        fontWeight: 'bold',
-        marginBottom: normalize(8)
-    },
-    firstOptionView: {
-        flex: 1,
-        marginLeft: 15,
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderColor: '#403F3F'
-    },
-    deconnectedOption: {
-        paddingVertical: 9,
-        paddingLeft: 5,
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    buttonDeconectedOption: {
-        backgroundColor: '#DF0404',
-        padding: 5,
-        borderRadius: 10,
-        marginLeft: 15
-    },
-    textDeconnectionOption: {
-        fontSize: normalize(18),
-        color: '#F80404',
-        fontWeight: 'bold',
-        marginLeft: 12
-    },
-    notification: {
-        backgroundColor: '#fe3c30',
-        padding: 5,
-        borderRadius: 10,
-        marginLeft: 15,
-        marginBottom: normalize(11)
-    },
-    secondOptionView: {
-        flex: 1,
-        marginLeft: 15,
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderColor: '#403F3F'
-    },
-    lastOptionView: {
-        flex: 1,
-        marginLeft: 15,
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    localisation: {
-        backgroundColor: '#0835A7',
-        padding: 5,
-        borderRadius: 10,
-        marginLeft: 15,
-        marginBottom: normalize(11)
-    },
-    lastOption: {
-        marginTop: normalize(11),
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    musicActually: {
-        paddingTop: normalize(17),
-        backgroundColor: "#232123",
-        borderRadius: 13,
-        alignItems: 'flex-start',
-        marginBottom: normalize(45)
-    },
-    titleMusic: {
-        flexDirection: 'row',
-        marginBottom: 5
-    },
-    mascot: {
-        width: normalize(90),
-        height: normalize(90),
-        position: 'absolute',
-        right: normalize(0),
-        top: normalize(10)
-    }
-
-})

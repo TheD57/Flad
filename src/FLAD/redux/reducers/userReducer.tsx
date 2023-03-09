@@ -7,6 +7,7 @@ const initialState = {
   userSpotifyToken : null,
   error: null,
   isLogedIn: false,
+  dark: false,
   }
   
   const userReducer = (state = initialState, action : any) => {
@@ -45,6 +46,8 @@ const initialState = {
         return {...state,
           user :null,
           isLogedIn: false  }
+      case userTypes.CHANGE_MODE:
+        return {...state, dark: !state.dark }      
       default:
         return state;
     }

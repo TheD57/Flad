@@ -10,14 +10,8 @@ export class UserService {
 		return docData(userDocRef);
 	}
 	async uploadName(name: string, email : string) {
-		const user = this.auth.currentUser;
 		try {
-			const userDocRef = doc(this.firestore, `User/${user.uid}`);
-			await setDoc(userDocRef, {
-				name,
-				email
-			});
-			return true;
+
 		} catch (e) {
 			return null;
 		}

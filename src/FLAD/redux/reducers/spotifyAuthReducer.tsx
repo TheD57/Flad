@@ -5,7 +5,7 @@ String getApiRedirectUrl() => _api.identification.redirectUri;
 
 String getIdSpotify() => _currentUser.idSpotify;
 
-String getIdDafl() => _currentUser.idDafl;
+String getIdFlad() => _currentUser.idFlad;
 
 
 case getCompleteMusic

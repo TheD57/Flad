@@ -12,15 +12,16 @@ import { Feather as Icon } from "@expo/vector-icons";
 import Music from "../Model/Music";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { useRef, useState } from "react";
+import { RenderCellProps } from "./littleCard";
 
 
 interface HorizontalFlatListProps {
     //  React.ReactNode;
-    renderCell: (image: string, titre : string) => React.ReactElement
+    children:(props: RenderCellProps)  => React.ReactElement
     title : string;
     data : any[];
   }
-export const HorizontalFlatList = ({ title, data, renderCell}: HorizontalFlatListProps) => {   
+export const HorizontalFlatList = ({ title, data, children : RenderCell }: HorizontalFlatListProps) => {   
     
 
     return (
@@ -31,22 +32,19 @@ export const HorizontalFlatList = ({ title, data, renderCell}: HorizontalFlatLis
             data={data}
             horizontal={true}
             keyExtractor={item => item.id}
-            renderItem={({item}) =>{
-                return renderCell(item.image, image.titre);
-            }}
-        /></View>
+            renderItem={({ item }) => RenderCell(item)}/></View>
     );
   };
   const styles = StyleSheet.create({
     similarSection: {
-        paddingTop: 30
+        paddingTop: 16
     },
     similarTitle: {
-        color: "#2998FD",
-        paddingLeft: 35,
-        fontSize: 17,
+        color: "#FFF",
+        paddingLeft: 8,
+        fontSize: 24,
         fontWeight: "600",
-        paddingBottom: 20
+        paddingBottom: 16
     }
 
   });

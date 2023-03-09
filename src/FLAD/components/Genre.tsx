@@ -78,6 +78,5 @@ export const ArtistLayout = () => {
     container: {
       flexDirection: "row",
       flexWrap: "wrap",
-
     },
   });

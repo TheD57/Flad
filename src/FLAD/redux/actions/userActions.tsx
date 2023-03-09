@@ -1,3 +1,4 @@
+import { User } from "../../Model/User";
 import { userTypes } from "../types/userTypes";
 
 
@@ -31,12 +32,12 @@ export const restoreToken = (token : string) => {
     playload : token
   };
 }
-// export const UserLogin = (username: string, password: string) => {
-//     return {
-//       type: userTypes.LOGIN, 
-//       playload : username, password
-//     };
-//   }
+export const userSignUp = (user : User) => {
+    return {
+      type: userTypes.LOGIN, 
+      playload : user
+    };
+  }
 
   export const UserLogout = () => {
     return {

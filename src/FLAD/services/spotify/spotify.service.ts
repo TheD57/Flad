@@ -2,7 +2,19 @@ import axios from "axios";
 import MusicFactory from "../../Model/factory/MusicFactory";
 import Music from "../../Model/Music";
 import { FetchOptions, RequestHandler } from "./spotifyRequestHandler/utils";
-
+ export class MusicMinimal {
+	public id : string; 
+	public title: string;
+	public image: string;
+  
+	constructor(id : string,title: string, bio: string, image: string, trackPreviewUrl: string) {
+	  this.title = title;
+	  this.image = image;
+	  this.id = id;
+	}
+  
+  }
+  
 export default class SpotifyService implements IspotifyService {
     private readonly API_URL = "https://flad-api-production.up.railway.app/api/";
     private spotifyRequestHandler = new RequestHandler();
@@ -138,7 +150,7 @@ export default class SpotifyService implements IspotifyService {
 		return ;
 	}
 
-	public async createPlayList(userId : string,name : string,description : string): Promise<void>{
+	public async createPlayList(userId : string,name? : string,description? : string): Promise<void>{
 		var requestData :string = '/users/' + encodeURIComponent(userId) + '/playlists';
 		
 		const fetchOptions: FetchOptions = {
@@ -146,7 +158,7 @@ export default class SpotifyService implements IspotifyService {
 			body: {
 				"public": false,
 				"name": name || "New Flad Playlist",
-				"description": description,
+				"description": description || "New Flad Playlist",
 			}
 		  };
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, fetchOptions,this.token);
@@ -154,7 +166,76 @@ export default class SpotifyService implements IspotifyService {
 		return ;
 	}
 
+	// public async getSimilarTrack(musicId : string,limit : number =1,market? : string): Promise<Music[]>{
+	// 	var requestData :string = '/recommendations' +
+	// 	'?limit=' +limit+
+	// 	'&market=FR' +
+	// 	"&seed_tracks=" + musicId;
+			
+	// 	const fetchOptions: FetchOptions = {
+	// 		method: 'GET',
+	// 		body: {
+	// 			seed_tracks: musicId,
+	// 			market: "FR",
+	// 			limit:  1,
+	// 		}
+	// 	  };
+		  
+	// 	console.log('222222222221baaaaaaaaaaaaahhhhhhhhhhhh LAaa chp gros ' + musicId);
 
+	// 	const respSimilarMusic = await this.spotifyRequestHandler.spotifyFetch(requestData,undefined,this.token);
+	// 	console.log(respSimilarMusic.status+'baaaaaaaaaaaaahhhhhhhhhhhh LAaa chp gros');
+	// 	console.log(respSimilarMusic.data+'baaaaaaaaaaaaahhhhhhhhhhhh LAaa chp gros2');
+
+	// 	/// if respSimilarMusic == null || respSimilarMusic.data.count == 0 =>
+	// 	const similars : Music[]= respSimilarMusic.data.tracks.map(async (trackData: any) => {
+	// 		// const { id, name, artists, album } = trackData;
+	// 		console.log(trackData.id);
+	// 		if(trackData.id){
+	// 			const data = await this.getMusicById(trackData.id);
+	// 			return data;
+	// 		}
+	// 		// return MusicFactory.mapFromSpotifyTrack(trackData)
+	// 		// const artistNames = artists.map((artist: any) => artist.name).join(', ');
+	// 		// const linkCover = album?.images[0]?.url || '';
+	// 		// return new Music(id, name, artistNames, linkCover);
+	// 	  });
+	// 	  console.log(similars+'################################################');
+	// 	return similars;
+	// }
+	public async getSimilarTrack(musicId: string, limit: number = 1, market?: string): Promise<Music[]> {
+		const requestData: string = '/recommendations/' +
+		'?limit=' + limit +
+		'&market=FR' +
+		'&seed_tracks=' + musicId;
+		console.log(musicId, "=============ouioui=================")
+		var respSimilarMusic;
+		try {
+			console.log( "=======================1=========",requestData,this.token )
+			respSimilarMusic=  await this.spotifyRequestHandler.spotifyFetch(requestData, {}, this.token);
+		} catch (error) {
+			console.log(error, "===================================spot Service");
+		}
+	if (!respSimilarMusic || !respSimilarMusic.data.tracks) {
+		return [];
+	}
+			const similars: Music[] = await Promise.all(
+			  respSimilarMusic.data.tracks.map(async (trackData: any) => {
+				if (trackData.id !=undefined) {
+						const data = await this.getMusicById(trackData.id);
+						return data;	
+				}
+				
+			  })
+	
+			  )
+			  return  similars.filter((music: Music | undefined) => !!music) as Music[];
+
+
+		// return similars;
+
+	  }
+	  
 
 	async getSpotifyCredentials() {
 		const res = await axios.get(this.API_URL)

@@ -11,4 +11,14 @@ export default class MusicFactory {
           );
       return music;
     }
+    static mapFromSpotifyTrackSmpified(jsonMusic :any ): Music {
+      const music = new Music(
+          jsonMusic.id,
+          jsonMusic.name,
+          "",
+          jsonMusic.album.images[0].url,
+          jsonMusic.preview_url
+        );
+    return music;
+  }
   }

@@ -10,6 +10,7 @@ import { registerUser } from '../redux/thunk/authThunk';
 import { useDispatch } from 'react-redux';
 import { CredentialsRegister } from '../redux/actions/userActions';
 import { Buffer } from 'buffer';
+import SpotifyService from '../services/spotify/spotify.service';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -109,6 +110,42 @@ const scopes = scopesArr.join(' ');
         console.error(err)
       }
     }
+    const getAuthorizationCode2 = async () => {
+      try {
+        const result = await AuthSession.startAsync({
+          authUrl:'https://flad-api-production.up.railway.app/api/spotify/exchange'
+        })
+        console.log("=================grant code ==============<");
+
+        console.log(result);
+        console.log("=================grant code ==============<");
+
+        return result.params.code;
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    const getTokens2 = async () => {
+      try {
+        const authorizationCode = await getAuthorizationCode2() //we wrote this function above
+        console.log(authorizationCode, "shhhhhhhhhhhhhheeeeeeeeeeeeeeeetttttttttttt");
+        const response = await fetch('https://flad-api-production.up.railway.app/api/spotify/callback');
+        const responseJson = await response.json();
+        console.log(responseJson, "okkkkkkkkkkkkkkk") ;
+        // destructure the response and rename the properties to be in camelCase to satisfy my linter ;)
+        const {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_in: expiresIn,
+        } = responseJson;
+        
+        await setSpotifyToken(accessToken);
+
+        console.log(spotifyToken);
+      } catch (err) {
+        console.error(err);
+      }
+    }
     const getTokens = async () => {
       try {
         const authorizationCode = await getAuthorizationCode() //we wrote this function above
@@ -130,11 +167,54 @@ const scopes = scopesArr.join(' ');
           expires_in: expiresIn,
         } = responseJson;
         await setSpotifyToken(accessToken);
+        save(MY_SECURE_AUTH_STATE_KEY, accessToken);
+        testService(accessToken);
         console.log(spotifyToken);
       } catch (err) {
         console.error(err);
       }
     }
+
+    const testService = async (token : string) =>{
+        try {
+          const serviceTest = new SpotifyService(token);
+            console.log("==============Test Service 1 ============");
+            const respSearch = await serviceTest.searchMusic("Parapluie Tiakola");
+            console.log("===================repoonce=========================");
+            console.log(respSearch);
+          console.log("============================================");
+            console.log("==============Test Service 2 ============");
+            const respFull = await serviceTest.getMusicById(respSearch[0].id);
+            console.log("===================repoonce=========================");
+            console.log(respFull);
+          console.log("============================================");
+            console.log("==============Test Service 3 ============");
+            const respSimilar = await serviceTest.getSimilarTrack(respSearch[0].id);
+            console.log("===================repoonce=========================");
+            console.log(respSimilar);
+          console.log("============================================");
+          console.log("==============Test Service 4 ============");
+            const respCurrent= await serviceTest.getUserCurrentMusic();
+            console.log("===================repoonce=========================");
+            console.log(respCurrent);
+          console.log("============================================");
+          console.log("==============Test Service 5 ============");
+          const respRecently= await serviceTest.getUserRecentlyPlayedMusic();
+          console.log("===================repoonce=========================");
+          console.log(respRecently);
+          console.log("============================================");
+
+        } catch (error) {
+          console.log("==============Test Service Error============");
+          console.error(error);
+          console.log("============================================");
+
+        }
+
+    }
+    
+
+
 
     return (
         <DismissKeyboard>

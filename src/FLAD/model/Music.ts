@@ -1,11 +1,11 @@
 export default class Music {
-  private _id : string; 
+  private _id: string;
   private _title: string;
   private _bio: string;
   private _image: string;
-  private _trackPreviewUrl : string;
+  private _trackPreviewUrl: string;
 
-  constructor(id : string,title: string, bio: string, image: string, trackPreviewUrl: string) {
+  constructor(id: string, title: string, bio: string, image: string, trackPreviewUrl: string) {
     this._title = title;
     this._bio = bio;
     this._image = image;

@@ -91,7 +91,7 @@ export const getCurrentUserMusic = (resuestHandler : SpotifyService)=> {
     catch (error) {
       console.log('Error---------', error);
     }
-}
+  }
 }
 export const searchMusic = async (resuestHandler : SpotifyService,search: string) => {
   // 

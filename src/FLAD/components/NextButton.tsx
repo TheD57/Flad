@@ -1,12 +1,15 @@
 import React, { useRef, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity , Animated } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Animated, useColorScheme } from 'react-native';
 import Svg, { G, Circle } from 'react-native-svg';
 import { AntDesign } from '@expo/vector-icons';
-
+import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
+import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
 import normalize from '../components/Normalize';
 
 // @ts-ignore
 export default function NextButton({ percentage, scrollTo }) {
+    const style = useColorScheme() == 'light' ? GraphicalCharterLight : GraphicalCharterDark;
+
     const size = normalize(148);
     const strokeWidth = 2;
     const center = size / 2;
@@ -40,7 +43,7 @@ export default function NextButton({ percentage, scrollTo }) {
                     });
                 }
 
-            }, 
+            },
             // @ts-ignore
             [percentage]
 
@@ -56,11 +59,11 @@ export default function NextButton({ percentage, scrollTo }) {
         <View style={styles.container}>
             <Svg width={size} height={size}>
                 <G rotation="-90" origin={center}>
-                    <Circle stroke="#E6E7E8" fill="#141414" cx={center} cy={center} r={radius} strokeWidth={strokeWidth}/>
+                    <Circle stroke={style.Text} cx={center} cy={center} r={radius} strokeWidth={strokeWidth} />
                     <Circle
                         ref={progressRef}
                         stroke="#F80404"
-                        fill="#141414"
+                        fill={style.body}
                         cx={center}
                         cy={center}
                         r={radius}

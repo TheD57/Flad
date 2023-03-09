@@ -9,22 +9,22 @@ import CurrentMusic from '../components/CurrentMusic';
 
 const Stack = createSharedElementStackNavigator();
 export default function MusicNavigation() {
-    return (
-      <Stack.Navigator initialRouteName="Favorite" screenOptions={{gestureEnabled: true, headerShown: false, cardOverlayEnabled: true, cardStyle: {backgroundColor: "transparent"}}} >
-        <Stack.Screen 
-          name="Favorite" 
-          component={Favorite} 
-          
-        />
-        <Stack.Screen 
-          name="MusicDetail" 
-          component={MusicDetail} 
-          sharedElements ={(route)=> {return [route.params.music.id]}}
-        />
-        <Stack.Screen 
-            name="Genre" 
-            component={CurrentMusic} 
-          />
-      </Stack.Navigator>
-    )
-  }
+  return (
+    <Stack.Navigator initialRouteName="Favorite" screenOptions={{ gestureEnabled: true, headerShown: false, cardOverlayEnabled: true, cardStyle: { backgroundColor: "transparent" } }} >
+      <Stack.Screen
+        name="Favorite"
+        component={Favorite}
+
+      />
+      <Stack.Screen
+        name="MusicDetail"
+        component={MusicDetail}
+        sharedElements={(route) => { return [route.params.music.id] }}
+      />
+      <Stack.Screen
+        name="Genre"
+        component={CurrentMusic}
+      />
+    </Stack.Navigator>
+  )
+}

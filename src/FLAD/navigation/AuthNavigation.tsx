@@ -1,5 +1,5 @@
 import Navigation from './Navigation';
-import { StyleSheet,SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import StartNavigation from './StartNavigation';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -13,10 +13,12 @@ import * as Location from 'expo-location';
 // const LOCATION_TASK_NAME = 'flad-background-location-task';
 
 export default function AuthNavigation() {
-    //@ts-ignore
-  const tokenProcesed : boolean = useSelector(state => state.userReducer.loading);
   //@ts-ignore
-  const isLogin : boolean = useSelector(state => state.userReducer.isLogedIn);
+  const tokenProcesed: boolean = useSelector(state => state.userReducer.loading);
+  // //@ts-ignore
+  // const appIsReady: boolean = useSelector(state => state.userReducer.loading);
+  //@ts-ignore
+  const isLogin: boolean = useSelector(state => state.userReducer.isLogedIn);
   // const userToken : string = useSelector(state => state.userReducer.userFladToken);
   const [appIsReady, setAppIsReady] = useState(false);
   const dispatch = useDispatch();
@@ -25,18 +27,18 @@ export default function AuthNavigation() {
   const [errorMsg, setErrorMsg] = useState('');
 
 
-// // seems background task but not optimized 
-// TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
-//   if (error) {
-//     console.log(error);
-//     return;
-//   }
-//   if (data) {
-//     const { locations } = data;
-//     // send location updates to server
-//     console.log(locations);
-//   }
-// });
+  // // seems background task but not optimized 
+  // TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
+  //   if (error) {
+  //     console.log(error);
+  //     return;
+  //   }
+  //   if (data) {
+  //     const { locations } = data;
+  //     // send location updates to server
+  //     console.log(locations);
+  //   }
+  // });
   // const startLocationUpdates = async () => {
   //   try {
   //     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
@@ -62,17 +64,17 @@ export default function AuthNavigation() {
 
   useEffect(() => {
     async function prepare() {
-        //@ts-ignore
+      //@ts-ignore
       await dispatch(getRefreshToken())
-      if (tokenProcesed && appIsReady ) {
+      if (tokenProcesed && appIsReady) {
         await SplashScreen.hideAsync();
       }      // await SplashScreen.hideAsync();
     }
     prepare();
-  }, [appIsReady,tokenProcesed]);
+  }, [appIsReady, tokenProcesed]);
 
   // const onStackRootView = useCallback(async () => {
-   
+
   // }, [appIsReady]);
   // useEffect(() => {
   //   const sendLocationUpdate = async () => {
@@ -89,7 +91,7 @@ export default function AuthNavigation() {
   //           // send location to server
   //           console.log(locationresp);
   //           if(locationresp !=location ){
-              
+
   //           }
   //           console.log(location);
   //         }
@@ -113,21 +115,16 @@ export default function AuthNavigation() {
   }
 
   // console.log(userToken, "k9 AuthNav")
-    return (
-        <>
-                 {isLogin ? (
-         /* {userToken != null ? ( */
-         // should set the reference to the function in Navigation to realy perform an on ready
-         // test purpose
-        <SafeAreaProvider onLayout={()=>setAppIsReady(true)}>
-            <Navigation/>
-        </SafeAreaProvider>
-    
-        ) : 
-        <SafeAreaProvider onLayout={()=>setAppIsReady(true)}>
-            <StartNavigation />
-        </SafeAreaProvider>
-        }
-    </>
-    )
-  }
+  return (
+    <SafeAreaProvider onLayout={() => setAppIsReady(true)}>
+      {isLogin ? (
+        /* {userToken != null ? ( */
+        // should set the reference to the function in Navigation to realy perform an on ready
+        // test purpose
+        <Navigation />
+      ) :
+        <StartNavigation />
+      }
+    </SafeAreaProvider>
+  )
+}

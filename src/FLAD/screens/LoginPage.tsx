@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, Text, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import normalize from '../components/Normalize';
 import { userLogin } from '../redux/thunk/authThunk';
 import { useDispatch } from 'react-redux';
+import { Audio } from 'expo-av';
 import { Credentials } from '../redux/actions/userActions';
 
 // @ts-ignore
@@ -14,22 +15,33 @@ const DismissKeyboard = ({ children }) => (
 )
 
 export default function loginPage() {
+    const [sound, setSound] = useState<Audio.Sound>();
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    async function playSound() {
+        console.log('Loading Sound');
+        const { sound } = await Audio.Sound.createAsync(
+            require('../assets/sounds/Click.mp3')
+        );
+        setSound(sound);
 
+        console.log('Playing Sound');
+        await sound.playAsync();
+    }
     const dispatch = useDispatch();
 
     const submitForm = () => {
         const credentials: Credentials = {
             email: username,
             password: password
-          };
+        };
         //@ts-ignore
         dispatch(userLogin(credentials))
-      }
+        playSound()
+    }
 
     const toggleRememberMe = () => {
         setRememberMe(!rememberMe);
@@ -42,19 +54,19 @@ export default function loginPage() {
                     <Text style={styles.versionText}>
                         v2.0
                     </Text>
-                    <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo}/>
+                    <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo} />
                     <Text style={styles.text}>SE CONNECTER</Text>
                     <View>
                         <TextInput placeholder="Username"
-        value={username}
-        onChangeText={setUsername}style={[styles.input, styles.shadow]}/>
+                            value={username}
+                            onChangeText={setUsername} style={[styles.input, styles.shadow]} />
                         <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
                     </View>
                     <View>
                         <TextInput placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry style={[styles.input, styles.shadow]}/>
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry style={[styles.input, styles.shadow]} />
                         <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
                     </View>
                     <View style={styles.rememberMeContainer}>
@@ -62,15 +74,15 @@ export default function loginPage() {
                         <Text style={styles.rememberMeText}>SE SOUVENIR DE MOI</Text>
                     </View>
                     <TouchableOpacity style={[styles.button, styles.shadow]} onPress={submitForm}>
-                        <Image source={require("../assets/icons/Check.png")} style={styles.buttonImage}/>
+                        <Image source={require("../assets/icons/Check.png")} style={styles.buttonImage} />
                     </TouchableOpacity>
                     <View style={styles.inscriptionText}>
-                        <Text style={{fontSize: normalize(18), color: 'white'}}>Tu n'as pas de compte? </Text>
-                        <TouchableOpacity 
+                        <Text style={{ fontSize: normalize(18), color: 'white' }}>Tu n'as pas de compte? </Text>
+                        <TouchableOpacity
                             // @ts-ignore
                             onPress={() => navigation.navigate('Register')}
                         >
-                            <Text style={{fontSize: normalize(18), color: '#406DE1', textDecorationLine: 'underline'}}>S'inscrire</Text>
+                            <Text style={{ fontSize: normalize(18), color: '#406DE1', textDecorationLine: 'underline' }}>S'inscrire</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
@@ -81,9 +93,9 @@ export default function loginPage() {
 
 
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
     container: {
-        flex: 1,    
+        flex: 1,
     },
     image: {
         flex: 1,
@@ -110,14 +122,14 @@ const styles = StyleSheet.create ({
         width: normalize(46),
         height: normalize(46),
     },
-    iconUser : {
+    iconUser: {
         position: 'absolute',
         width: 20,
         height: 20,
         left: normalize(80),
         bottom: '50%'
     },
-    iconLock : {
+    iconLock: {
         position: 'absolute',
         width: 20,
         height: 20,
@@ -133,7 +145,7 @@ const styles = StyleSheet.create ({
         alignSelf: 'center',
         marginBottom: 20,
         paddingLeft: 50,
-        paddingRight: 20 
+        paddingRight: 20
     },
     text: {
         fontWeight: 'bold',
@@ -145,8 +157,8 @@ const styles = StyleSheet.create ({
     shadow: {
         shadowColor: 'black',
         shadowOffset: {
-          width: 2,
-          height: 3,
+            width: 2,
+            height: 3,
         },
         shadowOpacity: 0.50,
         shadowRadius: 3.84,
@@ -184,8 +196,8 @@ const styles = StyleSheet.create ({
         backgroundColor: 'white'
     },
     inscriptionText: {
-        flexDirection: 'row', 
-        alignSelf: 'center', 
+        flexDirection: 'row',
+        alignSelf: 'center',
         bottom: normalize(-98)
     }
 })

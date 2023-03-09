@@ -1,9 +1,9 @@
 
 import * as React from 'react';
-import {TouchableOpacity, ScrollView, View, Text, StyleSheet, Image, SafeAreaView, FlatList, Animated} from 'react-native';
-import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {LinearGradient} from 'expo-linear-gradient';
-import {useEffect, useState} from "react";
+import { TouchableOpacity, ScrollView, View, Text, StyleSheet, Image, SafeAreaView, FlatList, Animated } from 'react-native';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LinearGradient } from 'expo-linear-gradient';
+import { useEffect, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SharedElement } from "react-navigation-shared-element";
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native";
@@ -21,13 +21,13 @@ import SpotifyService from "../services/spotify/spotify.service";
 import Music from '../Model/Music';
 import { HorizontalFlatList } from '../components/HorizontalFlatList';
 import { LittleCard } from '../components/littleCard';
-const halfPi = Math.PI/2;
+const halfPi = Math.PI / 2;
 // InfoScreen.sharedElement = (navigation : ReturnType<typeof useNavigation>)=>{
 //     const music = navigation.getParam('music');
 //     return [music.id];
 // }
-    // @ts-ignore
-export default function InfoScreen({route, navigation}) {
+// @ts-ignore
+export default function InfoScreen({ route, navigation }) {
 
     const item: Music = route.params.music;
 
@@ -35,9 +35,9 @@ export default function InfoScreen({route, navigation}) {
 
     const [similarMusics, setSimilarMusics] = useState<Music[]>([]);
 
-// parralax
+    // parralax
 
-// parralax
+    // parralax
 
 
     const styles = StyleSheet.create({
@@ -234,159 +234,159 @@ export default function InfoScreen({route, navigation}) {
         }
     });
 
-    
+
     const getSimilarMusics = async () => {
-      
-        
+
+
         const tmpMusic: Music[] = [
             // new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
             // new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
-            new Music("6npyDB4mn8MO1A1h666FTk","Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
+            new Music("6npyDB4mn8MO1A1h666FTk", "Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png", "https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
             // new Music("0qwxx9ouUc5kGmMWHglDpq","Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png",""),
-            new Music("03o8WSqd2K5rkGvn9IsLy2","Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg","https://p.scdn.co/mp3-preview/c55f95de81b8c3d0df04148da1b03bd38db56e8f?cid=774b29d4f13844c495f206cafdad9c86"),
-            new Music("6DPrYPPGYK218iVIZDix3i","Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png","https://p.scdn.co/mp3-preview/a9f9cb19ac1fe6db0d06b67decf8edbb25895a33?cid=774b29d4f13844c495f206cafdad9c86"),
+            new Music("03o8WSqd2K5rkGvn9IsLy2", "Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg", "https://p.scdn.co/mp3-preview/c55f95de81b8c3d0df04148da1b03bd38db56e8f?cid=774b29d4f13844c495f206cafdad9c86"),
+            new Music("6DPrYPPGYK218iVIZDix3i", "Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png", "https://p.scdn.co/mp3-preview/a9f9cb19ac1fe6db0d06b67decf8edbb25895a33?cid=774b29d4f13844c495f206cafdad9c86"),
             // new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
-            new Music("5GFHFEASZeJF0gyWuDDjGE","Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/9e854f4905c1228482e390169eb76d8520076b8f?cid=774b29d4f13844c495f206cafdad9c86"),
-          ] ;        
+            new Music("5GFHFEASZeJF0gyWuDDjGE", "Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png", "https://p.scdn.co/mp3-preview/9e854f4905c1228482e390169eb76d8520076b8f?cid=774b29d4f13844c495f206cafdad9c86"),
+        ];
         setSimilarMusics(tmpMusic);
     }
-    
+
 
     useEffect(() => {
         getSimilarMusics();
     }, []);
 
-////////////////////////////////////////////////
+    ////////////////////////////////////////////////
 
 
 
-const {width, height} = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
 
-const [currentspot, setCurrentspot] = useState(item);
-const [sound, setSound] = useState(null);
+    const [currentspot, setCurrentspot] = useState(item);
+    const [sound, setSound] = useState(null);
 
-const [isPlaying, setIsPlaying] = useState(false);
-const loader = useSharedValue(0);
-useEffect(() => {
-    loader.value = isPlaying ? 1 : 0
-}, [isPlaying,loader ]);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const loader = useSharedValue(0);
+    useEffect(() => {
+        loader.value = isPlaying ? 1 : 0
+    }, [isPlaying, loader]);
 
-const transition = useDerivedValue(()=>{
-    return withTiming(loader.value, {duration : 1000})
-}
-)
-
-
-// const styleAniamatedButton = useAnimatedStyle(() => {
-//     const verticalAxis =interpolate(
-//         transition.value,
-//         [0,1],
-//         [circumference, 0]
-//     )
-    
-//     return {
-//         top : withSpring( verticalAxis),
-//         left : withSpring(horizontalAxis),
-//     };
-    
-// })
-
-
-const trackPreviewUrl = 'https://p.scdn.co/mp3-preview/08ef3b9d6dbd6bab233f5e9ca564091902767f71?cid=774b29d4f13844c495f206cafdad9c86';
-const playTrackPreview = async () => {
-console.log("===============================================================================================================");
-
-    console.log('get in  Sound');
-
-    const { sound } = await Audio.Sound.createAsync({uri :item.trackPreviewUrl});
-            //@ts-ignore
-    setSound(sound);
-    console.log('Playing Sound');
-    await sound.playAsync();
-    setIsPlaying(true);
-
-
-    // const soundObject = new Audio.Sound();
-    // try {
-    //   await soundObject.loadAsync({ uri: trackPreviewUrl });
-    //   await soundObject.playAsync();
-    //   setIsPlaying(true);
-    // } catch (error) {
-    //   console.log('Error loading sound:', error);
-    // }
-  };
-  
-const handlePlaySound = async () => {
-if (sound === null) {
-  const { sound: newSound } = await Audio.Sound.createAsync(
-    { uri: item.trackPreviewUrl },
-    { shouldPlay: true }
-  );
-  setSound(newSound);
-  
-} else {
-    //@ts-ignore
-  await sound.playAsync();
-}
-};
-
-const handleStopSound = async () => {
-if (sound !== null) {
-    //@ts-ignore
-  await sound.stopAsync();
-}
-else{
-    setIsPlaying(true);
-}
-};
-useEffect(() => {
-return sound ? () => {
-        console.log('Unloading Sound');
-        //@ts-ignore
-        sound.unloadAsync();
+    const transition = useDerivedValue(() => {
+        return withTiming(loader.value, { duration: 1000 })
     }
-    : undefined;
-}, [sound]);
+    )
 
-  
-const sensor = useAnimatedSensor(SensorType.ROTATION);
-const styleAniamatedImage = useAnimatedStyle(() => {
-    const {yaw, pitch, roll} = sensor.sensor.value;
-    const verticalAxis =interpolate(
-        pitch,
-        [-halfPi*2,halfPi*2],
-        [-45, 45]
-    )
-    const horizontalAxis =interpolate(
-        roll,
-        [-halfPi*2,halfPi*2],
-        [-45, 45]
-    )
-    return {
-        top : withSpring( verticalAxis),
-        left : withSpring(horizontalAxis),
+
+    // const styleAniamatedButton = useAnimatedStyle(() => {
+    //     const verticalAxis =interpolate(
+    //         transition.value,
+    //         [0,1],
+    //         [circumference, 0]
+    //     )
+
+    //     return {
+    //         top : withSpring( verticalAxis),
+    //         left : withSpring(horizontalAxis),
+    //     };
+
+    // })
+
+
+    const trackPreviewUrl = 'https://p.scdn.co/mp3-preview/08ef3b9d6dbd6bab233f5e9ca564091902767f71?cid=774b29d4f13844c495f206cafdad9c86';
+    const playTrackPreview = async () => {
+        console.log("===============================================================================================================");
+
+        console.log('get in  Sound');
+
+        const { sound } = await Audio.Sound.createAsync({ uri: item.trackPreviewUrl });
+        //@ts-ignore
+        setSound(sound);
+        console.log('Playing Sound');
+        await sound.playAsync();
+        setIsPlaying(true);
+
+
+        // const soundObject = new Audio.Sound();
+        // try {
+        //   await soundObject.loadAsync({ uri: trackPreviewUrl });
+        //   await soundObject.playAsync();
+        //   setIsPlaying(true);
+        // } catch (error) {
+        //   console.log('Error loading sound:', error);
+        // }
     };
-    
-})
 
-  const animationState = new Value(State.UNDETERMINED);
-  const playMusic = async (id: string) => {
-     try { 
-          const service = new SpotifyService("BQC4k_OPQXENwmm2S8qLm9whlJT9IjeKsuG6kJNyVCSd88b0L-zOY84VqwvQxFsc9G3GvtPyUMezwxi8BBBloitzbhWX5tmTKTaLsJosGTnb7xivwNhRv0-LnNYbZWB24ZGAg0xPmDLn0yYmYlo7M_SMK5cCZdYQcZNXAuMYaI18GVXKoICBaKfCn4GcqBiRRgXyCVQnNGU4") ;
-          console.log("=====================================================)))))))))))))))"+id+"================================")
-          await service.playMusic(id);
-        }catch(error){}
+    const handlePlaySound = async () => {
+        if (sound === null) {
+            const { sound: newSound } = await Audio.Sound.createAsync(
+                { uri: item.trackPreviewUrl },
+                { shouldPlay: true }
+            );
+            setSound(newSound);
+
+        } else {
+            //@ts-ignore
+            await sound.playAsync();
+        }
+    };
+
+    const handleStopSound = async () => {
+        if (sound !== null) {
+            //@ts-ignore
+            await sound.stopAsync();
+        }
+        else {
+            setIsPlaying(true);
+        }
+    };
+    useEffect(() => {
+        return sound ? () => {
+            console.log('Unloading Sound');
+            //@ts-ignore
+            sound.unloadAsync();
+        }
+            : undefined;
+    }, [sound]);
+
+
+    const sensor = useAnimatedSensor(SensorType.ROTATION);
+    const styleAniamatedImage = useAnimatedStyle(() => {
+        const { yaw, pitch, roll } = sensor.sensor.value;
+        const verticalAxis = interpolate(
+            pitch,
+            [-halfPi * 2, halfPi * 2],
+            [-45, 45]
+        )
+        const horizontalAxis = interpolate(
+            roll,
+            [-halfPi * 2, halfPi * 2],
+            [-45, 45]
+        )
+        return {
+            top: withSpring(verticalAxis),
+            left: withSpring(horizontalAxis),
+        };
+
+    })
+
+    const animationState = new Value(State.UNDETERMINED);
+    const playMusic = async (id: string) => {
+        try {
+            const service = new SpotifyService("BQC4k_OPQXENwmm2S8qLm9whlJT9IjeKsuG6kJNyVCSd88b0L-zOY84VqwvQxFsc9G3GvtPyUMezwxi8BBBloitzbhWX5tmTKTaLsJosGTnb7xivwNhRv0-LnNYbZWB24ZGAg0xPmDLn0yYmYlo7M_SMK5cCZdYQcZNXAuMYaI18GVXKoICBaKfCn4GcqBiRRgXyCVQnNGU4");
+            console.log("=====================================================)))))))))))))))" + id + "================================")
+            await service.playMusic(id);
+        } catch (error) { }
     }
     const tmpMusic2: Music[] = [
         // new Music("La pharmacie", "Jul",require("../assets/images/jul.png")),
         // new Music("Deux frères", "PNL", require("../assets/images/pnl.png")),
-        new Music("6npyDB4mn8MO1A1h666FTk","Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
+        new Music("6npyDB4mn8MO1A1h666FTk", "Bambina", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png", "https://p.scdn.co/mp3-preview/d38052978a79adced2187cd8b6497bb10bedc452?cid=774b29d4f13844c495f206cafdad9c86"),
         // new Music("0qwxx9ouUc5kGmMWHglDpq","Stratos", "Kekra", "https://images.genius.com/ddc9cadedd1d4cef0860aaa85af9cd46.705x705x1.png",""),
-        new Music("03o8WSqd2K5rkGvn9IsLy2","Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg","https://p.scdn.co/mp3-preview/c55f95de81b8c3d0df04148da1b03bd38db56e8f?cid=774b29d4f13844c495f206cafdad9c86"),
-        new Music("6DPrYPPGYK218iVIZDix3i","Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png","https://p.scdn.co/mp3-preview/a9f9cb19ac1fe6db0d06b67decf8edbb25895a33?cid=774b29d4f13844c495f206cafdad9c86"),
+        new Music("03o8WSqd2K5rkGvn9IsLy2", "Autobahn", "Sch", "https://images.genius.com/83b6c98680d38bde1571f6b4093244b5.1000x1000x1.jpg", "https://p.scdn.co/mp3-preview/c55f95de81b8c3d0df04148da1b03bd38db56e8f?cid=774b29d4f13844c495f206cafdad9c86"),
+        new Music("6DPrYPPGYK218iVIZDix3i", "Freeze Raël", "Freeze Corleone", "https://intrld.com/wp-content/uploads/2020/08/freeze-corleone-la-menace-fanto%CC%82me.png", "https://p.scdn.co/mp3-preview/a9f9cb19ac1fe6db0d06b67decf8edbb25895a33?cid=774b29d4f13844c495f206cafdad9c86"),
         // new Music("Blanka", "PNL", require("../assets/images/pnl.png")),
-        new Music("5GFHFEASZeJF0gyWuDDjGE","Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png","https://p.scdn.co/mp3-preview/9e854f4905c1228482e390169eb76d8520076b8f?cid=774b29d4f13844c495f206cafdad9c86"),
-      ] ; 
+        new Music("5GFHFEASZeJF0gyWuDDjGE", "Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png", "https://p.scdn.co/mp3-preview/9e854f4905c1228482e390169eb76d8520076b8f?cid=774b29d4f13844c495f206cafdad9c86"),
+    ];
     return (
         <View style={styles.body}>
             <View style={styles.backgroundSection}>
@@ -403,87 +403,88 @@ const styleAniamatedImage = useAnimatedStyle(() => {
                 />
                 <LinearGradient style={styles.gradientFade}
                     // Button Linear Gradient
-                                colors={['rgba(14,14,14,0)', 'rgba(14,14,14,0.7)', 'rgba(14,14,14,1)', 'rgba(14,14,14,1)']}>
+                    colors={['rgba(14,14,14,0)', 'rgba(14,14,14,0.7)', 'rgba(14,14,14,1)', 'rgba(14,14,14,1)']}>
                 </LinearGradient>
             </View>
             <View style={styles.background1}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{zIndex: 100}}>
-                    <Ionicons name="ios-arrow-back" size={30} color="white" style={styles.backButton}/>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ zIndex: 100 }}>
+                    <Ionicons name="ios-arrow-back" size={30} color="white" style={styles.backButton} />
                 </TouchableOpacity>
-                
+
                 <ScrollView style={styles.list} showsVerticalScrollIndicator={false} scrollEventThrottle={4}
                 >
-                    <View style={styles.section1}>                     
-                    <View style={{ flex: 1, justifyContent : 'flex-start', alignItems : 'center' }}>
-        {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
-        <View>
-        <SharedElement id ={item.id}>
+                    <View style={styles.section1}>
+                        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+                            {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
+                            <View>
+                                <SharedElement id={item.id}>
 
-            <Animated.Image
-                    source={{
-                        uri:currentspot.image ,
-                    }}
-                    style={[
-                        {
-                        
-                        width: 370,
-                        height: 370,
-                        borderRadius : 24,
-                        resizeMode: 'stretch',
-                        },styleAniamatedImage
-                        
-                    ]}
-                    />
-                </SharedElement>
-                    <Button title="Play Track On Device"
-                  onPress={() => {
-                    playMusic(currentspot.id)
-                    // promptAsync();
-                  }}
-                />
-                    </View>
-                    {/* Button */}
+                                    <Animated.Image
+                                        source={{
+                                            uri: currentspot.image,
+                                        }}
+                                        style={[
+                                            {
+
+                                                width: 370,
+                                                height: 370,
+                                                borderRadius: 24,
+                                                resizeMode: 'stretch',
+                                            }, styleAniamatedImage
+
+                                        ]}
+                                    />
+                                </SharedElement>
+                                <Button title="Play Track On Device"
+                                    onPress={() => {
+                                        playMusic(currentspot.id)
+                                        // promptAsync();
+                                    }}
+                                />
+                            </View>
+                            {/* Button */}
 
 
 
-                    {/* <TapGestureHandler {...gestureHandler}> */}
-                        <Animated.View>
-                            <TouchableOpacity style={{
-                                backgroundColor: '#1DB954',
-                                paddingVertical: 12,
-                                paddingHorizontal: 24,
-                                borderRadius: 24,
-                            }}  onPressIn={handlePlaySound}
-                            onPressOut={handleStopSound}
-                            onLongPress={handlePlaySound}
-                            delayLongPress={1000}>
+                            {/* <TapGestureHandler {...gestureHandler}> */}
+                            <Animated.View>
+                                <TouchableOpacity style={{
+                                    backgroundColor: '#1DB954',
+                                    paddingVertical: 12,
+                                    paddingHorizontal: 24,
+                                    borderRadius: 24,
+                                }} onPressIn={handlePlaySound}
+                                    onPressOut={handleStopSound}
+                                    onLongPress={handlePlaySound}
+                                    delayLongPress={1000}>
 
-                                <Text style={ {
-                                    color: '#fff',
-                                    fontSize: 16,
-                                    fontWeight: 'bold',}}>
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontSize: 16,
+                                        fontWeight: 'bold',
+                                    }}>
                                         {isPlaying ? 'Playing...' : 'Play'}
-                                </Text>
-                            </TouchableOpacity>
-                        </Animated.View>
-                        
+                                    </Text>
+                                </TouchableOpacity>
+                            </Animated.View>
 
-        </View>
+
+                        </View>
 
                     </View>
 
                     {similarMusics.length !== 0 && (
-                    // <HorizontalFlatList renderCell={littleCard} title={'Simillar Music'} data={similarMusics}>
-                        
-                    // </HorizontalFlatList>
-                    
-                        <HorizontalFlatList  title={'Simillar Music'} data={tmpMusic2}>
+                        // <HorizontalFlatList renderCell={littleCard} title={'Simillar Music'} data={similarMusics}>
+
+                        // </HorizontalFlatList>
+
+                        <HorizontalFlatList title={'Simillar Music'} data={tmpMusic2}>
                             {(props) => (
-                                <LittleCard image={props.image} title ={props.title}/>              
+                                <LittleCard image={props.image} title={props.title} />
                             )}
                         </HorizontalFlatList>
                     )}
-                    
+
 
 
                 </ScrollView>

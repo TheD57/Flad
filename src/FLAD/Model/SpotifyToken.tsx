@@ -1,34 +1,34 @@
-class TokenSpotify  {
+class TokenSpotify {
   String _accessToken;
   final String _refreshToken;
   late DateTime _tokenEnd;
 
-//   TokenSpotify(this._accessToken, this._refreshToken, int expiresIn) {
-//     _setTokenEnd(expiresIn);
-//   }
+  //   TokenSpotify(this._accessToken, this._refreshToken, int expiresIn) {
+  //     _setTokenEnd(expiresIn);
+  //   }
 
-//   _setTokenEnd(int expiresIn) {
-//     _tokenEnd = DateTime.now().add(Duration(seconds: expiresIn));
-//   }
+  //   _setTokenEnd(int expiresIn) {
+  //     _tokenEnd = DateTime.now().add(Duration(seconds: expiresIn));
+  //   }
 
-//   Future<String> getAccessToken() async {
-//     if (DateTime.now().isAfter(_tokenEnd)) {
-//       await _actualiseToken();
-//     }
-//     return _accessToken;
-//   }
+  //   Future<String> getAccessToken() async {
+  //     if (DateTime.now().isAfter(_tokenEnd)) {
+  //       await _actualiseToken();
+  //     }
+  //     return _accessToken;
+  //   }
 
-//   _actualiseToken() async {
-//     var urlToken = Uri.https('accounts.spotify.com', 'api/token', {
-//       'grant_type': 'refresh_token',
-//       'refresh_token': _refreshToken,
-//       'client_id': ApiSpotifyIdentification.clientId
-//     });
-//     setResponse(await http.post(urlToken, headers: <String, String>{
-//       'Content-Type': 'application/x-www-form-urlencoded'
-//     }));
-//     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-//     _accessToken = decodedResponse['access_token'];
-//     _setTokenEnd(decodedResponse['expires_in']);
-//   }
+  //   _actualiseToken() async {
+  //     var urlToken = Uri.https('accounts.spotify.com', 'api/token', {
+  //       'grant_type': 'refresh_token',
+  //       'refresh_token': _refreshToken,
+  //       'client_id': ApiSpotifyIdentification.clientId
+  //     });
+  //     setResponse(await http.post(urlToken, headers: <String, String>{
+  //       'Content-Type': 'application/x-www-form-urlencoded'
+  //     }));
+  //     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+  //     _accessToken = decodedResponse['access_token'];
+  //     _setTokenEnd(decodedResponse['expires_in']);
+  //   }
 }

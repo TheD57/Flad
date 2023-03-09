@@ -45,3 +45,8 @@ export const userSignUp = (user : User) => {
     };
   }
  
+  export const userChangeMode = () => {
+    return {
+      type: userTypes.CHANGE_MODE, 
+    };
+  }

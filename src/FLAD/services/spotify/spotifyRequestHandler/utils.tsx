@@ -13,14 +13,14 @@ export interface FetchOptions {
     body?: Record<string, string | boolean | number | (string | boolean | number)[]>;
 }
 
-export class RequestHandler{
+export class RequestHandler {
     private _version: `v${number}` = 'v1';
     get version(): string {
         return this._version;
     }
-    
-    public async spotifyFetch(url: string, options: FetchOptions = {}, token: string) : Promise<AxiosResponse<any,any>> {
-        console.log(options+ "sds=============");
+
+    public async spotifyFetch(url: string, options: FetchOptions = {}, token: string): Promise<AxiosResponse<any, any>> {
+        console.log(options + "sds=============");
         const resp = await axios({
             url: `https://api.spotify.com/${this.version}${url}`,
             method: options.method || 'GET',
@@ -32,7 +32,7 @@ export class RequestHandler{
             },
             data: options.body
         });
-        console.log(")))))))))))))))))))",resp.request, "((((((((((((((((((((");
+        console.log(")))))))))))))))))))", resp.request, "((((((((((((((((((((");
         // console.log(resp, "frfrfrfr");
         return resp;
         // if (

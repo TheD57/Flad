@@ -97,7 +97,10 @@ Notre environnement de travail se base sur plusieurs outils et langages :👇
 
 ---
 
-&nbsp; ![React Native](https://img.shields.io/badge/React%20Native-000?style=for-the-badge&logo=react&logoColor=white&color=lightblue&textColor=white)
+&nbsp; ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+&nbsp; ![Docker](https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white)
+&nbsp; ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+&nbsp; ![Spotify Api](https://img.shields.io/badge/Spotify-1ED760?&style=for-the-badge&logo=spotify&logoColor=white)
 &nbsp; ![TypeScript](https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=typescript&logoColor=white&color=blue)
 &nbsp; ![JavaScript](https://img.shields.io/badge/JavaScript-000?style=for-the-badge&logo=javascript&logoColor=white&color=yellow)
 
@@ -114,10 +117,19 @@ Notre environnement de travail se base sur plusieurs outils et langages :👇
 
 La composition pour le projet se voit réaliser par deux élèves de l'IUT d'Aubière:
 <br>
-⚙️ Emre KARTAL : emre.kartal@etu.uca.fr
+Emre KARTAL : emre.kartal@etu.uca.fr
 <br>
-⚙️ David D'ALMEIDA : david.d_almeida@etu.uca.fr
+David D'ALMEIDA : david.d_almeida@etu.uca.fr
+
+<a href = "https://codefirst.iut.uca.fr/git/emre.kartal">
+<img src="https://codefirst.iut.uca.fr/git/avatars/402cf312e853192f42c0135a888725c2?size=870" width="50" >
+</a>
+<a href = "https://codefirst.iut.uca.fr/git/david.d_almeida">
+<img src="https://codefirst.iut.uca.fr/git/avatars/0f8eaaad1e26d3de644ca522eccaea7c?size=870" width="50" >
+</a>
 
 <div align = center>
 © PM2 (Projet inspiré par nos très chers développeurs de la Dafl Team (S.O les Dafl dev))
 </div>
+
+

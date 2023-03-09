@@ -91,7 +91,7 @@
 
 
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Text, View , Image } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import Animated, { useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { SharedElement } from 'react-navigation-shared-element';
 import { useSelector } from 'react-redux';
@@ -110,6 +110,20 @@ export default function CurrentMusic() {
   return (
 
     <View style={{
+      width: 200,
+      height: 200,
+      backgroundColor: 'white',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 25,
+      // iOS
+      shadowOpacity: 0.2,
+      shadowOffset: { width: 0, height: 0 },
+      shadowRadius: 20,
+      // Android
+      elevation: 2,
+    }}>
+      <Animated.View style={[{
         width: 200,
         height: 200,
         backgroundColor: 'white',
@@ -122,24 +136,10 @@ export default function CurrentMusic() {
         shadowRadius: 20,
         // Android
         elevation: 2,
-      }}>
-      <Animated.View style={[{
-    width: 200,
-    height: 200,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    // iOS
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 20,
-    // Android
-    elevation: 2,
-  }, { overflow: 'hidden' }]}>
+      }, { overflow: 'hidden' }]}>
         <Animated.View style={rStyle} />
       </Animated.View>
-  </View>
+    </View>
   );
 }
 

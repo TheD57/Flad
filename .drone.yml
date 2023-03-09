@@ -16,7 +16,7 @@ steps:
       - npm run
       
   - name: docker-build-and-push
-    image: node:latest
+    image: plugins/docker
     settings:
       dockerfile: src/Api/Dockerfile
       context: src/

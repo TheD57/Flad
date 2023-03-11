@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, Text, ImageBackground, TextInput, TouchableWit
 import { useNavigation } from "@react-navigation/native";
 import normalize from '../components/Normalize';
 import { userLogin } from '../redux/thunk/authThunk';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Audio } from 'expo-av';
 import { Credentials } from '../redux/actions/userActions';
 
@@ -18,6 +18,8 @@ export default function loginPage() {
     const [sound, setSound] = useState<Audio.Sound>();
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
+
+    const failedLogin = useSelector(state => state.userReducer.failedLogin);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -56,14 +58,19 @@ export default function loginPage() {
                     </Text>
                     <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo} />
                     <Text style={styles.text}>SE CONNECTER</Text>
-                    <View>
-                        <TextInput placeholder="Username"
+                    {failedLogin && (
+                        <Text style={styles.textError}>Email ou mot de passe incorrect!</Text>
+                    )}
+                    <View style={{ marginTop: 7 }}>
+                        <TextInput placeholder="Email"
+                            placeholderTextColor="#B8B4B8"
                             value={username}
                             onChangeText={setUsername} style={[styles.input, styles.shadow]} />
                         <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
                     </View>
                     <View>
                         <TextInput placeholder="Password"
+                            placeholderTextColor="#B8B4B8"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry style={[styles.input, styles.shadow]} />
@@ -118,6 +125,12 @@ const styles = StyleSheet.create({
         height: normalize(100),
         borderRadius: 21
     },
+    textError: {
+        fontSize: 15, 
+        alignSelf: "center", 
+        color: "red", 
+        fontWeight: 'bold'
+    },
     buttonImage: {
         width: normalize(46),
         height: normalize(46),
@@ -152,7 +165,7 @@ const styles = StyleSheet.create({
         fontSize: normalize(29),
         alignSelf: 'center',
         color: 'white',
-        marginBottom: 15
+        marginBottom: 8
     },
     shadow: {
         shadowColor: 'black',

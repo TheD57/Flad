@@ -17,7 +17,7 @@ type CustomCardMusic = { //Props
 
 export default function CardMusic(CBP: CustomCardMusic) {
   const isDark = useSelector(state => state.userReducer.dark);
-  const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
+  const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
   const currentMusic = useSelector(state => state.appReducer.currentMusic);
 
   const source = typeof CBP.image === 'string' ? { uri: CBP.image } : CBP.image;

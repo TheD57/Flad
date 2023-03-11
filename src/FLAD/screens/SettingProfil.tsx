@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView, Image } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Svg, Path } from 'react-native-svg';
@@ -11,6 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -22,8 +23,17 @@ const DismissKeyboard = ({ children }) => (
 
 export default function SettingProfil() {
     //Dark Mode
-    const isDark = useSelector(state => state.userReducer.dark);
-    const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
+    const [isDark, setIsDark] = useState(null);
+    useEffect(() => {
+        const retrieveDarkMode = async () => {
+            const darkModeValue = await AsyncStorage.getItem('dark');
+            if (darkModeValue !== null) {
+                setIsDark(JSON.parse(darkModeValue));
+            }
+        };
+        retrieveDarkMode();
+    }, []);
+    const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
 
     const [image, setImage] = useState(null);
     const navigation = useNavigation();

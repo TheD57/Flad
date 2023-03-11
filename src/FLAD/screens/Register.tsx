@@ -7,7 +7,7 @@ import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { registerUser } from '../redux/thunk/authThunk';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Audio } from 'expo-av';
 import { CredentialsRegister } from '../redux/actions/userActions';
 import { Buffer } from 'buffer';
@@ -41,6 +41,8 @@ export default function InscriptionPage() {
   const navigation = useNavigation();
   const [spotifyToken, setSpotifyToken] = useState('');
   const [spotifyID, setSpotifyIds] = useState('')
+  const failedSignup = useSelector(state => state.userReducer.failedSignup);
+
   async function playSound() {
     console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync(
@@ -238,20 +240,26 @@ export default function InscriptionPage() {
           </Text>
           <Image source={require("../assets/icons/Logo_White_Flad.png")} style={styles.imageLogo} />
           <Text style={styles.text}>S'INSCRIRE</Text>
-          <View>
+          {failedSignup && (
+            <Text style={styles.textError}>Email ou mot de passe incorrect!</Text>
+          )}
+          <View style={{ marginTop: 7 }}>
             <TextInput style={[styles.input, styles.shadow]} placeholder="Username"
+              placeholderTextColor="#B8B4B8"
               value={username}
               onChangeText={setUsername} />
             <Image source={require('../assets/icons/icons/User.png')} style={styles.iconUser} />
           </View>
           <View>
             <TextInput style={[styles.input, styles.shadow]} placeholder="Email"
+              placeholderTextColor="#B8B4B8"
               value={email}
               onChangeText={setEmail} />
             <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
           </View>
           <View>
             <TextInput style={[styles.input, styles.shadow]} placeholder="Password"
+              placeholderTextColor="#B8B4B8"
               value={password} secureTextEntry={true}
               onChangeText={setPassword} />
             <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
@@ -307,6 +315,12 @@ const styles = StyleSheet.create({
     height: normalize(100),
     borderRadius: 21
   },
+  textError: {
+    fontSize: 15,
+    alignSelf: "center",
+    color: "red",
+    fontWeight: 'bold'
+  },
   buttonImage: {
     width: normalize(46),
     height: normalize(46),
@@ -324,7 +338,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(29),
     alignSelf: 'center',
     color: 'white',
-    marginBottom: 15
+    marginBottom: 8
   },
   textIntoButton: {
     fontWeight: 'bold',

@@ -117,16 +117,17 @@ Notre environnement de travail se base sur plusieurs outils et langages :👇
 
 La composition pour le projet se voit réaliser par deux élèves de l'IUT d'Aubière:
 <br>
-Emre KARTAL : emre.kartal@etu.uca.fr
-<br>
-David D'ALMEIDA : david.d_almeida@etu.uca.fr
+- Emre KARTAL : emre.kartal@etu.uca.fr
+- David D'ALMEIDA : david.d_almeida@etu.uca.fr
 
+<div align="center">
 <a href = "https://codefirst.iut.uca.fr/git/emre.kartal">
 <img src="https://codefirst.iut.uca.fr/git/avatars/402cf312e853192f42c0135a888725c2?size=870" width="50" >
 </a>
 <a href = "https://codefirst.iut.uca.fr/git/david.d_almeida">
 <img src="https://codefirst.iut.uca.fr/git/avatars/0f8eaaad1e26d3de644ca522eccaea7c?size=870" width="50" >
 </a>
+</div>
 
 <div align = center>
 © PM2 (Projet inspiré par nos très chers développeurs de la Dafl Team (S.O les Dafl dev))

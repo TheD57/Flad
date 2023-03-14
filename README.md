@@ -82,7 +82,7 @@ Tout d'abord, il faut fournir votre *adresse e-mail* et votre *nom Spotify* aux 
 
 <div align = center>
 
-<img src="doc/Images/Real_RegisterPage.JPG" width="250" >
+<img src="doc/Images/Real_RegisterPage.png" width="250" >
 
 </div>
 

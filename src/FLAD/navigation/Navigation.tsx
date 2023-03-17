@@ -21,7 +21,7 @@ import SpotifyService from '../services/spotify/spotify.service';
 
 export default function Navigation() {
   const isDark = useSelector(state => state.userReducer.dark);
-  const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
+  const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
   const BottomTabNavigator = createBottomTabNavigator();
   const MyTheme = {
     dark: false,

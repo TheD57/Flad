@@ -33,16 +33,8 @@ export default function Setting() {
     const currentMusic = useSelector(state => state.appReducer.userCurrentMusic);
 
     //Dark Mode
-    const [isDark, setIsDark] = useState(null);
-    useEffect(() => {
-        const retrieveDarkMode = async () => {
-            const darkModeValue = await AsyncStorage.getItem('dark');
-            if (darkModeValue !== null) {
-                setIsDark(JSON.parse(darkModeValue));
-            }
-        };
-        retrieveDarkMode();
-    }, []);
+    const isDark = useSelector(state => state.userReducer.dark);
+
     const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
 
     async function ChangeDarkMode() {
@@ -51,7 +43,6 @@ export default function Setting() {
             if (currentValue !== null) {
                 const newValue = JSON.stringify(!JSON.parse(currentValue));
                 await AsyncStorage.setItem('dark', newValue);
-                setIsDark(JSON.parse(newValue));
                 dispatch(ChangeMode(JSON.parse(newValue)))
             }
         } catch (error) {

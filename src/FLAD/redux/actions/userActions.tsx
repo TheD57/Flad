@@ -19,10 +19,11 @@ export interface CredentialsRegister {
 //     loggedInState,
 //   }
 // );
-export const setLoginState = (cred: Credentials) => {
+export const setLoginState = (userJson: any) => {
+  const user = new User(userJson.data.idFlad,userJson.data.idSpotify,userJson.data.email,new Date(),userJson.data.name, require('../../assets/images/jul.png'));
   return {
     type: userTypes.LOGIN,
-    playload: cred
+    playload: user
   };
 }
 

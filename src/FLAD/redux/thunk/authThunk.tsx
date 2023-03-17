@@ -8,6 +8,7 @@ import { Credentials, CredentialsRegister, restoreToken, setLoginState, UserLogo
 import * as SecureStore from 'expo-secure-store';
 import { User } from "../../Model/User";
 import { UserFactory } from "../../Model/factory/UserFactory";
+import * as ImagePicker from 'expo-image-picker';
 
 const key = 'userToken';
 
@@ -97,6 +98,7 @@ export const userLogin = (loginCredential: Credentials) => {
         )
         // dispatch(setLoginState(resp.data.user) ); // our action is called here
         console.log(user.data);
+        
         dispatch(setLoginState(user.data)); // our action is called here
       } else {
         console.log('Login Failed', 'Username or Password is incorrect');
@@ -155,6 +157,14 @@ export const ChangeMode = (value: boolean) => {
     dispatch(userChangeMode(value));
   }
 }
+
+export const ChangeImageUserCurrent = (value: ImagePicker) => {
+  //@ts-ignore
+  return async dispatch => {
+    dispatch(userChangeImage(value));
+  }
+}
+
 
 // const logIn = (email, password) => {
 //   const action = (dispatch) => {

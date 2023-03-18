@@ -3,9 +3,9 @@ type: docker
 name: FLAD
 
 
-#trigger:
-#  event:
-#    - push
+trigger:
+  event:
+    - push
 
 steps:
   - name: app-build

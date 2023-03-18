@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, StyleSheet, Text, Image, TouchableWithoutFeedback, Keyboard, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useNavigation } from "@react-navigation/native";
@@ -33,10 +34,20 @@ export default function Setting() {
 
     //Dark Mode
     const isDark = useSelector(state => state.userReducer.dark);
-    const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
 
-    const ChangeDarkMode = () => {
-        dispatch(ChangeMode())
+    const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
+
+    async function ChangeDarkMode() {
+        try {
+            const currentValue = await AsyncStorage.getItem('dark');
+            if (currentValue !== null) {
+                const newValue = JSON.stringify(!JSON.parse(currentValue));
+                await AsyncStorage.setItem('dark', newValue);
+                dispatch(ChangeMode(JSON.parse(newValue)))
+            }
+        } catch (error) {
+            console.log(`Une erreur s'est produite lors de la mise à jour de la valeur booléenne pour la clé 'dark': `, error);
+        }
     }
 
     //Notification
@@ -87,7 +98,7 @@ export default function Setting() {
         },
         inputSearch: {
             placeholderTextColor: 'red',
-            color: 'white',
+            color: style.Text,
             width: normalize(350),
         },
         profil: {
@@ -319,7 +330,7 @@ export default function Setting() {
                         </View>
 
                         <View style={styles.musicActually}>
-                            <CardMusic image={currentMusic.image} title={currentMusic.title} description="PNL" />
+                            <CardMusic image="{currentMusic.image}" title="{currentMusic.title}" description="PNL" />
                             <Image source={require("../assets/images/FladyShadow.png")} style={styles.mascot} />
                         </View>
 

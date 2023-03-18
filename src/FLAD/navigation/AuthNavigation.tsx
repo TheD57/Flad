@@ -1,5 +1,5 @@
 import Navigation from './Navigation';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, AsyncStorage } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import StartNavigation from './StartNavigation';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ import store from '../redux/store';
 import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { View } from 'react-native';
-import { getRefreshToken } from '../redux/thunk/authThunk';
+import { ChangeMode, getRefreshToken } from '../redux/thunk/authThunk';
 import * as Location from 'expo-location';
 
 // const LOCATION_TASK_NAME = 'flad-background-location-task';
@@ -60,16 +60,28 @@ export default function AuthNavigation() {
   //   };
   // }, []);
 
+  async function prepare() {
+    //@ts-ignore
+    await dispatch(getRefreshToken())
+    if (tokenProcesed && appIsReady) {
+      await SplashScreen.hideAsync();
+    }      // await SplashScreen.hideAsync();
+  }
 
+  async function ChangeDarkMode() {
+    try {
+      const currentValue = await AsyncStorage.getItem('dark');
+      if (currentValue !== null) {
+        const newValue = JSON.stringify(JSON.parse(currentValue));
+        dispatch(ChangeMode(JSON.parse(newValue)))
+      }
+    } catch (error) {
+      console.log(`Une erreur s'est produite lors de la mise à jour de la valeur booléenne pour la clé 'dark': `, error);
+    }
+  }
 
   useEffect(() => {
-    async function prepare() {
-      //@ts-ignore
-      await dispatch(getRefreshToken())
-      if (tokenProcesed && appIsReady) {
-        await SplashScreen.hideAsync();
-      }      // await SplashScreen.hideAsync();
-    }
+    ChangeDarkMode();
     prepare();
   }, [appIsReady, tokenProcesed]);
 

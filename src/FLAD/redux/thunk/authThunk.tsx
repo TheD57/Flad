@@ -4,57 +4,60 @@ import axios from "axios";
 import { json } from "express";
 import { useEffect } from "react";
 import { API_URL } from "../../fladConfig";
-import { Credentials, CredentialsRegister, restoreToken, setLoginState, UserLogout, userChangeMode, userSignUp } from "../actions/userActions";
+import { Credentials, CredentialsRegister, restoreToken, setLoginState, UserLogout, userChangeMode, userSignUp, ChangeErrorLogin, ChangeErrorSignup } from "../actions/userActions";
 import * as SecureStore from 'expo-secure-store';
 import { User } from "../../Model/User";
 import { UserFactory } from "../../Model/factory/UserFactory";
+import * as ImagePicker from 'expo-image-picker';
 
 const key = 'userToken';
 
-export const registerUser = ( resgisterCredential : CredentialsRegister) => {
+export const registerUser = (resgisterCredential: CredentialsRegister) => {
   //@ts-ignore
   return async dispatch => {
     try {
       console.log(resgisterCredential);
 
-  const config = {
-      headers: {
+      const config = {
+        headers: {
           'Content-Type': 'application/json',
-      },
+        },
       }
       const resp = await axios.post(
-          `${API_URL}/api/users/register`,
-          resgisterCredential,
-          config
-        )
+        `${API_URL}/api/users/register`,
+        resgisterCredential,
+        config
+      )
 
-        if (resp.data.token) {
-          console.log(resp.data.token);
-          const token = resp.data.token;
+      if (resp.data.token) {
+        console.log(resp.data.token);
+        const token = resp.data.token;
         // await SecureStore.setItemAsync(key, token);
         const headers = {
-                'Authorization': 'Bearer ' + token};
+          'Authorization': 'Bearer ' + token
+        };
         const user = await axios.get(
           "https://flad-api-production.up.railway.app/api/users",
-          {headers}
-            )
-        dispatch(userSignUp( UserFactory.JsonToModel(user.data) )); // our action is called here
-          // console.log(user.data);
+          { headers }
+        )
+        dispatch(userSignUp(UserFactory.JsonToModel(user.data))); // our action is called here
+        // console.log(user.data);
         // dispatch(setLoginState(user.data) ); // our action is called here
-        } else {
+      } else {
         console.log('Login Failed', 'Username or Password is incorrect');
-        }
+      }
 
 
-        // if (resp.data.msg === 'success') { // response success checking logic could differ
-        //   await SecureStore.setItemAsync(key, resp.data.token);
-        //   dispatch(setLoginState(resp.data.user) ); // our action is called here
-        // } else {
-        //   console.log('Login Failed', 'Username or Password is incorrect');
-        // }
+      // if (resp.data.msg === 'success') { // response success checking logic could differ
+      //   await SecureStore.setItemAsync(key, resp.data.token);
+      //   dispatch(setLoginState(resp.data.user) ); // our action is called here
+      // } else {
+      //   console.log('Login Failed', 'Username or Password is incorrect');
+      // }
 
     } catch (error) {
       console.log('Error---------', error);
+      dispatch(ChangeErrorSignup())
     }
   }
 }
@@ -95,12 +98,14 @@ export const userLogin = (loginCredential: Credentials) => {
         )
         // dispatch(setLoginState(resp.data.user) ); // our action is called here
         console.log(user.data);
+        
         dispatch(setLoginState(user.data)); // our action is called here
       } else {
         console.log('Login Failed', 'Username or Password is incorrect');
       }
 
     } catch (error) {
+      dispatch(ChangeErrorLogin())
       console.log('Error---------', error);
     }
   }
@@ -146,13 +151,20 @@ export const DeleteToken = () => {
   }
 }
 
-export const ChangeMode = () => {
+export const ChangeMode = (value: boolean) => {
   //@ts-ignore
   return async dispatch => {
-    dispatch(userChangeMode());
-    await SecureStore.deleteItemAsync(key);
+    dispatch(userChangeMode(value));
   }
 }
+
+export const ChangeImageUserCurrent = (value: ImagePicker) => {
+  //@ts-ignore
+  return async dispatch => {
+    dispatch(userChangeImage(value));
+  }
+}
+
 
 // const logIn = (email, password) => {
 //   const action = (dispatch) => {

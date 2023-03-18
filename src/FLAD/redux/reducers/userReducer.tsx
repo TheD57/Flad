@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User } from "../../Model/User";
 import { userTypes } from "../types/userTypes";
 const initialState = {
@@ -7,7 +8,9 @@ const initialState = {
   userSpotifyToken: null,
   error: null,
   isLogedIn: false,
-  dark: false,
+  failedLogin: false,
+  failedSignup: false,
+  dark: null
 }
 
 const userReducer = (state = initialState, action: any) => {
@@ -24,25 +27,38 @@ const userReducer = (state = initialState, action: any) => {
         isLogedIn: resp,
       };
     case userTypes.LOGIN:
+      AsyncStorage.setItem('dark', JSON.stringify(false)).then(() => {
+        console.log('La nouvelle clé et sa valeur ont été créées dans le localstorage');
+      });
       console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
       console.log(action.playload, "LOOGGIIINN");
       console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
       return {
         ...state,
         user: action.playload,
-        isLogedIn: true
+        failedLogin: false,
+        isLogedIn: true,
+        dark: false
       };
     case userTypes.SIGNUP:
+      AsyncStorage.setItem('dark', JSON.stringify(false)).then(() => {
+        console.log('La nouvelle clé et sa valeur ont été créées dans le localstorage');
+      });
       console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
 
-      console.log(action.playload, "LOOGGIIINN");
+      console.log(action.playload, "SIGNNNNNUUUUPPPPPPP");
       console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
       return {
         ...state,
         user: action.playload,
-        isLogedIn: true
+        failedSignup: false,
+        isLogedIn: true,
+        dark: false
       };
     case userTypes.USER_LOGOUT:
+      AsyncStorage.removeItem('dark').then(() => {
+        console.log('La clé a été supprimée du localstorage');
+      });
       return {
         ...state,
         user: null,
@@ -53,8 +69,12 @@ const userReducer = (state = initialState, action: any) => {
         ...state,
         userSpotifyToken: action.playload,
       };
+    case userTypes.CHANGE_ERROR_LOGIN:
+      return { ...state, failedLogin: true }
+    case userTypes.CHANGE_ERROR_SIGNUP:
+      return { ...state, failedSignup: true }
     case userTypes.CHANGE_MODE:
-      return { ...state, dark: !state.dark }
+      return { ...state, dark: action.playload }
     default:
       return state;
   }

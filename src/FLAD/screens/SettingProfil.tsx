@@ -1,16 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView, Image } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Svg, Path } from 'react-native-svg';
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import normalize from '../components/Normalize';
 import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -22,13 +23,19 @@ const DismissKeyboard = ({ children }) => (
 
 export default function SettingProfil() {
     //Dark Mode
+    const dispatch = useDispatch();
     const isDark = useSelector(state => state.userReducer.dark);
-    const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
+    const UserCurrent = useSelector(state => state.userReducer.user);
 
-    const [image, setImage] = useState(null);
+    const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
+
     const navigation = useNavigation();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalVisible, setIsModalVisible] = React.useState(false);
+
+    useEffect(() => {
+        console.log(UserCurrent.image);
+      });
 
     const handleModal = () => setIsModalVisible(() => !isModalVisible);
     // @ts-ignore
@@ -44,11 +51,7 @@ export default function SettingProfil() {
             aspect: [4, 3],
             quality: 1,
         });
-
-        console.log(result);
-
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
         }
     };
 
@@ -172,12 +175,12 @@ export default function SettingProfil() {
         textInputId: {
             marginLeft: 50,
             width: '57%',
-            color: 'white',
+            color: style.Text,
             fontSize: normalize(18),
         },
         textInputMail: {
             marginLeft: 100,
-            color: 'white',
+            color: style.Text,
             width: '57%',
             fontSize: normalize(18)
         },
@@ -278,7 +281,7 @@ export default function SettingProfil() {
                         <View style={styles.profilHead}>
                             <Text style={styles.title}>Profil</Text>
                             <View style={styles.imageWrapper}>
-                                {image && <Image source={{ uri: image }} style={styles.imageProfil} />}
+                                <Image source={{ uri: UserCurrent.image }} style={styles.imageProfil} />
                             </View>
                             <View style={styles.editButton}>
                                 <TouchableOpacity onPress={pickImage} >
@@ -291,11 +294,11 @@ export default function SettingProfil() {
                         <View style={styles.body}>
                             <View style={styles.optionId}>
                                 <Text style={styles.textOption}>Identifiant</Text>
-                                <TextInput placeholderTextColor='#828288' placeholder='Flady' style={styles.textInputId} />
+                                <TextInput placeholderTextColor='#828288' placeholder={UserCurrent.name} style={styles.textInputId} />
                             </View>
                             <View style={styles.optionMail}>
                                 <Text style={styles.textOption}>Mail</Text>
-                                <TextInput placeholderTextColor='#828288' placeholder='emre.kartal@etu.uca.fr' style={styles.textInputMail} />
+                                <TextInput placeholderTextColor='#828288' placeholder={UserCurrent.email} style={styles.textInputMail} />
                             </View>
                         </View>
 

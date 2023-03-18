@@ -12,14 +12,14 @@ import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
 
 export default function favoritePage() {
+    const dispatch = useDispatch();
     //Dark Mode
     const isDark = useSelector(state => state.userReducer.dark);
-    const style = isDark ? GraphicalCharterLight : GraphicalCharterDark;
+    const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
 
     const navigation = useNavigation();
     //@ts-ignore
     const favoritesMusic = useSelector(state => state.appReducer.favoriteMusic);
-    const dispatch = useDispatch();
     const images = [
         { id: 1, source: require('../assets/images/FLADYLove.png') },
         { id: 2, source: require('../assets/images/FLADYStar.png') },

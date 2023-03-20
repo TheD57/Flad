@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 import { RequestHandler } from "../services/spotify/spotifyRequestHandler/utils";
 import { FetchRequest } from "expo-auth-session/build/Fetch";
+import { theService } from "../App";
 
 interface SpotProps {
   spot: { name: string, sourceUrl: string, index: number };
@@ -155,8 +156,9 @@ const SpotDetailsPage = ({ route }) => {
 
   const getCurrentTrack = async () => {
     try {
-      const opt: FetchRequest = { headers: Record }
-      requestor.spotifyFetch(`tracks${id}`,)
+      // const opt: FetchRequest = { headers: Record }
+      // requestor.spotifyFetch(`tracks${id}`,)
+      theService.getMusicById(id)
 
       // var GetTrackOptions = {
       //     method: 'GET',

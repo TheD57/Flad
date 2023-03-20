@@ -18,10 +18,18 @@ export class MusicMinimal {
 export default class SpotifyService implements IspotifyService {
 	private readonly API_URL = "https://flad-api-production.up.railway.app/api/";
 	private spotifyRequestHandler = new RequestHandler();
-	private readonly token: string;
+	// private spotifyAuthHandler : AuthHandler;
+	public token: string;
+
+
 	constructor(token: string) {
+		// this.auth = new AuthManager(this.token);
+		// this.initialize();
 		this.token = token;
 	}
+	// initialize() {
+	// 	this.token = await this.auth.getApiToken(options.token.clientID, options.token.clientSecret);
+	// }
 	// get id(){
 	// 	return this.identification;
 	// }
@@ -44,8 +52,12 @@ export default class SpotifyService implements IspotifyService {
 		if (respMusic.status != 200) {
 			return null;
 		}
-		console.log(respMusic.data.items.track.id)
-		return respMusic.data.items.track.id;
+		console.log("respMusic.data.items.track.id")
+		console.log(respMusic.data.item.id)
+		console.log("respMusic.data.items.track.id")
+
+		
+		return respMusic.data.item.id;
 	}
 
 	public async getUserRecentlyPlayedMusic(): Promise<string | null> {
@@ -56,6 +68,10 @@ export default class SpotifyService implements IspotifyService {
 		if (respMusic.data.items.length <= 0) {
 			return null;
 		}
+		console.log("respMusic.data.items[0].track.id");
+		console.log(respMusic.data.items[0].track.id);
+		
+		console.log("respMusic.data.items[0].track.id");
 		return respMusic.data.items[0].track.id;
 	}
 
@@ -135,7 +151,6 @@ export default class SpotifyService implements IspotifyService {
 
 		return respMusic.data.audio_features.tempo;
 	}
-
 
 	public async addItemToPlayList(playlistId: string, idMusic: string): Promise<void> {
 		var requestData: string = '/playlists/' + playlistId + '/tracks';

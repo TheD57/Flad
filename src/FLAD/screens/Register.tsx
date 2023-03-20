@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import normalize from '../components/Normalize';
 import * as SecureStore from 'expo-secure-store';
 import * as AuthSession from 'expo-auth-session';
-import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { registerUser } from '../redux/thunk/authThunk';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +11,7 @@ import { Audio } from 'expo-av';
 import { CredentialsRegister } from '../redux/actions/userActions';
 import { Buffer } from 'buffer';
 import SpotifyService from '../services/spotify/spotify.service';
+import * as WebBrowser from 'expo-web-browser';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -125,21 +125,28 @@ export default function InscriptionPage() {
       console.error(err)
     }
   }
+  // const [result2, setResult] = useState(null);
+
   const getAuthorizationCode2 = async () => {
     try {
       const result = await AuthSession.startAsync({
         authUrl: 'https://flad-api-production.up.railway.app/api/spotify/exchange'
       })
+      // let result = await WebBrowser.openBrowserAsync('https://flad-api-production.up.railway.app/api/spotify/exchange');
+      // setResult(result2);
       console.log("=================grant code ==============<");
 
       console.log(result);
+      // console.log(result2);
+
       console.log("=================grant code ==============<");
 
-      return result.params.code;
+      // return result.params.code;
     } catch (err) {
       console.error(err)
     }
   }
+
   const getTokens2 = async () => {
     try {
       const authorizationCode = await getAuthorizationCode2() //we wrote this function above
@@ -265,7 +272,7 @@ export default function InscriptionPage() {
             <Image source={require('../assets/icons/icons/lock.png')} style={styles.iconLock} />
           </View>
           <TouchableOpacity onPress={async () => {
-            await getTokens();
+            await getTokens2();
           }} style={[styles.buttonSpotify, styles.shadow]}>
             <Text style={styles.textIntoButton}>Lier compte</Text>
             <Image source={require("../assets/icons/icons/Spotify.png")} style={{ width: normalize(35), height: normalize(35) }} />

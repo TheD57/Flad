@@ -134,6 +134,7 @@ export default function SpotPage() {
     console.log("====3===" + currentCard.music.title + "======3=========");
 
     dispatch(addFavoritesMusic(music))
+    // dispatch(likeMusic(currentCard));
     // dispatch(addFavoriteMusic(props));
     // if (displayIndex == trendingMovies.length - 1) {
     //     setdisplayIndex(0);

@@ -1,17 +1,4 @@
-import { View, StyleSheet, Dimensions, Text, Image, Pressable, TouchableWithoutFeedback, TouchableOpacity, TouchableHighlight, FlatList } from "react-native";
-import Animated, {
-  Layout,
-  Transition,
-  ZoomIn,
-  ZoomOut,
-} from "react-native-reanimated";
-
-const { width } = Dimensions.get("window");
-const SIZE = width / 3;
-import { Feather as Icon } from "@expo/vector-icons";
-import Music from "../Model/Music";
-import { State, TapGestureHandler } from "react-native-gesture-handler";
-import { useRef, useState } from "react";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import { RenderCellProps } from "./littleCard";
 
 
@@ -22,7 +9,6 @@ interface HorizontalFlatListProps {
   data: any[];
 }
 export const HorizontalFlatList = ({ title, data, children: RenderCell }: HorizontalFlatListProps) => {
-
 
   return (
     <View style={styles.similarSection}>

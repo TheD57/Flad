@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import FavoritePage from '../screens/favorite';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SpotPage from '../screens/spot'
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
-import SpotDetailsPage from '../screens/SpotDetailsPage';
 import MusicDetail from '../screens/MusicDetail';
 
 
@@ -27,13 +24,6 @@ export default function SpotNavigation() {
         name="DetailsSpot"
         component={MusicDetail}
       />
-      {/* <Stack.Screen 
-          name="DetailsSpot" 
-          component={SpotDetailsPage} 
-          sharedElements={(route) => {
-           return [route.params.spot.name]
-          }}
-        /> */}
     </Stack.Navigator>
   )
 }

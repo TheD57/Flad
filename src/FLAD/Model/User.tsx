@@ -6,6 +6,7 @@ export class User {
   private _createdAt: Date;
   private _name: string;
   public image: string = require('../assets/images/jul.png');
+  
   //constructors
   constructor(idFlad: string, idSpotify: string, email: string, createdAt: Date, name: string, image: string) {
     this._name = name;

@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User } from "../../Model/User";
 import { userTypes } from "../types/userTypes";
+
 const initialState = {
   loading: false,
-  user: User, // for user object
-  userFladToken: "", // for storing the JWT
+  user: User,
+  userFladToken: "",
   userSpotifyToken: null,
   error: null,
   isLogedIn: false,
@@ -15,11 +16,8 @@ const initialState = {
 
 const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    // just for the navigation and speciafly use 
-    // and 
     case userTypes.RESTORE_TOKEN:
       const resp = (action.playload == "" ? false : true)
-      console.log(resp, "si il ya le tokennen ou passssssssssss")
       return {
         ...state,
         userFladToken: action.playload,
@@ -27,12 +25,7 @@ const userReducer = (state = initialState, action: any) => {
         isLogedIn: resp,
       };
     case userTypes.LOGIN:
-      AsyncStorage.setItem('dark', JSON.stringify(false)).then(() => {
-        console.log('La nouvelle clé et sa valeur ont été créées dans le localstorage');
-      });
-      console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
-      console.log(action.playload, "LOOGGIIINN");
-      console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
+      AsyncStorage.setItem('dark', JSON.stringify(false)).then(() => { });
       return {
         ...state,
         user: action.playload,
@@ -41,13 +34,7 @@ const userReducer = (state = initialState, action: any) => {
         dark: false
       };
     case userTypes.SIGNUP:
-      AsyncStorage.setItem('dark', JSON.stringify(false)).then(() => {
-        console.log('La nouvelle clé et sa valeur ont été créées dans le localstorage');
-      });
-      console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
-
-      console.log(action.playload, "SIGNNNNNUUUUPPPPPPP");
-      console.log("++++++++++++++++++++++++++++++++++++++userRducer+++++++++++++++++++++++++++++3");
+      AsyncStorage.setItem('dark', JSON.stringify(false)).then(() => { });
       return {
         ...state,
         user: action.playload,
@@ -56,9 +43,7 @@ const userReducer = (state = initialState, action: any) => {
         dark: false
       };
     case userTypes.USER_LOGOUT:
-      AsyncStorage.removeItem('dark').then(() => {
-        console.log('La clé a été supprimée du localstorage');
-      });
+      AsyncStorage.removeItem('dark').then(() => { });
       return {
         ...state,
         user: null,

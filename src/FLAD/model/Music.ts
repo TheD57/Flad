@@ -1,9 +1,4 @@
-// export interface MinimalMusic{
-//   private _id: string;
-//   private _title: string;
-
-// }
-export default class Music{ //  : extends MinimalMusic
+export default class Music{ 
   private _id: string;
   private _title: string;
   private _bio: string;

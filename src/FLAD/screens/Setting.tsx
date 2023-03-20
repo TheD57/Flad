@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, StyleSheet, Text, Image, TouchableWithoutFeedback, Keyboard, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
@@ -11,8 +11,6 @@ import { ChangeMode, DeleteToken } from '../redux/thunk/authThunk';
 import { useSelector } from 'react-redux';
 import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
-import SpotifyService from '../services/spotify/spotify.service';
-import { getCurrentUserMusic } from '../redux/thunk/spotThunk';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -67,9 +65,8 @@ export default function Setting() {
     const toggleLocalisation =
         () => setIsCheckedLocalisation(value => !value);
 
+
     //Style
-
-
     const styles = StyleSheet.create({
         mainSafeArea: {
             flex: 1,

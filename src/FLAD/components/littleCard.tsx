@@ -1,11 +1,10 @@
-import { TouchableOpacity, ScrollView, View, Text, StyleSheet, Image, SafeAreaView, FlatList, Animated } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 export interface RenderCellProps {
     image: string;
     title: string;
 }
 export const LittleCard = (props: RenderCellProps) => {
-    console.log('===============' + props.image + props.title + '==ok============');
     return (
         <View style={styles.similarContainer}>
             <Image source={{ uri: props.image }} style={styles.similarPoster}></Image>

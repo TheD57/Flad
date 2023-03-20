@@ -18,7 +18,7 @@ export default function loginPage() {
     const [sound, setSound] = useState<Audio.Sound>();
     const [rememberMe, setRememberMe] = useState(false);
     const navigation = useNavigation();
-
+    // @ts-ignore
     const failedLogin = useSelector(state => state.userReducer.failedLogin);
 
     const [username, setUsername] = useState('');
@@ -29,8 +29,6 @@ export default function loginPage() {
             require('../assets/sounds/Click.mp3')
         );
         setSound(sound);
-
-        console.log('Playing Sound');
         await sound.playAsync();
     }
     const dispatch = useDispatch();

@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Image, StyleSheet, Text, View, FlatList, ScrollView, TouchableOpacity, TouchableHighlight, SafeAreaView } from 'react-native';
 import CardMusic from '../components/CardMusic';
 import normalize from '../components/Normalize';
 import Music from '../Model/Music'
 import FladyComponent from '../components/FladyComponent';
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from 'react-redux';
-import { getFavoritesMusic } from '../redux/actions/appActions';
+import { useSelector } from 'react-redux';
 import { SharedElement } from 'react-navigation-shared-element';
 import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
 
 export default function favoritePage() {
-    const dispatch = useDispatch();
     //Dark Mode
     const isDark = useSelector(state => state.userReducer.dark);
     const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
@@ -29,25 +27,6 @@ export default function favoritePage() {
     const navigueToDetail = (music: any) => {
         navigation.navigate("MusicDetail", { "music": music })
     };
-    // to do
-    const [filteredDataSource, setFilteredDataSource] = useState<Music[]>([]);
-    const [search, setSearch] = useState('');
-    const searchMusic = (text: string) => {
-        if (text) {
-            const newData = favoritesMusic.filter(function (item: Music) {
-                const search = item.title
-                    ? item.title.toUpperCase() : ''.toUpperCase();
-                const textsearch = text.toUpperCase();
-                return search.indexOf(textsearch) > -1;
-            });
-            setFilteredDataSource(newData);
-            setSearch(text);
-        } else {
-            setFilteredDataSource([]);
-            setSearch(text);
-        }
-    };
-
     const styles = StyleSheet.create({
         mainSafeArea: {
             flex: 1,

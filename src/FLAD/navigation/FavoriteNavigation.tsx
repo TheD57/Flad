@@ -1,9 +1,6 @@
 import React from 'react';
 import Favorite from '../screens/Favorite';
-import { createStackNavigator } from '@react-navigation/stack';
-import { ArtistLayout } from '../components/Genre';
 import MusicDetail from '../screens/MusicDetail';
-import InfoScreen from '../screens/testPage';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import CurrentMusic from '../components/CurrentMusic';
 

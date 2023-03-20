@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { SharedElement } from 'react-navigation-shared-element';
 import { useSelector } from 'react-redux';
 import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
@@ -16,9 +15,9 @@ type CustomCardMusic = { //Props
 
 
 export default function CardMusic(CBP: CustomCardMusic) {
+  // @ts-ignore
   const isDark = useSelector(state => state.userReducer.dark);
   const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
-  const currentMusic = useSelector(state => state.appReducer.currentMusic);
 
   const source = typeof CBP.image === 'string' ? { uri: CBP.image } : CBP.image;
   const styles = StyleSheet.create({

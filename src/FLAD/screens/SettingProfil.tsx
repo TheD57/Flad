@@ -11,7 +11,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GraphicalCharterDark } from '../assets/GraphicalCharterDark';
 import { GraphicalCharterLight } from '../assets/GraphicalCharterLight';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // @ts-ignore
 const DismissKeyboard = ({ children }) => (
@@ -22,15 +21,12 @@ const DismissKeyboard = ({ children }) => (
 
 
 export default function SettingProfil() {
-    //Dark Mode
-    const dispatch = useDispatch();
+    // @ts-ignore
     const isDark = useSelector(state => state.userReducer.dark);
+    // @ts-ignore
     const UserCurrent = useSelector(state => state.userReducer.user);
-
     const style = isDark ? GraphicalCharterDark : GraphicalCharterLight;
-
     const navigation = useNavigation();
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalVisible, setIsModalVisible] = React.useState(false);
 
     useEffect(() => {
@@ -38,13 +34,9 @@ export default function SettingProfil() {
       });
 
     const handleModal = () => setIsModalVisible(() => !isModalVisible);
-    // @ts-ignore
-    const viewableItemsChanged = useRef(({ viewableItems }) => {
-        setCurrentIndex(viewableItems[0].index);
-    }).current;
+
 
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,

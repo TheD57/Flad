@@ -1,95 +1,20 @@
-import { View, Text, Image, PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable, TouchableOpacity, SafeAreaView } from 'react-native'
-import React, { useCallback, useEffect, useRef, useState, useTransition } from 'react'
+import { View, Text, Dimensions, StyleSheet, ImageBackground, Pressable, TouchableOpacity, SafeAreaView } from 'react-native'
+import React, { useCallback, useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import Animated from 'react-native-reanimated';
-
 import Card from '../components/Card';
-
 import { cards as cardArray, spotArray2 } from '../data/data'
-import FladButton from '../components/button/button';
-import axios from 'axios';
 import AdjustSize from '../components/AdjustSize';
-import * as SecureStore from 'expo-secure-store';
-import { MY_SECURE_AUTH_STATE_KEY } from './login';
-import * as AuthSession from 'expo-auth-session';
 import normalize from '../components/Normalize';
-import * as Location from 'expo-location';
-import Icons from '../assets/icons/icons/icon';
 import LottieView from 'lottie-react-native'
 import Lotties from '../assets/lottie/Lottie';
 import FladLoading from '../components/FladLoadingScreen';
-import { SharedElement } from 'react-navigation-shared-element';
 import { useNavigation } from '@react-navigation/native';
 import Music from '../Model/Music';
 import { addFavoritesMusic } from '../redux/actions/appActions';
 import { useDispatch } from 'react-redux';
 import { Spot } from '../Model/Spot';
-
-type LocationData = {
-  latitude: number;
-  longitude: number;
-  timestamp: number;
-}
-
-interface NearbyUser {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
-
-async function getUserData(accessToken: string) {
-  axios.get("https://api.spotify.com/v1/me",
-    {
-      headers: {
-        'Authorization': 'Bearer ' + accessToken,
-        "Content-Type": "application/json"
-      }
-    })
-    .then(response => {
-      if (response && response.statusText === 'success') {
-        console.log(response.data.message);
-        const userData = JSON.stringify(response.data);
-        const userId = response.data.id;
-        return { userId, userData }
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-};
-// async function sendUserLoc(accessToken : string) {
-//   axios.get("https://api.spotify.com/v1/me",
-//        {
-//          headers: {
-//            'Authorization': 'Bearer ' + accessToken,
-//            "Content-Type" : "application/json"
-//         }})
-//        .then(response =>
-//        {
-//          if (response && response.statusText === 'success') {
-//          console.log(response.data.message);
-//          const userData = JSON.stringify(response.data);
-//          const userId = response.data.id;}
-
-//        })  
-//        .catch(function (error) {
-//          console.log(error);
-//        });
-// };  
-
-async function getValueFor(key: string): Promise<string | null> {
-  let result = await SecureStore.getItemAsync(key);
-  if (result) {
-    alert("🔐 Here's your value 🔐 \n" + result);
-  } else {
-
-    alert('No values stored under that key.');
-  }
-  return result;
-}
 
 export default function SpotPage() {
   const [cards, setCards] = useState(spotArray2);
@@ -98,9 +23,7 @@ export default function SpotPage() {
 
     if (direction === 'right') {
       // Swiped right
-      console.log("====2===" + currentCard.music.title + "======2=========");
       addLike(currentCard.music);
-      console.log('Swiped right');
     } else if (direction === 'left') {
       // Swiped left
       console.log('Swiped left');
@@ -114,14 +37,9 @@ export default function SpotPage() {
       setCards(cards.filter((_, i) => i !== index));
       setcurrentCard(cards[index - 1]);
     }, 3);
-    // setCards(cards.filter((_, i) => i !== index));
-    // setcurrentCard(cards[index-1]);
   };
 
   const likeButtonref = useRef<LottieView>(null);
-  const dislikeButtonref = useRef<LottieView>(null);
-  const discoveryButtonref = useRef<LottieView>(null);
-
   const onLike = useCallback(() => {
     likeButtonref.current?.reset();
     likeButtonref.current?.play(0, 55);
@@ -131,77 +49,15 @@ export default function SpotPage() {
 
   function addLike(music: Music) {
     onLike();
-    console.log("====3===" + currentCard.music.title + "======3=========");
-
     dispatch(addFavoritesMusic(music))
-    // dispatch(likeMusic(currentCard));
-    // dispatch(addFavoriteMusic(props));
-    // if (displayIndex == trendingMovies.length - 1) {
-    //     setdisplayIndex(0);
-    //     swiper.swipeLeft();
-    // }
   }
 
-
-
-  // const hapti  = (() => {
-  //   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
-  //   getValueFor(MY_SECURE_AUTH_STATE_KEY)
-  //   .then(key => { (key != null) ? getUserData(key) :console.log("error key is nullll") } ) ;
-  //     // Haptics.NotificationFeedbackType.Success
-  // });
-
-  ////////////////////////////////////////////////////////////////
-  //   const [locationData, setLocationData] = useState<LocationData>();
-  //   const [prevLocationData, setPrevLocationData] = useState<LocationData>();
-  //   const [nearbyUsers, setNearbyUsers] = useState<NearbyUser[]>([]);
-  //   const [currentMusic, setCurrentMusic] = useState<string>("");
-
-  //   async function getLocation() {
-  //     var { status } = await Location.requestForegroundPermissionsAsync();
-  //       if (status !== 'granted') {
-  //         console.log('Permission to access location was denied');
-  //         return;
-  //       }
-
-  //     let currentLocation = await Location.getCurrentPositionAsync({});
-  //     setLocationData({
-  //       latitude: currentLocation.coords.latitude,
-  //       longitude: currentLocation.coords.longitude,
-  //       timestamp: currentLocation.timestamp
-  //     });
-  //   }; 
-  //   async function sendLocationToServer() {
-  //     getLocation();
-  //       if (!locationData) return;
-  //       if (prevLocationData && locationData.latitude === prevLocationData.latitude && locationData.longitude === prevLocationData.longitude) {
-  //         return;
-  //       }
-  //       try {
-  //         const response = await axios.post(
-  //           'http://localhost/api/users/david/nextToMe',
-  //           locationData
-  //         );
-
-  //         if (response.status !== 200) {
-  //           throw new Error('Failed to send location to server');
-  //         }
-
-  //         setPrevLocationData(locationData);
-  //         setNearbyUsers(response.data);
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //   };
-
-  // setInterval(sendLocationToServer, 30000)
   const navigator = useNavigation();
 
   const { width: wWidht } = Dimensions.get("window");
   const hapti = (card: Spot) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
     navigator.navigate("DetailsSpot", { "music": card.music })
-    // Haptics.NotificationFeedbackType.Success
   };
   return (
 
@@ -251,13 +107,11 @@ export default function SpotPage() {
                 <View key={card.userSpotifyId} style={{ position: 'absolute' }} >
 
                   <Pressable onLongPress={() => { hapti(card) }} >
-                    {/* <SharedElement id={card.name}> */}
                     <Card
                       title={card.music.title}
                       image={card.music.image}
                       onSwipe={(direction) => { onSwipe(index, direction) }}
                     />
-                    {/* </SharedElement> */}
                   </Pressable>
                 </View>
               ))

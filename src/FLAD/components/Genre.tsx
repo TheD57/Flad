@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import Music from "../Model/Music";
 import { Artist } from "./Artist";
 import { StyleSheet } from "react-native";

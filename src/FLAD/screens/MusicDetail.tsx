@@ -1,28 +1,17 @@
-import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native";
-import { View, Text, Image, StyleSheet, Dimensions, useWindowDimensions, Button, TouchableOpacity, ScrollView, Pressable } from "react-native";
-import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, useDerivedValue, useSharedValue, Value, withSpring, withTiming } from "react-native-reanimated";
-import { BlurView } from 'expo-blur';
-import qs from "qs";
-import axios from "axios";
-import { Buffer } from 'buffer';
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Pressable } from "react-native";
+import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, withSpring } from "react-native-reanimated";
+
 import { Audio } from 'expo-av';
 import { useEffect, useState } from "react";
 import normalize from '../components/Normalize';
-import { State, TapGestureHandler } from "react-native-gesture-handler";
-import { RequestHandler } from "../services/spotify/spotifyRequestHandler/utils";
-import { FetchRequest } from "expo-auth-session/build/Fetch";
 import Music from "../Model/Music";
 import SpotifyService from "../services/spotify/spotify.service";
-import { SharedElement } from "react-navigation-shared-element";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import Icons from "../assets/icons/icons/icon";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather as Icon } from "@expo/vector-icons";
 import { HorizontalFlatList } from "../components/HorizontalFlatList";
 import { LittleCard } from "../components/littleCard";
-import { Circle } from "react-native-svg";
-import { AntDesign } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { useSelector } from "react-redux";
 
@@ -50,13 +39,6 @@ const MusicDetail = ({ route }) => {
         getSimilarTrack();
     }, [testtoken]);
 
-    // const getSimilarTrack = async () =>  {
-    //     const service = new SpotifyService(testtoken);            
-    //         const simularMusic = await service.getSimilarTrack(currentspot.id, 5, 'FR');
-    //             console.log("suggesstd", simularMusic)     
-    //                 setSimularMusic(simularMusic);     
-
-    //   }
     const getSimilarTrack = async () => {
         try {
             const service = new SpotifyService(testtoken);
@@ -65,7 +47,6 @@ const MusicDetail = ({ route }) => {
             setSimularMusic(simularMusic);
         } catch (error) {
             console.error('Error ================ in getSimilarTrack', error);
-            // Handle the error here.
         }
     }
 
@@ -123,53 +104,6 @@ const MusicDetail = ({ route }) => {
         };
 
     })
-    const tokenSend: string = useSelector(state => state.userReducer.userFladToken);
-   
-    // const maymany = async () => {
-    //     try{
-    //         const resp = await axios({
-    //             url: 'https://flad-api-production.up.railway.app/api/users/nextTo',
-    //             method: 'GET',
-    //             headers: {
-    //                 Authorization: `Bearer ${tokenSend}`,
-    //             },
-    //             params:{
-    //                 longitude: '12323',
-    //                 latitude: '12323',
-    //                 currentMusic : '12323' 
-    //             }
-    //           });
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-
-    //           console.log(resp);
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    //         console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-
-    //     }
-    //     catch(error){
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log(error);
-
-    //         console.log(error.message);
-
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-
-    //         console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-
-    //     }
-    // };
     return (
         <View style={styles.body}>
             <View style={styles.backgroundSection}>
@@ -180,13 +114,7 @@ const MusicDetail = ({ route }) => {
                         uri: currentspot.image,
                     }}
                 ></Image>
-
-                {/* <LinearGradient
-                    // Background Linear Gradient
-                    colors={['rgba(0,0,0,0.8)', 'transparent']}
-                /> */}
                 <LinearGradient style={styles.gradientFade}
-                    // Button Linear Gradient
                     colors={['rgba(56,56,56,0)', 'rgba(14,14,14,1)']}>
                 </LinearGradient>
             </View>
@@ -194,7 +122,6 @@ const MusicDetail = ({ route }) => {
                 <ScrollView style={styles.list} showsVerticalScrollIndicator={false} scrollEventThrottle={4}>
                     <View style={styles.section1}>
                         <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-                            {/* <SharedElement  id={spot.name} style={{ flex: 1 }}>                 */}
                             <View>
 
                                 <Animated.Image
@@ -203,9 +130,6 @@ const MusicDetail = ({ route }) => {
                                     }}
                                     style={[
                                         {
-
-                                            // width: 370,
-                                            // width: 400,
                                             width: normalize(429),
                                             height: normalize(429),
                                             borderRadius: 24,

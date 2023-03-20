@@ -9,8 +9,8 @@ const { width } = Dimensions.get("window");
 const SIZE = width / 3;
 import { Feather as Icon } from "@expo/vector-icons";
 import Music from "../Model/Music";
-import { State, TapGestureHandler } from "react-native-gesture-handler";
-import { useRef, useState } from "react";
+import { State } from "react-native-gesture-handler";
+import { useState } from "react";
 
 
 interface ArtistProps {
@@ -25,7 +25,6 @@ export const Artist = ({ artist, onPress }: ArtistProps) => {
       alert('Hey single tap!');
     }
   };
-  const doubleTapRef = useRef(null);
   const [selected, setSeleted] = useState(false);
   const onS = () => {
     setSeleted(!selected);

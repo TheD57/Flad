@@ -1,7 +1,6 @@
-import { View, StyleSheet, Dimensions, Image, Pressable, TouchableWithoutFeedback, TouchableOpacity, TouchableHighlight } from "react-native";
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import Animated, {
   Layout,
-  Transition,
   ZoomIn,
   ZoomOut,
 } from "react-native-reanimated";
@@ -10,14 +9,12 @@ const { width } = Dimensions.get("window");
 const SIZE = width / 3;
 import { Feather as Icon } from "@expo/vector-icons";
 import Music from "../Model/Music";
-import { State, TapGestureHandler } from "react-native-gesture-handler";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 
 interface SelectedCardProps {
   artist: Music;
   onPress: () => void;
-  // cheepPosition: string ;(direction: "left" | "right" | "down") 
 }
 export const SelectedCard = ({ artist, onPress }: SelectedCardProps) => {
   const [selected, setSeleted] = useState(false);
@@ -68,7 +65,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 100,
     alignItems: "center",
-
-
   }
 });

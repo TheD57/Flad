@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Image, Animated, PanResponder, Dimensions, StyleSheet, ImageBackground, Button, Pressable, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 
 interface InputProps {
   name: string;

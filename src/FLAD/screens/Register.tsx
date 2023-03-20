@@ -9,8 +9,6 @@ import { registerUser } from '../redux/thunk/authThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { Audio } from 'expo-av';
 import { CredentialsRegister } from '../redux/actions/userActions';
-import { Buffer } from 'buffer';
-import SpotifyService from '../services/spotify/spotify.service';
 import * as WebBrowser from 'expo-web-browser';
 
 // @ts-ignore
@@ -34,35 +32,26 @@ async function save(key: string, value: string) {
   await SecureStore.setItemAsync(key, value);
 }
 
-
 export default function InscriptionPage() {
   const [sound, setSound] = useState<Audio.Sound>();
-  const [rememberMe, setRememberMe] = useState(false);
   const navigation = useNavigation();
   const [spotifyToken, setSpotifyToken] = useState('');
-  const [spotifyID, setSpotifyIds] = useState('')
   const failedSignup = useSelector(state => state.userReducer.failedSignup);
 
   async function playSound() {
-    console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync(
       require('../assets/sounds/Click.mp3')
     );
     setSound(sound);
-
-    console.log('Playing Sound');
     await sound.playAsync();
   }
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const toggleRememberMe = () => {
-    setRememberMe(!rememberMe);
-  }
 
   //spotify auth
-  const [request, response, promptAsync] = useAuthRequest(
+  const [response] = useAuthRequest(
     {
       responseType: AuthSession.ResponseType.Token,
       clientId: '1f1e34e4b6ba48b388469dba80202b10',
@@ -99,66 +88,12 @@ export default function InscriptionPage() {
     dispatch(registerUser(credentials))
     playSound()
   }
-  const scopesArr = ['user-read-private', 'user-read-email', 'user-read-playback-state', 'user-read-currently-playing', 'user-read-recently-played', 'playlist-modify-public', 'ugc-image-upload', 'user-modify-playback-state'];
-  const scopes = scopesArr.join(' ');
-  //work so use this for my implementation
-  const getAuthorizationCode = async () => {
-    try {
-      const redirectUrl = "https://auth.expo.io/@anonymous/FLAD-7eafd441-fd6b-4fb6-924c-ec2b0ed5ce6d"; //this will be something like https://auth.expo.io/@your-username/your-app-slug
-      const result = await AuthSession.startAsync({
-        authUrl:
-          'https://accounts.spotify.com/authorize' +
-          '?response_type=code' +
-          '&client_id=' +
-          "1f1e34e4b6ba48b388469dba80202b10" +
-          (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-          '&redirect_uri=' +
-          encodeURIComponent(redirectUrl),
-      })
-      console.log("=================grant code ==============<");
-
-      console.log(result);
-      console.log("=================grant code ==============<");
-
-      return result.params.code;
-    } catch (err) {
-      console.error(err)
-    }
-  }
-  // const [result2, setResult] = useState(null);
-
-  const getAuthorizationCode2 = async () => {
-    try {
-      const result = await AuthSession.startAsync({
-        authUrl: 'https://flad-api-production.up.railway.app/api/spotify/exchange'
-      })
-      // let result = await WebBrowser.openBrowserAsync('https://flad-api-production.up.railway.app/api/spotify/exchange');
-      // setResult(result2);
-      console.log("=================grant code ==============<");
-
-      console.log(result);
-      // console.log(result2);
-
-      console.log("=================grant code ==============<");
-
-      // return result.params.code;
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   const getTokens2 = async () => {
     try {
-      const authorizationCode = await getAuthorizationCode2() //we wrote this function above
-      console.log(authorizationCode, "shhhhhhhhhhhhhheeeeeeeeeeeeeeeetttttttttttt");
       const response = await fetch('https://flad-api-production.up.railway.app/api/spotify/callback');
       const responseJson = await response.json();
-      console.log(responseJson, "okkkkkkkkkkkkkkk");
-      // destructure the response and rename the properties to be in camelCase to satisfy my linter ;)
       const {
         access_token: accessToken,
-        refresh_token: refreshToken,
-        expires_in: expiresIn,
       } = responseJson;
 
       await setSpotifyToken(accessToken);
@@ -168,76 +103,6 @@ export default function InscriptionPage() {
       console.error(err);
     }
   }
-  const getTokens = async () => {
-    try {
-      const authorizationCode = await getAuthorizationCode() //we wrote this function above
-      console.log(authorizationCode, "shhhhhhhhhhhhhheeeeeeeeeeeeeeeetttttttttttt");
-      const response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic ' + (Buffer.from('1f1e34e4b6ba48b388469dba80202b10' + ':' + '779371c6d4994a68b8dd6e84b0873c82').toString('base64')),
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https://auth.expo.io/@anonymous/FLAD-7eafd441-fd6b-4fb6-924c-ec2b0ed5ce6d`,
-      });
-      const responseJson = await response.json();
-      console.log(responseJson, "okkkkkkkkkkkkkkk");
-      // destructure the response and rename the properties to be in camelCase to satisfy my linter ;)
-      const {
-        access_token: accessToken,
-        refresh_token: refreshToken,
-        expires_in: expiresIn,
-      } = responseJson;
-      await setSpotifyToken(accessToken);
-      save(MY_SECURE_AUTH_STATE_KEY, accessToken);
-      testService(accessToken);
-      console.log(spotifyToken);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  const testService = async (token: string) => {
-    try {
-      const serviceTest = new SpotifyService(token);
-      console.log("==============Test Service 1 ============");
-      const respSearch = await serviceTest.searchMusic("Parapluie Tiakola");
-      console.log("===================repoonce=========================");
-      console.log(respSearch);
-      console.log("============================================");
-      console.log("==============Test Service 2 ============");
-      const respFull = await serviceTest.getMusicById(respSearch[0].id);
-      console.log("===================repoonce=========================");
-      console.log(respFull);
-      console.log("============================================");
-      console.log("==============Test Service 3 ============");
-      const respSimilar = await serviceTest.getSimilarTrack(respSearch[0].id);
-      console.log("===================repoonce=========================");
-      console.log(respSimilar);
-      console.log("============================================");
-      console.log("==============Test Service 4 ============");
-      const respCurrent = await serviceTest.getUserCurrentMusic();
-      console.log("===================repoonce=========================");
-      console.log(respCurrent);
-      console.log("============================================");
-      console.log("==============Test Service 5 ============");
-      const respRecently = await serviceTest.getUserRecentlyPlayedMusic();
-      console.log("===================repoonce=========================");
-      console.log(respRecently);
-      console.log("============================================");
-
-    } catch (error) {
-      console.log("==============Test Service Error============");
-      console.error(error);
-      console.log("============================================");
-
-    }
-
-  }
-
-
-
-
   return (
     <DismissKeyboard>
       <View style={styles.container}>

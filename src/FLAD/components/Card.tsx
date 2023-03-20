@@ -1,15 +1,12 @@
 import { View, Image, Dimensions, StyleSheet } from 'react-native'
 import React from 'react'
-import Animated, { Extrapolate, interpolate, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { interpolate, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import normalize from '../components/Normalize';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
-// const width = wWidht *0.75;
-// const height = wWidht * (465/264);
-// const borderRadius = 24;
 interface CardProps {
   title: string;
   image: any;
@@ -20,7 +17,7 @@ type ContextType = {
   translateY: number;
 };
 
-const Card = ({ title, image, onSwipe }: CardProps) => {
+const Card = ({ image, onSwipe }: CardProps) => {
 
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -38,20 +35,15 @@ const Card = ({ title, image, onSwipe }: CardProps) => {
       translateY.value = event.translationY + context.translateY;
 
     },
-    onEnd: (event, context) => {
-      console.log(translateX.value - translateY.value);
-      // console.log(translateY.value);
-      // translateX.value = withSpring(0);
-      // translateY.value = withSpring(snapPoint(translateY.value,velocityY, snapPoints ))
+    onEnd: () => {
+
       if (translateX.value > 160) {
         console.log("translateX2");
         runOnJS(onSwipe)("right");
       } else if (translateX.value < -160) {
         runOnJS(onSwipe)("left");
-        // onSwipe("left");
       } else if (translateY.value > 250) {
         runOnJS(onSwipe)("down");
-        // onSwipe("left");
       }
 
       else {
@@ -119,19 +111,6 @@ const Card = ({ title, image, onSwipe }: CardProps) => {
 
   const horizontalThreshold = SCREEN_WIDTH * 0.65;
 
-  const rotateStyle = useAnimatedStyle(() => {
-    const rot = interpolate
-      (translateX.value,
-        [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-        [30, 0, 30],
-        Extrapolate.CLAMP);
-    return {
-      transform: [{ rotate: `${rot}deg` }, {
-        translateX: withSpring(translateX.value),
-      }],
-
-    };
-  });
   const styleCardsNew = useAnimatedStyle(() => {
     const factor = 1;
     const rot = interpolate
@@ -151,23 +130,6 @@ const Card = ({ title, image, onSwipe }: CardProps) => {
     };
   });
 
-
-  // Calculate the distance of the card from its starting position
-
-  const rStyle = useAnimatedStyle(() => {
-
-    return {
-      transform: [
-        {
-          translateX: translateX.value,
-        },
-        {
-          translateY: translateY.value,
-        },
-      ],
-    };
-  });
-  console.log('==========================================', SCREEN_WIDTH / 4, "===============================");
   return (
     <View>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
@@ -189,8 +151,6 @@ const Card = ({ title, image, onSwipe }: CardProps) => {
           <>
             <Animated.View
               style={[{
-                // transform: [{ rotate: "30deg" }],
-
                 elevation: 100,
                 position: "absolute",
                 zIndex: 1000,

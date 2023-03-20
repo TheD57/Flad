@@ -1,18 +1,8 @@
-import { View, Text, Image , Dimensions, StyleSheet, Pressable } from 'react-native'
-import React, { useRef, useState } from 'react'
-import Animated,{ Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
-import * as Haptics from 'expo-haptics';
+import { Image , StyleSheet, Pressable } from 'react-native'
+import React from 'react'
 import Icons from '../../assets/icons/icons/icon';
-import Rive, { Fit, RiveRef } from 'rive-react-native';
+import { RiveRef } from 'rive-react-native';
 
-const {width : wWidht} = Dimensions.get("window");
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const SCREEN_WIDTH = Dimensions.get('window').width
-// const width = wWidht *0.75;
-// const height = wWidht * (465/264);
-// const borderRadius = 24;
 interface ButtonProps {
     name : string;
 }

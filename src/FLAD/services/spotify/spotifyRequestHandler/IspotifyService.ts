@@ -1,4 +1,3 @@
 interface IspotifyService {
-    getMusicById(idMusic : string): Promise<any>;
-
+    getMusicById(idMusic: string): Promise<any>;
 }

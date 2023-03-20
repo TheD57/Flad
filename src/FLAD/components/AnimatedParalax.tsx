@@ -1,16 +1,12 @@
-import { View, useWindowDimensions } from "react-native";
-import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import { View } from "react-native";
+import Animated, { interpolate, SensorType, useAnimatedSensor, useAnimatedStyle } from "react-native-reanimated";
 
-interface SpotProps {
-    spot: { name: string, sourceUrl: string, index: number };
-}
 const halfPi = Math.PI / 2;
 
 const AnimatedParalax = ({ }) => {
-    const { width, height } = useWindowDimensions();
     const sensor = useAnimatedSensor(SensorType.ROTATION);
     const styleAniamatedImage = useAnimatedStyle(() => {
-        const { yaw, pitch, roll } = sensor.sensor.value;
+        const { pitch, roll } = sensor.sensor.value;
         const verticalAxis = interpolate(
             pitch,
             [-halfPi, halfPi],

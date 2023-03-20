@@ -13,14 +13,8 @@ export interface CredentialsRegister {
   idFlad: string,
   idSpotify: string
 }
-// export const setLoggedInState = loggedInState => (
-//   {
-//     type: types.SET_LOGGED_IN_STATE,
-//     loggedInState,
-//   }
-// );
 export const setLoginState = (userJson: any) => {
-  const user = new User(userJson.data.idFlad,userJson.data.idSpotify,userJson.data.email,new Date(),userJson.data.name, require('../../assets/images/jul.png'));
+  const user = new User(userJson.data.idFlad, userJson.data.idSpotify, userJson.data.email, new Date(), userJson.data.name, require('../../assets/images/jul.png'));
   return {
     type: userTypes.LOGIN,
     playload: user

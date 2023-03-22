@@ -55,7 +55,6 @@ const SpotDetailsPage = ({ route }) => {
       : undefined;
   }, [sound]);
 
-  console.log(spot);
   const sensor = useAnimatedSensor(SensorType.ROTATION);
   const styleAniamatedImage = useAnimatedStyle(() => {
     const { pitch, roll } = sensor.sensor.value;
@@ -75,7 +74,7 @@ const SpotDetailsPage = ({ route }) => {
     };
 
   })
-  var id = '0cFS3AMF9Lhj3CNoFvwjvY'
+  const id = '0cFS3AMF9Lhj3CNoFvwjvY'
 
   const getCurrentTrack = async () => {
     try {

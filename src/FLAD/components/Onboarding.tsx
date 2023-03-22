@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Modal, View, StyleSheet, useColorScheme, Text, FlatList, Animated, TouchableOpacity, ImageBackground, Image } from 'react-native';
-// import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import normalize from '../components/Normalize';
 import OnboardingItem from './OnboardingItem';

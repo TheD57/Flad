@@ -18,7 +18,7 @@ export const getSpotList = (resuestHandler: SpotifyService) => {
   return async dispatch => {
     try {
       //@ts-ignore
-      var userToken: string = await SecureStore.getItemAsync(key);
+      const userToken: string = await SecureStore.getItemAsync(key);
       const headers = {
         'Authorization': 'Bearer ' + userToken
       };

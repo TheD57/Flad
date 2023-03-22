@@ -1,4 +1,4 @@
-export default function AdjustSize(Text: String) {
+export default function AdjustSize(Text: string) {
     const titleLength = Text.length;
     const minFontSize = 23;
     const maxFontSize = 48;

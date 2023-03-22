@@ -3,7 +3,6 @@ import { RenderCellProps } from "./littleCard";
 
 
 interface HorizontalFlatListProps {
-  //  React.ReactNode;
   children: (props: RenderCellProps) => React.ReactElement
   title: string;
   data: any[];

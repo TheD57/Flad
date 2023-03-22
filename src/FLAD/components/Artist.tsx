@@ -19,12 +19,6 @@ interface ArtistProps {
 }
 export const Artist = ({ artist, onPress }: ArtistProps) => {
   const source = typeof artist.image === 'string' ? { uri: artist.image } : artist.image;
-  //@ts-ignore
-  const onSingleTapEvent = (event) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      alert('Hey single tap!');
-    }
-  };
   const [selected, setSeleted] = useState(false);
   const onS = () => {
     setSeleted(!selected);

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import Music from "../Model/Music";
 import { Artist } from "./Artist";
-import { StyleSheet } from "react-native";
 
 export const ArtistLayout = () => {
   const MUSIC_LIST: Music[] = [
@@ -16,7 +15,6 @@ export const ArtistLayout = () => {
     new Music("Kratos", "PNL", "https://upload.wikimedia.org/wikipedia/en/a/a0/PNL_-_Dans_la_l%C3%A9gende.png"),
   ]
   const [artists, setArtists] = useState<Music[]>(MUSIC_LIST);
-  const [selectedArtists, setSelectedArtists] = useState<typeof MUSIC_LIST>([]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

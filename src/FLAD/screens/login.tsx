@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button, Platform } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import React from 'react'
 import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';

@@ -5,7 +5,6 @@ import MusicDetail from '../screens/MusicDetail';
 
 
 export default function SpotNavigation() {
-  // const Stack = createSharedElementStackNavigator();
   const Stack = createStackNavigator();
 
   return (

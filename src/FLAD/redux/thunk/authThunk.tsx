@@ -96,7 +96,7 @@ export const getRefreshToken = () => {
         dispatch(restoreToken(empty));
       }
     } catch (e) {
-      console.log('Error---------', e);
+      console.log('Error :', e);
     }
   }
 }

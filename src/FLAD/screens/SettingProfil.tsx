@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView, Image } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Svg, Path } from 'react-native-svg';
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import normalize from '../components/Normalize';
 import * as ImagePicker from 'expo-image-picker';
@@ -43,8 +43,6 @@ export default function SettingProfil() {
             aspect: [4, 3],
             quality: 1,
         });
-        if (!result.canceled) {
-        }
     };
 
     const styles = StyleSheet.create({

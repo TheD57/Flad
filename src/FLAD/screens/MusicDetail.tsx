@@ -13,7 +13,6 @@ import { Feather as Icon } from "@expo/vector-icons";
 import { HorizontalFlatList } from "../components/HorizontalFlatList";
 import { LittleCard } from "../components/littleCard";
 import * as SecureStore from 'expo-secure-store';
-import { useSelector } from "react-redux";
 
 const halfPi = Math.PI / 2;
 
@@ -21,7 +20,7 @@ const halfPi = Math.PI / 2;
 //@ts-ignore
 const MusicDetail = ({ route }) => {
     const music: Music = route.params.music;
-    const [currentspot, setCurrentSpot] = useState(music);
+    const [currentspot] = useState(music);
     const [simularMusic, setSimularMusic] = useState<Music[]>([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [sound, setSound] = useState(null);
@@ -87,7 +86,7 @@ const MusicDetail = ({ route }) => {
 
     const sensor = useAnimatedSensor(SensorType.ROTATION);
     const styleAniamatedImage = useAnimatedStyle(() => {
-        const { yaw, pitch, roll } = sensor.sensor.value;
+        const { pitch, roll } = sensor.sensor.value;
         const verticalAxis = interpolate(
             pitch,
             [-halfPi * 2, halfPi * 2],

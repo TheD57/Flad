@@ -24,16 +24,17 @@ export default class SpotifyService implements IspotifyService {
 	constructor(token: string) {
 		this.token = token;
 	}
-	public async getMusicById(idMusic: string): Promise<Music> {
-		var requestData: string = '/tracks/' + idMusic;
+	public async getMusicById(idMusic: string): Promise<Music| null> {
+		let requestData: string = '/tracks/' + idMusic;
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
 		if (respMusic.status != 200) {
+			return null;
 		}
 		return MusicFactory.mapFromSpotifyTrack(respMusic.data);
 	}
 
 	public async getUserCurrentMusic(): Promise<string | null> {
-		var requestData: string = '/me/player/currently-playing';
+		let requestData: string = '/me/player/currently-playing';
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
 		if (respMusic.status != 200) {
 			return null;
@@ -44,9 +45,10 @@ export default class SpotifyService implements IspotifyService {
 	}
 
 	public async getUserRecentlyPlayedMusic(): Promise<string | null> {
-		var requestData: string = '/me/player/recently-played';
+		let requestData: string = '/me/player/recently-played';
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
 		if (respMusic.status != 200) {
+			return null;
 		}
 		if (respMusic.data.items.length <= 0) {
 			return null;
@@ -62,6 +64,7 @@ export default class SpotifyService implements IspotifyService {
 				position_ms: 0
 			}
 		};
+		throw new Error("not Implemented")
 		return;
 	}
 
@@ -88,7 +91,7 @@ export default class SpotifyService implements IspotifyService {
 	}
 	// tempo version 
 	public async getMusicMoreDetails(idMusic: string): Promise<string> {
-		var requestData: string = '/audio-features/' + idMusic;
+		let requestData: string = '/audio-features/' + idMusic;
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
 		if (respMusic.status != 200) {
 		}
@@ -97,7 +100,7 @@ export default class SpotifyService implements IspotifyService {
 	}
 
 	public async getRelatedArtist(idArtist: string): Promise<string> {
-		var requestData: string = '/artists/' + idArtist + '/related-artists';
+		let requestData: string = '/artists/' + idArtist + '/related-artists';
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
 		if (respMusic.status != 200) {
 		}
@@ -106,7 +109,7 @@ export default class SpotifyService implements IspotifyService {
 	}
 
 	public async getArtistTopTracks(idArtist: string): Promise<string> {
-		var requestData: string = '/artists/' + idArtist + '/top-tracks';
+		let requestData: string = '/artists/' + idArtist + '/top-tracks';
 		const respMusic = await this.spotifyRequestHandler.spotifyFetch(requestData, undefined, this.token);
 		if (respMusic.status != 200) {
 		}
@@ -115,7 +118,7 @@ export default class SpotifyService implements IspotifyService {
 	}
 
 	public async addItemToPlayList(playlistId: string, idMusic: string): Promise<void> {
-		var requestData: string = '/playlists/' + playlistId + '/tracks';
+		let requestData: string = '/playlists/' + playlistId + '/tracks';
 		const fetchOptions: FetchOptions = {
 			method: 'POST',
 			body: {

@@ -14,7 +14,7 @@ steps:
       - cd ./src/FLAD/
       - npm install expo-cli	
       - npm install
-      - npm run
+      - npm run start
       
   - name: code-analysis
     image: node:latest
@@ -24,11 +24,14 @@ steps:
     settings:
       sources: ./src/FLAD/ 
     commands:
+      - cd ./src/FLAD/
+      - npm install
+      - npm run test
       - export SONAR_SCANNER_VERSION=4.7.0.2747
       - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
       - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -D sonar.projectKey=FLAD -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar
+      - sonar-scanner -D sonar.projectKey=FLAD -D sonar.sources=. -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -Dsonar.javascript.lcov.reportPaths=./test/coverage/lcov.info
     depends_on: [ app-build ]

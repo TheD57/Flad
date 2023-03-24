@@ -19,7 +19,7 @@ steps:
     image: plugins/docker
     settings:
       dockerfile: src/Api/Dockerfile
-      context: src/
+      context: src/Api
       registry: hub.codefirst.iut.uca.fr
       repo: hub.codefirst.iut.uca.fr/emre.kartal/FLAD
       username:

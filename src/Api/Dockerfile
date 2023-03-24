@@ -1,17 +1,12 @@
 FROM node:latest
-ENV PORT=8080 
-RUN find . -name UserService.ts -type f -print
-WORKDIR /app
-RUN ls /app
-RUN find . -name UserService.ts -type f -print
-#ARG http_proxy=http://193.49.118.36:8080 https_proxy=http://193.49.118.36:8080
+
 ADD package.json /app
 ADD tsconfig.json /app
+WORKDIR /app
 ADD . /app
-
 RUN npm install
 RUN npm run build
 
-#EXPOSE 8080
-CMD [ "node","." ]
+EXPOSE 8080
+CMD [ "node", "." ]
 

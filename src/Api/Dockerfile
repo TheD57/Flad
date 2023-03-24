@@ -2,6 +2,8 @@ FROM node:latest
 ENV PORT=8080 
 RUN find . -name UserService.ts -type f -print
 WORKDIR /app
+RUN ls
+RUN find . -name UserService.ts -type f -print
 #ARG http_proxy=http://193.49.118.36:8080 https_proxy=http://193.49.118.36:8080
 ADD package.json /app
 ADD tsconfig.json /app

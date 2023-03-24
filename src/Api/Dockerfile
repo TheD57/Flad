@@ -1,5 +1,5 @@
 FROM node:latest
-
+RUN ls
 ADD package.json /app
 ADD tsconfig.json /app
 WORKDIR /app

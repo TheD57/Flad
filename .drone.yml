@@ -32,7 +32,7 @@ steps:
     image: flady
     environment:
         IMAGENAME: hub.codefirst.iut.uca.fr/emre.kartal/flad
-        CONTAINERNAME: flady
+        CONTAINERNAME: flad
         COMMAND: run
         OVERWRITE: true
     depends_on: [ docker-build-and-push ]

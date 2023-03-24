@@ -1,5 +1,5 @@
 FROM node:latest
-RUN ls /usr
+RUN ls /usr/src
 ADD package.json /app
 ADD tsconfig.json /app
 RUN cat package.json

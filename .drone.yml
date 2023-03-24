@@ -29,10 +29,10 @@ steps:
 
   #container deployment
   - name: deploy-container
-    image: flady
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
-        IMAGENAME: hub.codefirst.iut.uca.fr/emre.kartal/flad
-        CONTAINERNAME: flad
+        IMAGENAME: hub.codefirst.iut.uca.fr/emre.kartal/flad:latest
+        CONTAINERNAME: flady-container
         COMMAND: run
         OVERWRITE: true
     depends_on: [ docker-build-and-push ]

@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 const app = new App(
     [new PingController(), new SpotifyController(), new UserController()],
-    Number(process.env.PORT)
+    Number(8080)
 
 );
 

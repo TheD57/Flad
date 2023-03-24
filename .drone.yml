@@ -35,7 +35,7 @@ steps:
         CONTAINERNAME: flady-container
         COMMAND: run
         OVERWRITE: true
-        ADMINS: emrekartal,,davidd_almeida
+        ADMINS: emrekartal,davidd_almeida
     depends_on: [ docker-build-and-push ]
     
 

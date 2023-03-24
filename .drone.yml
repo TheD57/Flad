@@ -21,7 +21,7 @@ steps:
       dockerfile: src/Api/Dockerfile
       context: src/Api
       registry: hub.codefirst.iut.uca.fr
-      repo: hub.codefirst.iut.uca.fr/emre.kartal/FLAD
+      repo: hub.codefirst.iut.uca.fr/emre.kartal/flad
       username:
         from_secret: SECRET_REGISTRY_USERNAME
       password:

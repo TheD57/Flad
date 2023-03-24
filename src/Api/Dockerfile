@@ -1,7 +1,8 @@
 FROM node:latest
-RUN ls
+RUN ls /usr
 ADD package.json /app
 ADD tsconfig.json /app
+RUN cat package.json
 WORKDIR /app
 ADD . /app
 RUN npm install
